@@ -1,0 +1,30 @@
+enum RenameFeature {
+  CONTROLLER
+  LOCATION
+}
+
+extend type FeatureMap {
+  rename: [RenameFeature!]
+}
+
+extend type Mutation {
+  renameController(input: RenameInput!): RenameControllerResult!
+  renameLocation(input: RenameInput!): RenameLocationResult!
+}
+
+input RenameInput {
+  id: ID!
+  name: String!
+}
+
+type RenameControllerSuccess {
+  controller: Controller!
+}
+
+union RenameControllerResult = RenameControllerSuccess | NotFound | NotSupported
+
+type RenameLocationSuccess {
+  location: Location!
+}
+
+union RenameLocationResult = RenameLocationSuccess | NotFound | NotSupported

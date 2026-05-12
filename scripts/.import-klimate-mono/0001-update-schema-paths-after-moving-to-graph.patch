@@ -1,0 +1,212 @@
+From 04789e78706bf27b9d63ffc90b2d2ffd090cddeb Mon Sep 17 00:00:00 2001
+From: Jacob Gable <jacob.gable@gmail.com>
+Date: Mon, 9 Aug 2021 14:27:30 -0700
+Subject: [PATCH] Update schema paths after moving to /graph
+
+- Add SCHEMA_PATH to dev-api/config
+- Update schema/index to use SCHEMA_PATH env variable
+- Update codegen.yml to use SCHEMA_PATH env variable
+---
+ dev-api/codegen.yml                    |  4 ++--
+ dev-api/package.json                   |  4 ++--
+ dev-api/src/config.ts                  |  6 ++++++
+ dev-api/src/schema/index.ts            |  3 ++-
+ intellicomfort-api/Dockerfile          | 20 +++++++++++---------
+ intellicomfort-api/codegen.yml         |  2 +-
+ intellicomfort-api/package.json        |  4 ++--
+ intellicomfort-api/src/config.ts       |  6 ++++++
+ intellicomfort-api/src/schema/index.ts |  4 +++-
+ mobile/codegen.yml                     |  2 +-
+ 10 files changed, 36 insertions(+), 19 deletions(-)
+
+diff --git a/dev-api/codegen.yml b/dev-api/codegen.yml
+index 834bdf1a1..b6ed81983 100644
+--- a/dev-api/codegen.yml
++++ b/dev-api/codegen.yml
+@@ -1,6 +1,6 @@
+ overwrite: true
+-schema: "schema/**/*.graphql"
+-documents: null
++schema: ${SCHEMA_PATH:../graph/schema/**/*.graphql}
++documents: []
+ generates:
+   ./src/schema/resolvers-types.ts:
+     plugins:
+diff --git a/dev-api/package.json b/dev-api/package.json
+index b32b7b2d7..b50a475ca 100644
+--- a/dev-api/package.json
++++ b/dev-api/package.json
+@@ -10,9 +10,9 @@
+     "start": "node -r dotenv/config dist/index.js",
+     "build": "yarn build-graph && yarn build-ts",
+     "build-ts": "tsc",
+-    "build-graph": "graphql-codegen --config codegen.yml",
++    "build-graph": "graphql-codegen --config codegen.yml -r dotenv/config",
+     "watch-ts": "tsc -w",
+-    "watch-graph": "graphql-codegen --watch --config codegen.yml",
++    "watch-graph": "graphql-codegen --watch --config codegen.yml -r dotenv/config",
+     "watch-node": "nodemon -r dotenv/config dist/index.js",
+     "clean": "rm -Rf dist/*",
+     "lint": "eslint .",
+diff --git a/dev-api/src/config.ts b/dev-api/src/config.ts
+index bdc3faff8..986d7b3e2 100644
+--- a/dev-api/src/config.ts
++++ b/dev-api/src/config.ts
+@@ -40,3 +40,9 @@ export const KLIMATE_FORCE_FIXTURES_SYNC = env
+   .default(0)
+   .required(false)
+   .asBool();
++
++export const SCHEMA_PATH: string = env
++  .get("SCHEMA_PATH")
++  .default("../graph/schema/**/*.graphql")
++  .required()
++  .asString();
+diff --git a/dev-api/src/schema/index.ts b/dev-api/src/schema/index.ts
+index f6a483669..47fb176eb 100644
+--- a/dev-api/src/schema/index.ts
++++ b/dev-api/src/schema/index.ts
+@@ -1,12 +1,13 @@
+ import { promises as fs } from "fs";
+ import glob from "glob";
+ import { ITypeDefinitions } from "apollo-server-express";
++import { SCHEMA_PATH } from "../config";
+ 
+ export * from "./resolvers-types";
+ 
+ export default (): Promise<ITypeDefinitions> => {
+   return new Promise((resolve, reject) => {
+-    glob("schema/**/*.graphql", (err, matches) => {
++    glob(SCHEMA_PATH, (err, matches) => {
+       if (err) {
+         reject(err);
+       } else {
+diff --git a/intellicomfort-api/Dockerfile b/intellicomfort-api/Dockerfile
+index 2f143f99f..c424f6b2c 100644
+--- a/intellicomfort-api/Dockerfile
++++ b/intellicomfort-api/Dockerfile
+@@ -1,13 +1,15 @@
+ FROM node:12-alpine3.12 AS build
+ 
+-WORKDIR /usr/src/api
++# NB we expect the repo root to be the build context
+ 
+-COPY ./package.json ./yarn.lock ./
++WORKDIR /usr/src/intellicomfort-api
++
++COPY intellicomfort-api/package.json intellicomfort-api/yarn.lock ./
+ 
+ RUN yarn install --frozen-lockfile
+ 
+-COPY ./tsconfig.json ./
+-COPY ./src ./src
++COPY intellicomfort-api/tsconfig.json ./
++COPY intellicomfort-api/src ./src
+ 
+ RUN yarn build-ts
+ 
+@@ -16,22 +18,22 @@ ENV NODE_ENV=production
+ 
+ RUN apk --no-cache add curl
+ 
+-WORKDIR /usr/src/api
++WORKDIR /usr/src/intellicomfort-api
+ 
+ RUN chown node:node .
+ 
+-COPY ./entrypoint ./entrypoint
++COPY intellicomfort-api/entrypoint ./entrypoint
+ RUN chown node:node ./entrypoint
+ RUN chmod u+x ./entrypoint
+ 
+ USER node
+ 
+-COPY ./package.json ./yarn.lock ./
++COPY intellicomfort-api/package.json intellicomfort-api/yarn.lock ./
+ 
+ RUN yarn install --frozen-lockfile
+ 
+-COPY ./schema ./schema
+-COPY --from=build /usr/src/api/dist ./dist
++COPY ./graph ../graph
++COPY --from=build /usr/src/intellicomfort-api/dist ./dist
+ 
+ EXPOSE 3000
+ 
+diff --git a/intellicomfort-api/codegen.yml b/intellicomfort-api/codegen.yml
+index dbbb216b1..25e0cc963 100644
+--- a/intellicomfort-api/codegen.yml
++++ b/intellicomfort-api/codegen.yml
+@@ -1,5 +1,5 @@
+ overwrite: true
+-schema: "./schema/**/*.graphql"
++schema: ${SCHEMA_PATH:../graph/schema/**/*.graphql}
+ documents: []
+ generates:
+   ./src/schema/resolvers-types.ts:
+diff --git a/intellicomfort-api/package.json b/intellicomfort-api/package.json
+index 2e32f31c9..1c24dd314 100644
+--- a/intellicomfort-api/package.json
++++ b/intellicomfort-api/package.json
+@@ -10,9 +10,9 @@
+     "start": "node -r dotenv/config dist/index.js",
+     "build": "yarn build-graph && yarn build-ts",
+     "build-ts": "tsc",
+-    "build-graph": "graphql-codegen --config codegen.yml",
++    "build-graph": "graphql-codegen --config codegen.yml -r dotenv/config",
+     "watch-ts": "tsc -w",
+-    "watch-graph": "graphql-codegen --watch --config codegen.yml",
++    "watch-graph": "graphql-codegen --watch --config codegen.yml -r dotenv/config",
+     "watch-node": "nodemon -r dotenv/config dist/index.js",
+     "clean": "rm -Rf dist/*",
+     "lint": "eslint .",
+diff --git a/intellicomfort-api/src/config.ts b/intellicomfort-api/src/config.ts
+index ab41c73d6..ebc72e45a 100644
+--- a/intellicomfort-api/src/config.ts
++++ b/intellicomfort-api/src/config.ts
+@@ -4,6 +4,12 @@ import * as env from "env-var";
+ // (1) Type these values manually (e.g. FOO: string or BAR: string | undefined) in order to be explicit about what we intend to export as config
+ // (2) Use required() even when we're adding a default() in order to get runtime assertions at this level as opposed to hitting a type error further on down the stack
+ 
++export const SCHEMA_PATH: string = env
++  .get("SCHEMA_PATH")
++  .default("../graph/schema/**/*.graphql")
++  .required()
++  .asString();
++
+ export const BASE_URL: string = env
+   .get("BASE_URL")
+   .default("https://intellicomfort.kraftful.cloud/")
+diff --git a/intellicomfort-api/src/schema/index.ts b/intellicomfort-api/src/schema/index.ts
+index f6a483669..b49d5894c 100644
+--- a/intellicomfort-api/src/schema/index.ts
++++ b/intellicomfort-api/src/schema/index.ts
+@@ -2,11 +2,13 @@ import { promises as fs } from "fs";
+ import glob from "glob";
+ import { ITypeDefinitions } from "apollo-server-express";
+ 
++import { SCHEMA_PATH } from "../config";
++
+ export * from "./resolvers-types";
+ 
+ export default (): Promise<ITypeDefinitions> => {
+   return new Promise((resolve, reject) => {
+-    glob("schema/**/*.graphql", (err, matches) => {
++    glob(SCHEMA_PATH, (err, matches) => {
+       if (err) {
+         reject(err);
+       } else {
+diff --git a/mobile/codegen.yml b/mobile/codegen.yml
+index b7cb6fa5a..56e3bf694 100644
+--- a/mobile/codegen.yml
++++ b/mobile/codegen.yml
+@@ -1,5 +1,5 @@
+ overwrite: true
+-schema: ${SCHEMA_PATH}
++schema: ${SCHEMA_PATH:../graph/schema/**/*.graphql}
+ documents:
+   - "**/*.{ts,tsx,graphql}"
+   - "!ios/**"
+-- 
+2.30.1 (Apple Git-130)
+

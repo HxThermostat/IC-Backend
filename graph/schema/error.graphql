@@ -1,0 +1,15 @@
+interface Error {
+  message: String
+}
+
+type NotFound implements Error {
+  message: String
+}
+
+type NotSupported implements Error {
+  message: String
+}
+
+type TokenInvalid implements Error {
+  message: String
+}

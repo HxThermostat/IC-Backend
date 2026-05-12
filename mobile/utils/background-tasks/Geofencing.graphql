@@ -1,0 +1,11 @@
+fragment Background_AwayActiveStatus_Location on Location {
+  __typename
+  id
+  awayActive
+}
+
+query BackgroundAwayActiveStatus($locationId: ID!) {
+  location(id: $locationId) {
+    ...Background_AwayActiveStatus_Location
+  }
+}

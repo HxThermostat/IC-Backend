@@ -1,0 +1,45 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`location it returns the correct fields 1`] = `
+Object {
+  "data": Object {
+    "location": Object {
+      "awayActive": false,
+      "connectionStatus": "ONLINE",
+      "id": "9c98e454-531c-4042-b494-3a8f8bba1273",
+      "lat": 49.2827,
+      "lng": -123.1207,
+      "name": "Home",
+      "temperatureOutdoor": 18.3333,
+      "temperatureUnit": "F",
+      "zoning": true,
+    },
+  },
+  "errors": undefined,
+  "extensions": undefined,
+  "http": Object {
+    "headers": Headers {
+      Symbol(map): Object {},
+    },
+  },
+}
+`;
+
+exports[`locations it returns multiple locations 1`] = `
+Object {
+  "data": Object {
+    "locations": Array [
+      Object {
+        "id": "9c98e454-531c-4042-b494-3a8f8bba1273",
+      },
+    ],
+  },
+  "errors": undefined,
+  "extensions": undefined,
+  "http": Object {
+    "headers": Headers {
+      Symbol(map): Object {},
+    },
+  },
+}
+`;

@@ -1,0 +1,324 @@
+From efdc79d44c00e889e628963cbf1e9a951963596e Mon Sep 17 00:00:00 2001
+From: Jacob Gable <jacob.gable@gmail.com>
+Date: Tue, 10 Aug 2021 10:17:34 -0700
+Subject: [PATCH] Move github CI workflows to root
+
+---
+ .../workflows/dev-api.ci.workflow.yml         | 43 ++++++++-----------
+ .../intellicomfort-api.ci.workflow.yml        | 35 +++++----------
+ .../intellicomfort-api.deploy.workflow.yml    | 12 +++---
+ .../workflows/mobile.ci.workflow.yml          | 15 +++++--
+ .../workflows/mobile.ota.workflow.yml         |  8 +++-
+ .../workflows/mobile.release.workflow.yml     |  8 +++-
+ 6 files changed, 62 insertions(+), 59 deletions(-)
+ rename dev-api/.github/workflows/main.yml => .github/workflows/dev-api.ci.workflow.yml (55%)
+ rename intellicomfort-api/.github/workflows/main.yml => .github/workflows/intellicomfort-api.ci.workflow.yml (58%)
+ rename intellicomfort-api/.github/workflows/deploy-graph.yml => .github/workflows/intellicomfort-api.deploy.workflow.yml (78%)
+ rename mobile/.github/workflows/ci.yml => .github/workflows/mobile.ci.workflow.yml (60%)
+ rename mobile/.github/workflows/ota.yml => .github/workflows/mobile.ota.workflow.yml (84%)
+ rename mobile/.github/workflows/release.yml => .github/workflows/mobile.release.workflow.yml (98%)
+
+diff --git a/dev-api/.github/workflows/main.yml b/.github/workflows/dev-api.ci.workflow.yml
+similarity index 55%
+rename from dev-api/.github/workflows/main.yml
+rename to .github/workflows/dev-api.ci.workflow.yml
+index 5bd8e7af2..5a7b2fa7f 100644
+--- a/dev-api/.github/workflows/main.yml
++++ b/.github/workflows/dev-api.ci.workflow.yml
+@@ -1,17 +1,24 @@
+-# This is a basic workflow to help you get started with Actions
+-name: CI
++# This is a basic CI workflow to help you get started with Actions
++name: DEV-API-CI
+ 
+-# Triggers the workflow in a few conditions
+-# 1. Every change to main (a merged PR will result in a push)
++# Triggers the workflow on changes to `dev-api/**`
++# 1. On main branch (a merged PR will result in a push)
+ # 2. When a pull request created / updated
+ # 3. Manually
+ on:
+   push:
+     branches: [main]
++    paths: ["dev-api/**", "graph/**"]
+   pull_request:
+     types: [opened, reopened, synchronize]
++    paths: ["dev-api/**", "graph/**"]
+   workflow_dispatch:
+ 
++defaults:
++  run:
++    # Default to commands running in the dev-api folder
++    working-directory: ./dev-api
++
+ # A workflow run is made up of one or more jobs that can run sequentially or in parallel
+ jobs:
+   # Installs dependencies
+@@ -25,40 +32,28 @@ jobs:
+       JWT_ENCRYPT_KEY: encrypt
+       REVIEWS_ENABLED: true
+       REVIEW_PROBABILITY: 1
++      SCHEMA_PATH: "../graph/schema/**/*.graphql"
+ 
+     # Steps represent a sequence of tasks that will be executed as part of the job
+     steps:
+       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+       - uses: actions/checkout@v2
++      
+       - uses: actions/setup-node@v2
+         with:
+           node-version: "~12"
+-
+-      # The next few steps manage installing + caching dependencies via Yarn
+-      - name: Get yarn cache directory path
+-        id: yarn-cache-dir-path
+-        run: echo "::set-output name=dir::$(yarn cache dir)"
+-
+-      - name: Setup cache
+-        uses: actions/cache@v2
+-        id: yarn-cache
+-        with:
+-          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn*') }}
+-          restore-keys: |
+-            ${{ runner.os }}-yarn-
+-
+-      - name: Install yarn dependencies without cache
+-        if: steps.yarn-cache.outputs.cache-hit != 'true'
+-        run: yarn --frozen-lockfile
++          cache: "yarn"
++          cache-dependency-path: "dev-api/yarn.lock"
+ 
+       - name: Install yarn dependencies from cache
+-        if: steps.yarn-cache.outputs.cache-hit == 'true'
+         run: yarn --frozen-lockfile --prefer-offline
+ 
+       # And then we move on to the meat of the action
++      - name: Build Graph
++        run: yarn build-graph
++
+       - name: Build Typescript
+-        run: yarn build-graph build-ts
++        run: yarn build-ts
+ 
+       - name: Run ESLint
+         run: yarn lint
+diff --git a/intellicomfort-api/.github/workflows/main.yml b/.github/workflows/intellicomfort-api.ci.workflow.yml
+similarity index 58%
+rename from intellicomfort-api/.github/workflows/main.yml
+rename to .github/workflows/intellicomfort-api.ci.workflow.yml
+index 41f49755c..17e2ef143 100644
+--- a/intellicomfort-api/.github/workflows/main.yml
++++ b/.github/workflows/intellicomfort-api.ci.workflow.yml
+@@ -1,5 +1,5 @@
+ # This is a basic workflow to help you get started with Actions
+-name: CI
++name: INTELLICOMFORT-API-CI
+ 
+ # Triggers the workflow in a few conditions
+ # 1. Every change to main (a merged PR will result in a push)
+@@ -8,10 +8,17 @@ name: CI
+ on:
+   push:
+     branches: [main]
++    paths: ["intellicomfort-api/**", "graph/**"]
+   pull_request:
+     types: [opened, reopened, synchronize]
++    paths: ["intellicomfort-api/**", "graph/**"]
+   workflow_dispatch:
+ 
++defaults:
++  run:
++    # Default to commands running in the intellicomfort-api folder
++    working-directory: ./intellicomfort-api
++
+ # A workflow run is made up of one or more jobs that can run sequentially or in parallel
+ jobs:
+   # Installs dependencies
+@@ -31,33 +38,13 @@ jobs:
+     steps:
+       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+       - uses: actions/checkout@v2
++      
+       - uses: actions/setup-node@v2
+         with:
+           node-version: "~12"
++          cache: "yarn"
++          cache-dependency-path: "intellicomfort-api/yarn.lock"
+ 
+-      # The next few steps manage installing + caching dependencies via Yarn
+-      - name: Get yarn cache directory path
+-        id: yarn-cache-dir-path
+-        run: echo "::set-output name=dir::$(yarn cache dir)"
+-
+-      - name: Setup cache
+-        uses: actions/cache@v2
+-        id: yarn-cache
+-        with:
+-          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn*') }}
+-          restore-keys: |
+-            ${{ runner.os }}-yarn-
+-
+-      - name: Install yarn dependencies without cache
+-        if: steps.yarn-cache.outputs.cache-hit != 'true'
+-        run: yarn --frozen-lockfile
+-
+-      - name: Install yarn dependencies from cache
+-        if: steps.yarn-cache.outputs.cache-hit == 'true'
+-        run: yarn --frozen-lockfile --prefer-offline
+-
+-      # And then we move on to the meat of the action
+       - name: Build Typescript
+         run: yarn build-graph build-ts
+ 
+diff --git a/intellicomfort-api/.github/workflows/deploy-graph.yml b/.github/workflows/intellicomfort-api.deploy.workflow.yml
+similarity index 78%
+rename from intellicomfort-api/.github/workflows/deploy-graph.yml
+rename to .github/workflows/intellicomfort-api.deploy.workflow.yml
+index deadd344e..ade5ae99b 100644
+--- a/intellicomfort-api/.github/workflows/deploy-graph.yml
++++ b/.github/workflows/intellicomfort-api.deploy.workflow.yml
+@@ -1,6 +1,6 @@
+-on: workflow_dispatch
++name: INTELLICOMFORT-API-DEPLOY
+ 
+-name: Deploy to Amazon ECS
++on: workflow_dispatch
+ 
+ jobs:
+   deploy:
+@@ -14,8 +14,8 @@ jobs:
+       - name: Configure AWS credentials
+         uses: aws-actions/configure-aws-credentials@v1
+         with:
+-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
++          aws-access-key-id: ${{ secrets.INTELLICOMFORT_AWS_ACCESS_KEY_ID }}
++          aws-secret-access-key: ${{ secrets.INTELLICOMFORT_AWS_SECRET_ACCESS_KEY }}
+           aws-region: us-east-1
+ 
+       - name: Login to Amazon ECR
+@@ -29,7 +29,7 @@ jobs:
+           ECR_REPOSITORY: graph
+           IMAGE_TAG: ${{ github.sha }}
+         run: |
+-          docker build -f Dockerfile -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
++          docker build -f intellicomfort-api/Dockerfile -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+           echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
+ 
+@@ -37,7 +37,7 @@ jobs:
+         id: task-def
+         uses: aws-actions/amazon-ecs-render-task-definition@v1
+         with:
+-          task-definition: task-definition.json
++          task-definition: intellicomfort-api/task-definition.json
+           container-name: graph
+           image: ${{ steps.build-image.outputs.image }}
+ 
+diff --git a/mobile/.github/workflows/ci.yml b/.github/workflows/mobile.ci.workflow.yml
+similarity index 60%
+rename from mobile/.github/workflows/ci.yml
+rename to .github/workflows/mobile.ci.workflow.yml
+index 2c1b96522..72e213d5d 100644
+--- a/mobile/.github/workflows/ci.yml
++++ b/.github/workflows/mobile.ci.workflow.yml
+@@ -1,16 +1,24 @@
+-name: CI
++# This is a basic workflow to help you get started with Actions
++name: MOBILE-CI
+ 
+-# Triggers the workflow in a few conditions
+-# 1. Every change to main (a merged PR will result in a push)
++# Triggers the workflow on changes to `mobile/**`
++# 1. On main branch (a merged PR will result in a push)
+ # 2. When a pull request created / updated
+ # 3. Manually
+ on:
+   push:
+     branches: [main]
++    paths: ["mobile/**", "graph/**"]
+   pull_request:
+     types: [opened, reopened, synchronize]
++    paths: ["mobile/**", "graph/**"]
+   workflow_dispatch:
+ 
++defaults:
++  run:
++    # Default to commands running in the mobile folder
++    working-directory: ./mobile
++
+ jobs:
+   test:
+     runs-on: ubuntu-latest
+@@ -22,6 +30,7 @@ jobs:
+         with:
+           node-version: "~12"
+           cache: "yarn"
++          cache-dependency-path: "mobile/yarn.lock"
+ 
+       - name: Install yarn dependencies from cache
+         run: yarn --frozen-lockfile --prefer-offline
+diff --git a/mobile/.github/workflows/ota.yml b/.github/workflows/mobile.ota.workflow.yml
+similarity index 84%
+rename from mobile/.github/workflows/ota.yml
+rename to .github/workflows/mobile.ota.workflow.yml
+index bc1ef6b3c..9af5e7a67 100644
+--- a/mobile/.github/workflows/ota.yml
++++ b/.github/workflows/mobile.ota.workflow.yml
+@@ -1,8 +1,13 @@
+-name: OTA
++name: MOBILE-OTA
+ 
+ on:
+   workflow_dispatch:
+ 
++defaults:
++  run:
++    # Default to commands running in the mobile folder
++    working-directory: ./mobile
++
+ jobs:
+   ota:
+     name: Build + Deploy OTA Update
+@@ -16,6 +21,7 @@ jobs:
+         with:
+           node-version: "12"
+           cache: "yarn"
++          cache-dependency-path: "mobile/yarn.lock"
+ 
+       - name: Install yarn dependencies
+         run: yarn --frozen-lockfile --prefer-offline
+diff --git a/mobile/.github/workflows/release.yml b/.github/workflows/mobile.release.workflow.yml
+similarity index 98%
+rename from mobile/.github/workflows/release.yml
+rename to .github/workflows/mobile.release.workflow.yml
+index f7d25bc70..eb418fe50 100644
+--- a/mobile/.github/workflows/release.yml
++++ b/.github/workflows/mobile.release.workflow.yml
+@@ -3,6 +3,11 @@ name: Release
+ on:
+   workflow_dispatch:
+ 
++defaults:
++  run:
++    # Default to commands running in the mobile folder
++    working-directory: ./mobile
++
+ # This workflow follows follows a fan-out structure where we first
+ # build the generic Klimate app and then process it for each white
+ # label output:
+@@ -28,7 +33,8 @@ jobs:
+       - uses: actions/setup-node@v2
+         with:
+           node-version: "12"
+-          cache: "yarn"
++          cache: "yarn" 
++          cache-dependency-path: "mobile/yarn.lock"
+ 
+       # It seems like the "best practice" is to cache yarn's internal
+       # cache directory as opposed to caching the node_modules
+-- 
+2.31.0
+

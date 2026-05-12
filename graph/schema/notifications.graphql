@@ -1,0 +1,214 @@
+enum NotificationsFeature {
+  CONTROLLER_TEMPERATURE
+  CONTROLLER_HUMIDITY
+  LOCATION_TEMPERATURE
+  LOCATION_HUMIDITY
+  LOCATION_FAULTS
+}
+
+extend type FeatureMap {
+  notifications: [NotificationsFeature!]
+}
+
+interface Notification {
+  enabled: Boolean!
+}
+
+type HumidityNotification implements Notification & DualRangeValue {
+  enabled: Boolean!
+  lower: PercentageRangeValue!
+  upper: PercentageRangeValue!
+  minInterval: Float!
+}
+
+type TemperatureNotification implements Notification & DualRangeValue {
+  enabled: Boolean!
+  lower: SingleSetpoint!
+  upper: SingleSetpoint!
+  minInterval: Float!
+}
+
+type BasicNotification implements Notification {
+  enabled: Boolean!
+}
+
+extend type Controller {
+  humidityNotification: HumidityNotification
+  temperatureNotification: TemperatureNotification
+}
+
+extend type Location {
+  faultNotification: BasicNotification
+  humidityNotification: HumidityNotification
+  temperatureNotification: TemperatureNotification
+}
+
+enum PushTokenStatus {
+  ENABLED
+  DISABLED
+}
+
+type PushToken {
+  id: ID!
+  platform: Platform!
+  status: PushTokenStatus!
+  token: String!
+}
+
+extend type User {
+  pushTokens: [PushToken!]
+}
+
+extend type Mutation {
+  subscribeToNotifications(
+    input: SubscribeToNotificationsInput!
+  ): SubscribeToNotificationsResult!
+  unsubscribeFromNotifications(
+    input: UnsubscribeFromNotificationsInput!
+  ): UnsubscribeFromNotificationsResult!
+  toggleControllerTemperatureNotification(
+    input: ToggleNotificationInput!
+  ): ToggleControllerTemperatureNotificationResult!
+  adjustControllerTemperatureNotificationThreshold(
+    input: AdjustNotificationThresholdInput!
+  ): AdjustControllerTemperatureNotificationThresholdResult!
+  toggleControllerHumidityNotification(
+    input: ToggleNotificationInput!
+  ): ToggleControllerHumidityNotificationResult!
+  adjustControllerHumidityNotificationThreshold(
+    input: AdjustNotificationThresholdInput!
+  ): AdjustControllerHumidityNotificationThresholdResult!
+  toggleLocationFaultNotification(
+    input: ToggleNotificationInput!
+  ): ToggleLocationFaultNotificationResult!
+  toggleLocationTemperatureNotification(
+    input: ToggleNotificationInput!
+  ): ToggleLocationTemperatureNotificationResult!
+  adjustLocationTemperatureNotificationThreshold(
+    input: AdjustNotificationThresholdInput!
+  ): AdjustLocationTemperatureNotificationThresholdResult!
+  toggleLocationHumidityNotification(
+    input: ToggleNotificationInput!
+  ): ToggleLocationHumidityNotificationResult!
+  adjustLocationHumidityNotificationThreshold(
+    input: AdjustNotificationThresholdInput!
+  ): AdjustLocationHumidityNotificationThresholdResult!
+}
+
+input SubscribeToNotificationsInput {
+  token: String!
+  platform: Platform!
+}
+
+type SubscribeToNotificationsSuccess {
+  pushToken: PushToken!
+}
+
+union SubscribeToNotificationsResult =
+    SubscribeToNotificationsSuccess
+  | NotSupported
+
+input UnsubscribeFromNotificationsInput {
+  id: ID!
+}
+
+type UnsubscribeFromNotificationsSuccess {
+  _: Boolean
+}
+
+union UnsubscribeFromNotificationsResult =
+    UnsubscribeFromNotificationsSuccess
+  | NotFound
+  | NotSupported
+
+input ToggleNotificationInput {
+  id: ID!
+  enabled: Boolean!
+}
+
+input AdjustNotificationThresholdInput {
+  id: ID!
+  lower: Float!
+  upper: Float!
+}
+
+type ToggleControllerTemperatureNotificationSuccess {
+  controller: Controller!
+}
+
+union ToggleControllerTemperatureNotificationResult =
+    ToggleControllerTemperatureNotificationSuccess
+  | NotFound
+  | NotSupported
+
+type AdjustControllerTemperatureNotificationThresholdSuccess {
+  controller: Controller!
+}
+
+union AdjustControllerTemperatureNotificationThresholdResult =
+    AdjustControllerTemperatureNotificationThresholdSuccess
+  | NotFound
+  | NotSupported
+
+type ToggleControllerHumidityNotificationSuccess {
+  controller: Controller!
+}
+
+union ToggleControllerHumidityNotificationResult =
+    ToggleControllerHumidityNotificationSuccess
+  | NotFound
+  | NotSupported
+
+type AdjustControllerHumidityNotificationThresholdSuccess {
+  controller: Controller!
+}
+
+union AdjustControllerHumidityNotificationThresholdResult =
+    AdjustControllerHumidityNotificationThresholdSuccess
+  | NotFound
+  | NotSupported
+
+type ToggleLocationFaultNotificationSuccess {
+  location: Location!
+}
+
+union ToggleLocationFaultNotificationResult =
+    ToggleLocationFaultNotificationSuccess
+  | NotFound
+  | NotSupported
+
+type ToggleLocationTemperatureNotificationSuccess {
+  location: Location!
+}
+
+union ToggleLocationTemperatureNotificationResult =
+    ToggleLocationTemperatureNotificationSuccess
+  | NotFound
+  | NotSupported
+
+type ToggleLocationHumidityNotificationSuccess {
+  location: Location!
+}
+
+union ToggleLocationHumidityNotificationResult =
+    ToggleLocationHumidityNotificationSuccess
+  | NotFound
+  | NotSupported
+
+type AdjustLocationTemperatureNotificationThresholdSuccess {
+  location: Location!
+}
+
+union AdjustLocationTemperatureNotificationThresholdResult =
+    AdjustLocationTemperatureNotificationThresholdSuccess
+  | NotFound
+  | NotSupported
+
+type AdjustLocationHumidityNotificationThresholdSuccess {
+  location: Location!
+}
+
+union AdjustLocationHumidityNotificationThresholdResult =
+    AdjustLocationHumidityNotificationThresholdSuccess
+  | NotFound
+  | NotSupported

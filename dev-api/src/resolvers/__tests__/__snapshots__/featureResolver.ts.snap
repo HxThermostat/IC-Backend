@@ -1,0 +1,36 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`features it returns the correct fields 1`] = `
+Object {
+  "data": Object {
+    "features": Object {
+      "away": Array [
+        "AWAY_LOCATION",
+        "AWAY_CONTROLLER",
+      ],
+      "changeDefaultHoldLengthController": null,
+      "changeDefaultHoldLengthLocation": Array [
+        "INDEFINITE",
+        "NEXT_EVENT",
+        "HOURS_24",
+      ],
+      "connect": "AYLA_DISPLAY",
+      "faultLogsController": null,
+      "faultLogsLocation": "LOG_WITH_LABEL_AND_DESCRIPTION",
+      "rename": Array [
+        "LOCATION",
+        "CONTROLLER",
+      ],
+      "schedule": "SCHEDULE_TEMPERATURE_FAN",
+      "signIn": "TOKEN",
+    },
+  },
+  "errors": undefined,
+  "extensions": undefined,
+  "http": Object {
+    "headers": Headers {
+      Symbol(map): Object {},
+    },
+  },
+}
+`;

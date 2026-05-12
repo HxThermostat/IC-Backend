@@ -1,0 +1,33 @@
+require_relative '../node_modules/react-native/scripts/react_native_pods'
+require_relative '../node_modules/react-native-unimodules/cocoapods.rb'
+require_relative '../node_modules/@react-native-community/cli-platform-ios/native_modules'
+
+platform :ios, '11.0'
+
+target 'klimate' do
+  use_unimodules!
+  config = use_native_modules!
+
+  use_react_native!(:path => config["reactNativePath"])
+
+  # Uncomment the code below to enable Flipper.
+  #
+  # You should not install Flipper in CI environments when creating release
+  # builds, this will lead to significantly slower build times.
+  #
+  # Note that if you have use_frameworks! enabled, Flipper will not work.
+  #
+  # use_flipper!
+  # post_install do |installer|
+  #    flipper_post_install(installer)
+  # end
+
+  # Disable building for the arm64 architecture in the Simulator
+  # Essentially, let us build on M1 Macs
+  # https://stackoverflow.com/a/63955114
+  post_install do |installer|
+    installer.pods_project.build_configurations.each do |config|
+      config.build_settings["EXCLUDED_ARCHS[sdk=iphonesimulator*]"] = "arm64"
+    end
+  end
+end

@@ -1,0 +1,36 @@
+enum TemperatureUnit {
+  F
+  C
+}
+
+enum ChangeTemperatureUnitFeature {
+  APP_ONLY
+}
+
+extend type FeatureMap {
+  changeTemperatureUnit: ChangeTemperatureUnitFeature
+}
+
+extend type Location {
+  temperatureUnit: TemperatureUnit!
+}
+
+input ChangeTemperatureUnitInput {
+  id: ID!
+  temperatureUnit: TemperatureUnit!
+}
+
+extend type Mutation {
+  changeTemperatureUnit(
+    input: ChangeTemperatureUnitInput!
+  ): ChangeTemperatureUnitResult!
+}
+
+type ChangeTemperatureUnitSuccess {
+  location: Location!
+}
+
+union ChangeTemperatureUnitResult =
+    ChangeTemperatureUnitSuccess
+  | NotFound
+  | NotSupported

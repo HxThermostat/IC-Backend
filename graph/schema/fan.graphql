@@ -1,0 +1,7 @@
+enum FanMode {
+  AUTO
+  FIFTEEN
+  THIRTY
+  FORTYFIVE
+  ALWAYS
+}

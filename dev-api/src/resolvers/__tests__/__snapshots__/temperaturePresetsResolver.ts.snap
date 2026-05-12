@@ -1,0 +1,242 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`mutations it adds a new temperature preset 1`] = `
+Object {
+  "data": Object {
+    "addTemperaturePreset": Object {
+      "__typename": "AddTemperaturePresetSuccess",
+      "temperaturePreset": Object {
+        "name": "Hawaii",
+        "setpoint": Object {
+          "__typename": "DualSetpoint",
+          "lower": Object {
+            "max": 31.1111,
+            "min": 10,
+            "step": 0.5555,
+            "value": 22.2222,
+          },
+          "minInterval": 1.1111,
+          "upper": Object {
+            "max": 32.2222,
+            "min": 11.1111,
+            "step": 0.5555,
+            "value": 27.2222,
+          },
+        },
+        "slot": "CUSTOM",
+      },
+    },
+  },
+  "errors": undefined,
+  "extensions": undefined,
+  "http": Object {
+    "headers": Headers {
+      Symbol(map): Object {},
+    },
+  },
+}
+`;
+
+exports[`mutations it changes a presets fanmode 1`] = `
+Object {
+  "data": Object {
+    "changeTemperaturePresetFanMode": Object {
+      "__typename": "ChangeTemperaturePresetFanModeSuccess",
+      "temperaturePreset": Object {
+        "fanMode": "FORTYFIVE",
+      },
+    },
+  },
+  "errors": undefined,
+  "extensions": undefined,
+  "http": Object {
+    "headers": Headers {
+      Symbol(map): Object {},
+    },
+  },
+}
+`;
+
+exports[`mutations it changes a presets name 1`] = `
+Object {
+  "data": Object {
+    "changeTemperaturePresetName": Object {
+      "__typename": "ChangeTemperaturePresetNameSuccess",
+      "temperaturePreset": Object {
+        "name": "New Name",
+      },
+    },
+  },
+  "errors": undefined,
+  "extensions": undefined,
+  "http": Object {
+    "headers": Headers {
+      Symbol(map): Object {},
+    },
+  },
+}
+`;
+
+exports[`mutations it changes a presets setpoint 1`] = `
+Object {
+  "data": Object {
+    "changeTemperaturePresetSetpoint": Object {
+      "__typename": "ChangeTemperaturePresetSetpointSuccess",
+      "temperaturePreset": Object {
+        "setpoint": Object {
+          "__typename": "DualSetpoint",
+          "lower": Object {
+            "max": 31.1111,
+            "min": 10,
+            "step": 0.5555,
+            "value": 12.2222,
+          },
+          "minInterval": 1.1111,
+          "upper": Object {
+            "max": 32.2222,
+            "min": 11.1111,
+            "step": 0.5555,
+            "value": 18.8888,
+          },
+        },
+        "slot": "HOME",
+      },
+    },
+  },
+  "errors": undefined,
+  "extensions": undefined,
+  "http": Object {
+    "headers": Headers {
+      Symbol(map): Object {},
+    },
+  },
+}
+`;
+
+exports[`temperaturePreset it returns the correct fields 1`] = `
+Object {
+  "data": Object {
+    "temperaturePreset": Object {
+      "fanMode": "AUTO",
+      "name": "Home",
+      "removable": false,
+      "setpoint": Object {
+        "__typename": "DualSetpoint",
+        "lower": Object {
+          "max": 31.1111,
+          "min": 10,
+          "step": 0.5555,
+          "value": 15,
+        },
+        "minInterval": 1.1111,
+        "upper": Object {
+          "max": 32.2222,
+          "min": 11.1111,
+          "step": 0.5555,
+          "value": 26.1111,
+        },
+      },
+      "slot": "HOME",
+    },
+  },
+  "errors": undefined,
+  "extensions": undefined,
+  "http": Object {
+    "headers": Headers {
+      Symbol(map): Object {},
+    },
+  },
+}
+`;
+
+exports[`temperaturePresets it returns all temperaturePresets 1`] = `
+Object {
+  "data": Object {
+    "locations": Array [
+      Object {
+        "temperaturePresets": Array [
+          Object {
+            "id": "d3f63842-1444-4ff6-92c8-6fd05dbd4728",
+          },
+          Object {
+            "id": "2bbb7b71-01fb-4268-b2c5-152c839b6750",
+          },
+          Object {
+            "id": "93d8bca6-98f1-4471-b27e-cd628c824f68",
+          },
+          Object {
+            "id": "1b240d75-a61c-4a1a-9128-7fc11fb709a5",
+          },
+          Object {
+            "id": "b06d8593-997a-44a1-ad23-2cf19e5ad071--b06d8593-997a-44a1-ad23-2cf19e5ad071--MON--2--virtual",
+          },
+          Object {
+            "id": "b06d8593-997a-44a1-ad23-2cf19e5ad071--b06d8593-997a-44a1-ad23-2cf19e5ad071--WED--2--virtual",
+          },
+          Object {
+            "id": "b06d8593-997a-44a1-ad23-2cf19e5ad071--b06d8593-997a-44a1-ad23-2cf19e5ad071--FRI--2--virtual",
+          },
+          Object {
+            "id": "492cc711-4c86-42f5-bb2b-c61187825ffb--492cc711-4c86-42f5-bb2b-c61187825ffb--MON--2--virtual",
+          },
+          Object {
+            "id": "492cc711-4c86-42f5-bb2b-c61187825ffb--492cc711-4c86-42f5-bb2b-c61187825ffb--WED--2--virtual",
+          },
+          Object {
+            "id": "492cc711-4c86-42f5-bb2b-c61187825ffb--492cc711-4c86-42f5-bb2b-c61187825ffb--FRI--2--virtual",
+          },
+        ],
+      },
+    ],
+    "temperaturePresets": Array [
+      Object {
+        "id": "d3f63842-1444-4ff6-92c8-6fd05dbd4728",
+        "slot": "HOME",
+      },
+      Object {
+        "id": "2bbb7b71-01fb-4268-b2c5-152c839b6750",
+        "slot": "SLEEP",
+      },
+      Object {
+        "id": "93d8bca6-98f1-4471-b27e-cd628c824f68",
+        "slot": "AWAY",
+      },
+      Object {
+        "id": "1b240d75-a61c-4a1a-9128-7fc11fb709a5",
+        "slot": "CUSTOM",
+      },
+      Object {
+        "id": "b06d8593-997a-44a1-ad23-2cf19e5ad071--b06d8593-997a-44a1-ad23-2cf19e5ad071--MON--2--virtual",
+        "slot": null,
+      },
+      Object {
+        "id": "b06d8593-997a-44a1-ad23-2cf19e5ad071--b06d8593-997a-44a1-ad23-2cf19e5ad071--WED--2--virtual",
+        "slot": null,
+      },
+      Object {
+        "id": "b06d8593-997a-44a1-ad23-2cf19e5ad071--b06d8593-997a-44a1-ad23-2cf19e5ad071--FRI--2--virtual",
+        "slot": null,
+      },
+      Object {
+        "id": "492cc711-4c86-42f5-bb2b-c61187825ffb--492cc711-4c86-42f5-bb2b-c61187825ffb--MON--2--virtual",
+        "slot": null,
+      },
+      Object {
+        "id": "492cc711-4c86-42f5-bb2b-c61187825ffb--492cc711-4c86-42f5-bb2b-c61187825ffb--WED--2--virtual",
+        "slot": null,
+      },
+      Object {
+        "id": "492cc711-4c86-42f5-bb2b-c61187825ffb--492cc711-4c86-42f5-bb2b-c61187825ffb--FRI--2--virtual",
+        "slot": null,
+      },
+    ],
+  },
+  "errors": undefined,
+  "extensions": undefined,
+  "http": Object {
+    "headers": Headers {
+      Symbol(map): Object {},
+    },
+  },
+}
+`;

@@ -1,0 +1,68 @@
+# This is a basic CI workflow to help you get started with Actions
+name: DEV-API-CI
+
+# Triggers the workflow on changes to `dev-api/**`
+# 1. On main branch (a merged PR will result in a push)
+# 2. When a pull request created / updated
+# 3. Manually
+on:
+  push:
+    branches: [main]
+    paths: ["dev-api/**", "graph/**"]
+  pull_request:
+    types: [opened, reopened, synchronize]
+    paths: ["dev-api/**", "graph/**"]
+  workflow_dispatch:
+
+defaults:
+  run:
+    # Default to commands running in the dev-api folder
+    working-directory: ./dev-api
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # Installs dependencies
+  build:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Set the required environment variables
+    env:
+      JWT_SIG_KEY: sig
+      JWT_ENCRYPT_KEY: encrypt
+      REVIEWS_ENABLED: true
+      REVIEW_PROBABILITY: 1
+      SCHEMA_PATH: "../graph/schema/**/*.graphql"
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+
+      - uses: actions/setup-node@v2
+        with:
+          node-version: "~14"
+          cache: "yarn"
+          cache-dependency-path: "dev-api/yarn.lock"
+
+      - name: Install yarn dependencies from cache
+        run: yarn --frozen-lockfile --prefer-offline
+
+      # And then we move on to the meat of the action
+      - name: Build Graph
+        run: |
+          yarn build-graph
+          git diff --quiet
+          if [ $? -eq 1 ]; then
+            echo "Schema changes detected, they should be validated and comitted"
+            exit 1;
+          fi
+
+      - name: Build Typescript
+        run: yarn build-ts
+
+      - name: Run ESLint
+        run: yarn lint
+
+      - name: Run Jest
+        run: yarn test

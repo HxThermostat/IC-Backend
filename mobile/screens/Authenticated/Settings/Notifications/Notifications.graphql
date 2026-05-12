@@ -1,0 +1,167 @@
+fragment HumidityNotification on HumidityNotification {
+  __typename
+  enabled
+  ...DualRangeValueFields
+}
+
+fragment TemperatureNotification on TemperatureNotification {
+  __typename
+  enabled
+  ...DualRangeValueFields
+}
+
+fragment Screen_Settings_Notifications_Controller on Controller {
+  __typename
+  id
+  name
+  temperatureNotification {
+    ...TemperatureNotification
+  }
+  humidityNotification {
+    ...HumidityNotification
+  }
+}
+
+fragment Screen_Settings_Notifications_Location on Location {
+  __typename
+  id
+  name
+  controllers {
+    ...Screen_Settings_Notifications_Controller
+  }
+  temperatureNotification {
+    ...TemperatureNotification
+  }
+  humidityNotification {
+    ...HumidityNotification
+  }
+  faultNotification {
+    enabled
+  }
+  temperatureUnit
+}
+
+query LocationNotifications($locationId: ID!) {
+  location(id: $locationId) {
+    ...Screen_Settings_Notifications_Location
+  }
+}
+
+query ControllerNotifications($controllerId: ID!) {
+  controller(id: $controllerId) {
+    ...Screen_Settings_Notifications_Controller
+  }
+}
+
+mutation ToggleControllerTemperatureNotification(
+  $input: ToggleNotificationInput!
+) {
+  toggleControllerTemperatureNotification(input: $input) {
+    __typename
+    ... on ToggleControllerTemperatureNotificationSuccess {
+      controller {
+        ...Screen_Settings_Notifications_Controller
+      }
+    }
+  }
+}
+
+mutation AdjustControllerTemperatureNotificationThreshold(
+  $input: AdjustNotificationThresholdInput!
+) {
+  adjustControllerTemperatureNotificationThreshold(input: $input) {
+    __typename
+    ... on AdjustControllerTemperatureNotificationThresholdSuccess {
+      controller {
+        ...Screen_Settings_Notifications_Controller
+      }
+    }
+  }
+}
+
+mutation ToggleControllerHumidityNotification(
+  $input: ToggleNotificationInput!
+) {
+  toggleControllerHumidityNotification(input: $input) {
+    __typename
+    ... on ToggleControllerHumidityNotificationSuccess {
+      controller {
+        ...Screen_Settings_Notifications_Controller
+      }
+    }
+  }
+}
+
+mutation AdjustControllerHumidityNotificationThreshold(
+  $input: AdjustNotificationThresholdInput!
+) {
+  adjustControllerHumidityNotificationThreshold(input: $input) {
+    __typename
+    ... on AdjustControllerHumidityNotificationThresholdSuccess {
+      controller {
+        ...Screen_Settings_Notifications_Controller
+      }
+    }
+  }
+}
+
+mutation ToggleLocationFaultNotification($input: ToggleNotificationInput!) {
+  toggleLocationFaultNotification(input: $input) {
+    __typename
+    ... on ToggleLocationFaultNotificationSuccess {
+      location {
+        ...Screen_Settings_Notifications_Location
+      }
+    }
+  }
+}
+
+mutation ToggleLocationTemperatureNotification(
+  $input: ToggleNotificationInput!
+) {
+  toggleLocationTemperatureNotification(input: $input) {
+    __typename
+    ... on ToggleLocationTemperatureNotificationSuccess {
+      location {
+        ...Screen_Settings_Notifications_Location
+      }
+    }
+  }
+}
+
+mutation AdjustLocationTemperatureNotificationThreshold(
+  $input: AdjustNotificationThresholdInput!
+) {
+  adjustLocationTemperatureNotificationThreshold(input: $input) {
+    __typename
+    ... on AdjustLocationTemperatureNotificationThresholdSuccess {
+      location {
+        ...Screen_Settings_Notifications_Location
+      }
+    }
+  }
+}
+
+mutation ToggleLocationHumidityNotification($input: ToggleNotificationInput!) {
+  toggleLocationHumidityNotification(input: $input) {
+    __typename
+    ... on ToggleLocationHumidityNotificationSuccess {
+      location {
+        ...Screen_Settings_Notifications_Location
+      }
+    }
+  }
+}
+
+mutation AdjustLocationHumidityNotificationThreshold(
+  $input: AdjustNotificationThresholdInput!
+) {
+  adjustLocationHumidityNotificationThreshold(input: $input) {
+    __typename
+    ... on AdjustLocationHumidityNotificationThresholdSuccess {
+      location {
+        ...Screen_Settings_Notifications_Location
+      }
+    }
+  }
+}

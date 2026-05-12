@@ -1,0 +1,10 @@
+{
+  "eslint.workingDirectories": [
+    "./ayla-client",
+    "./demo-api",
+    "./dev-api",
+    "./graph",
+    "./intellicomfort-api",
+    "./mobile"
+  ]
+}

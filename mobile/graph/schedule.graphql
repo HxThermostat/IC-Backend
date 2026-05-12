@@ -1,0 +1,83 @@
+fragment ScheduleTimeFields on ScheduleTime {
+  day
+  hour
+  minute
+}
+
+fragment BaseScheduleEventFields on ScheduleEvent {
+  __typename
+  id
+  day
+  removable
+  start {
+    ...ScheduleTimeFields
+  }
+  end {
+    ...ScheduleTimeFields
+  }
+  temperaturePreset {
+    ...TemperaturePresetsFields
+  }
+}
+
+fragment ScheduleEventFields on ScheduleEvent {
+  ...BaseScheduleEventFields
+  nextEvent {
+    ...BaseScheduleEventFields
+  }
+  prevEvent {
+    ...BaseScheduleEventFields
+  }
+  temperaturePreset {
+    ...TemperaturePresetsFields
+  }
+}
+
+fragment ScheduleDayFields on ScheduleDay {
+  day
+  events {
+    ...ScheduleEventFields
+  }
+  full
+}
+
+fragment ScheduleFields on Schedule {
+  days {
+    ...ScheduleDayFields
+  }
+  monday {
+    ...ScheduleDayFields
+  }
+  tuesday {
+    ...ScheduleDayFields
+  }
+  wednesday {
+    ...ScheduleDayFields
+  }
+  thursday {
+    ...ScheduleDayFields
+  }
+  friday {
+    ...ScheduleDayFields
+  }
+  saturday {
+    ...ScheduleDayFields
+  }
+  sunday {
+    ...ScheduleDayFields
+  }
+  maxEvents
+  minEvents
+  minEventInterval
+}
+
+fragment TemperaturePresetsFields on TemperaturePreset {
+  id
+  name
+  slot
+  fanMode
+  removable
+  setpoint {
+    ...SetpointFields
+  }
+}

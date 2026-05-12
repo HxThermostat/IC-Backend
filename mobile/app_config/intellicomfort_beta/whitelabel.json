@@ -1,0 +1,45 @@
+{
+  "android_store_id": "com.jci.thermostat",
+  "bundle_id_android": "com.kraftful.klimate.intellicomfort",
+  "bundle_id_ios": "com.kraftful.klimate.intellicomfort",
+  "dark_colors": {
+    "coolButton": "#0031FF",
+    "coolGradientStart": "#0041FF",
+    "coolGradientEnd": "#7C95FD",
+    "heatButton": "#E10101",
+    "heatGradientStart": "#FF0000",
+    "heatGradientEnd": "#FF7D7D"
+  },
+  "display_name": "IntelliComfort β",
+  "google_services": {
+    "default_web_client_id": "645044357294-d4dps546jnpsovsm7ui4eqj7rsq11acg.apps.googleusercontent.com",
+    "geo_api_key": "AIzaSyCOGSCHAIk5fruc3CkgURyA0E3zOpNvfkY",
+    "gcm_defaultSenderId": "645044357294",
+    "google_api_key": "AIzaSyDUpgSQLhC38abzqWOzgyjT2qxgQ0nJqmk",
+    "google_app_id": "1:645044357294:android:92b83bdf0424c694db053f",
+    "google_crash_reporting_api_key": "AIzaSyDUpgSQLhC38abzqWOzgyjT2qxgQ0nJqmk",
+    "google_storage_bucket": "klimate-app.appspot.com",
+    "project_id": "klimate-app"
+  },
+  "graph_url": "https://intellicomfort.kraftful.cloud",
+  "host_name": "intellicomfort.kraftful.app",
+  "ios_store_id": "794980960",
+  "light_colors": {
+    "cool": "#0031FF",
+    "coolButton": "#193694",
+    "coolGradientStart": "#1D367F",
+    "coolGradientEnd": "#0031FF",
+    "heat": "#E10101",
+    "heatButton": "#830202",
+    "heatGradientStart": "#830202",
+    "heatGradientEnd": "#FF0000"
+  },
+  "splash_screen_background": {
+    "dark": "#000000",
+    "light": "#F1F1F1"
+  },
+  "team_id": "BPGHMXQ36K",
+  "uri_scheme": "intellicomfort",
+  "version_name_android": "3.2",
+  "version_name_ios": "3.2.0"
+}

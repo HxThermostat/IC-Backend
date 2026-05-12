@@ -1,0 +1,63 @@
+#!/bin/sh
+
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
+
+echo "🚚 Set up a temporary directory to stage the changes"
+TMP_DIR=$(mktemp -d -t klimate)
+pushd ${TMP_DIR}
+
+echo "🚚 Clone klimate -> klimate-mono"
+git clone git@github.com:kraftful/klimate.git klimate-mono
+pushd klimate-mono
+
+echo "🚚 Merge history and -> mobile"
+git filter-repo --to-subdirectory-filter mobile
+popd
+
+echo "🚚 Clone klimate-api -> dev-api"
+git clone git@github.com:kraftful/klimate-api.git dev-api
+pushd dev-api
+
+echo "🚚 Merge dev-api history"
+git filter-repo --to-subdirectory-filter dev-api
+popd
+pushd klimate-mono
+git remote add -f dev-api ../dev-api
+git merge --allow-unrelated-histories dev-api/main -m "Merge klimate-api into dev-api"
+popd
+
+echo "🚚 Clone intellicomfort-api"
+git clone git@github.com:kraftful/intellicomfort-api.git
+pushd intellicomfort-api
+
+echo "🚚 Merge intellicomfort-api history"
+git filter-repo --to-subdirectory-filter intellicomfort-api
+popd
+pushd klimate-mono
+git remote add -f intellicomfort-api ../intellicomfort-api
+git merge --allow-unrelated-histories intellicomfort-api/main -m "Merge intellicomfort-api"
+
+echo "🚚 Graph/schema history"
+git filter-repo --path-rename dev-api/schema/:graph/schema/ --force
+
+echo "🚚 Add origins and fetch"
+git remote add origin git@github.com:kraftful/klimate-mono.git
+git remote add klimate-origin git@github.com:kraftful/klimate.git
+git fetch --all
+
+echo "🚚 Apply migration patches"
+mkdir scripts
+cp -R ${SCRIPT_DIR}/ scripts/
+shopt -s dotglob # allow the glob pattern to match the hidden directory that contains the patches
+cat scripts/**/*.patch | git am
+shopt -u dotglob
+git add scripts/
+git commit -m "Add import script"
+popd
+
+echo "🚚 Cleanup folders..."
+rm -rf dev-api
+rm -rf intellicomfort-api
+
+echo "🚚 Done!"
+echo "✅ You can access the repository at ${TMP_DIR}/klimate-mono"

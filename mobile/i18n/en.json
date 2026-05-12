@@ -1,0 +1,523 @@
+{
+  "Common": {
+    "back": "Back",
+    "cancel": "Cancel",
+    "continue": "Continue",
+    "done": "Done",
+    "ok": "OK",
+    "save": "Save",
+    "signOut": "Logout",
+    "edit": "Edit",
+    "offlineAlert": {
+      "title": "Couldn't load account",
+      "message": "Your account details couldn't be loaded. Make sure you're on WiFi or cellular with internet access.",
+      "logout": "Logout",
+      "tryAgain": "Try again"
+    },
+    "logoutSheet": {
+      "logout": "Logout",
+      "message": "Are you sure you want to logout?"
+    },
+    "removeAccountSheet": {
+      "title": "Are you sure you want to remove your account?",
+      "message": "Your thermostat will continue to work without mobile app control.",
+      "confirm": "Remove account"
+    },
+    "errorAlert": {
+      "title": "Something's gone wrong",
+      "message": "We couldn't load the data needed to start the app. Make sure you're on WiFi or cellular with internet access.",
+      "emailSupport": "Email Support",
+      "tryAgain": "Try again",
+      "emailSubject": "Issues loading app",
+      "emailBody": "Hi app development team,\n\nI was trying to load the %{appName} app and it's not working. Can you help?\n\nThanks!"
+    },
+    "Notifications": {
+      "alertTitle": "Permission required",
+      "alertDescription": "You'll need to go to the Settings app to enable push notifications",
+      "openSettings": "Open Settings"
+    },
+    "Modes": {
+      "HEAT": "Heat mode",
+      "COOL": "Cool mode",
+      "HEATCOOL": "Cool + Heat",
+      "OFF": "Off",
+      "OFFLINE": "Offline",
+      "AWAY": "Away"
+    },
+    "home": "Home",
+    "schedules": "Schedules",
+    "settings": "Settings",
+    "fanSettings": {
+      "AUTO": {
+        "label": "Auto",
+        "itemLabel": "Auto"
+      },
+      "ALWAYS": {
+        "label": "Always",
+        "itemLabel": "Run always"
+      },
+      "FIFTEEN": {
+        "label": "15 min/hr",
+        "itemLabel": "Run 15 minutes per hour"
+      },
+      "THIRTY": {
+        "label": "30 min/hr",
+        "itemLabel": "Run 30 minutes per hour"
+      },
+      "FORTYFIVE": {
+        "label": "45 min/hr",
+        "itemLabel": "Run 45 minutes per hour"
+      }
+    }
+  },
+  "Components": {
+    "Dial": {
+      "indoor": "Indoor"
+    },
+    "SelectControllerModal": {
+      "thermostatOffline": "Thermostat offline"
+    },
+    "SelectModeModal": {
+      "modes": {
+        "HEAT": "Heat",
+        "COOL": "Cool",
+        "AUTO": "Cool + Heat",
+        "OFF": "Off",
+        "QUICKHEAT": "Quick Heat",
+        "QUICKCOOL": "Quick Cool",
+        "EHEAT": "Emergency Heat"
+      },
+      "away": "Away",
+      "awayActive": "Turn off away",
+      "actionSheet": {
+        "awayLocation": "Set Away From %{name}",
+        "awayZone": "Set Away From %{name}",
+        "message": "Set Away",
+        "cancel": "Cancel"
+      }
+    },
+    "DaySelector": {
+      "Short": {
+        "MON": "M",
+        "TUE": "T",
+        "WED": "W",
+        "THU": "T",
+        "FRI": "F",
+        "SAT": "S",
+        "SUN": "S"
+      }
+    }
+  },
+  "Screens": {
+    "Unauthenticated": {
+      "EnterEmailAddress": {
+        "screenTitle": "Email",
+        "title": "What's your email address?",
+        "placeholder": "Email address",
+        "label": "Email address",
+        "caption": "Let's check if this address already has an account."
+      },
+      "EnterEmailConfirmation": {
+        "screenTitle": "Confirmation",
+        "title": "Check your email",
+        "instructions": "To sign in, click the button in the email we sent to",
+        "button": "Open email",
+        "fallbackInstructions": "You can also type in the code:",
+        "emailNotReceived": "Didn't receive an email?",
+        "placeholder": "Code",
+        "headerRightText": "Continue",
+        "alertManual": {
+          "title": "Incorrect code",
+          "message": "Make sure the code matches the email sent to %{email}",
+          "defaultButton": "Try again",
+          "cancelButton": "Send new code"
+        },
+        "alertDeeplink": {
+          "title": "Incorrect code",
+          "message": "The code was not valid or has already been used",
+          "defaultButton": "Send new code"
+        },
+        "alertEmailNotReceived": {
+          "title": "Didn’t receive an email?",
+          "message": "The email can take a few minutes to arrive. Try refreshing your mailbox and check your spam folder.",
+          "defaultButton": "Resend",
+          "cancelButton": "Cancel"
+        }
+      },
+      "EnterNewSignUpInfo": {
+        "screenTitle": "Sign up",
+        "title": "No account found",
+        "createAccountFor": "Let's create a new account for",
+        "firstNameLabel": "First name",
+        "firstNamePlaceholder": "Name",
+        "lastNameLabel": "Last name",
+        "lastNamePlaceholder": "Last name",
+        "button": "Sign up"
+      },
+      "UpdateRequired": {
+        "updateRequired": "App update required",
+        "downloadUpdate": "You can install the latest update from the %{store}."
+      }
+    },
+    "Connect": {
+      "Start": {
+        "title": "Connect your thermostat",
+        "body": "We'll walk you through how to set up your thermostat with this app."
+      },
+      "Success": {
+        "title": "Success!",
+        "body": "The thermostat is connected. You can now control it with this app."
+      },
+      "AylaDisplay": {
+        "Instructions": {
+          "title": "Instructions",
+          "item1": "1. On your thermostat, go to Menu / Tools / Wireless",
+          "item2": "2. Select your WiFi network and tap “connect”",
+          "item3": "3. Enter the password to connect to your WiFi network and press “ok”"
+        },
+        "Token": {
+          "title": "Enter Device ID",
+          "body": "If your screen doesn’t show a Device ID, press “Refresh” or try to reconnect the thermostat to your WiFi.",
+          "placeholder": "Device ID",
+          "TokenInvalid": {
+            "title": "Device ID invalid",
+            "message": "Make sure the token entered matches the token displayed on your thermostat"
+          },
+          "DeviceStateInvalid": {
+            "title": "Issue with your thermostat",
+            "message": "There's an issue with your thermostat that's stopping it from working with this app"
+          },
+          "RequestFailed": {
+            "title": "Failed to connect thermostat",
+            "message": "Something went wrong when registering the Device ID",
+            "defaultButton": "Try again"
+          }
+        }
+      }
+    },
+    "Authenticated": {
+      "Home": {
+        "outdoorTemp": "Outdoor",
+        "humidity": "Humidity",
+        "activeHold": "Overriding scheduled temperature",
+        "backToSchedule": "Back to schedule",
+        "systemModeCool": "A/C is running",
+        "systemModeHeat": "Heat is running",
+        "awayModeAlert": {
+          "title": "Away mode is active",
+          "message": "You can adjust the Away mode temperatures in Settings.",
+          "cancel": "Cancel",
+          "openSettings": "Open settings"
+        },
+        "fanSpeed": {
+          "low": "low",
+          "medium": "medium",
+          "high": "high",
+          "name": "Fan is running on {{speedName}} speed",
+          "percent": "Fan is running at {{speedPercent}}% speed"
+        },
+        "survey": {
+          "prompt": "Feedback? Chat with us",
+          "chat": {
+            "title": "Feedback",
+            "intro": "Send us some feedback and we'll respond to you directly."
+          }
+        }
+      },
+      "SchedulesNavigator": {
+        "Schedules": {
+          "title": "Schedules",
+          "button": "Copy schedule"
+        },
+        "ManageSchedule": {
+          "titleEdit": "Edit Schedule",
+          "titleAdd": "Add Schedule",
+          "startsAt": "Start",
+          "endsAt": "End",
+          "temperatureLabel": "Temperature",
+          "edit": "Edit",
+          "add": "Add",
+          "delete": "Delete schedule",
+          "deleteScheduleSheet": {
+            "title": "Are you sure you want to remove this event?",
+            "message": "You can add it again later using the app.",
+            "confirm": "Remove"
+          },
+          "note": "This event ends tomorrow",
+          "reset": "reset"
+        },
+        "ManageTemperaturePreset": {
+          "titleEdit": "Edit %{name}",
+          "titleAdd": "Add Temperature",
+          "label": "Set a comfortable temperature range.",
+          "fan": "Fan",
+          "delete": "Delete preset",
+          "deleteScheduleSheet": {
+            "title": "Are you sure you want to remove this temperature?",
+            "message": "You can add it again later using the app.",
+            "confirm": "Remove"
+          }
+        },
+        "CopySchedule": {
+          "title": "Copy Schedule",
+          "header": "On days",
+          "copy": "Copy"
+        },
+        "Fan": {
+          "title": "Fan"
+        }
+      },
+      "SettingsNavigator": {
+        "Settings": {
+          "screenTitle": "Settings",
+          "sections": {
+            "general": {
+              "title": "General",
+              "about": "About %{appName}",
+              "support": "Support",
+              "rate": "Rate"
+            },
+            "account": {
+              "title": "Account",
+              "addThermostat": "Add thermostat",
+              "manageAccount": "Manage account"
+            },
+            "locations": {
+              "title": "Locations"
+            }
+          }
+        },
+        "DebugMenuHome": {
+          "screenTitle": "Developer Menu",
+          "graphUrl": "Graph Url",
+          "debugUser": "Current User"
+        },
+        "ChangeGraphUrl": {
+          "screenTitle": "Graph URL",
+          "label": "Graph URL"
+        },
+        "DebugUser": {
+          "screenTitle": "Current User",
+          "id": "User ID",
+          "accessToken": "Access Token",
+          "refreshToken": "Refresh Token",
+          "expiresAt": "Expires At",
+          "triggerRefresh": "Trigger Refresh Token"
+        },
+        "About": {
+          "screenTitle": "About",
+          "version": "Version",
+          "debugMenu": "Developer Menu",
+          "submitFeedback": "Share feedback",
+          "submitFeedbackAlert": {
+            "title": "Would you mind emailing us?",
+            "message": "We really value your feedback to help improve the app.",
+            "cancelButton": "No thanks",
+            "defaultButton": "Sure"
+          },
+          "submitFeedbackEmail": {
+            "subject": "%{appName} app feedback",
+            "body": "Hi app development,\n\nI was using the %{appName} app and thought you might like to know..."
+          }
+        },
+        "Support": {
+          "screenTitle": "Support",
+          "manufacturerSupport": "Manufacturer Support",
+          "email": "Email",
+          "phone": "Phone",
+          "web": "Website",
+          "contactDealer": "For service requests and immediate support, please reach out to your authorized dealer."
+        },
+        "AccountSharing": {
+          "screenTitle": "Account Sharing",
+          "title": "Scan to sign in",
+          "subtitle": "Quickly sign in to your %{appName} account on another device.",
+          "description": "Start by downloading the %{appName} app on another phone or tablet. Then, scan this QR code using that device's camera to automatically sign in to your %{appName} account.",
+          "expiresIn": {
+            "counting": {
+              "one": "For your security, this QR code will only be valid for one minute.",
+              "other": "For your security, this QR code will only be valid for %{count} minutes."
+            }
+          }
+        },
+        "Away": {
+          "screenTitle": "Away",
+          "geofencing": "Geofencing",
+          "geofencingEnabled": "On",
+          "setpoints": "Setpoints"
+        },
+        "AdjustAway": {
+          "screenTitle": "Temperature",
+          "awayMode": "Away mode",
+          "saveEnergyDescription": "Save energy by setting a wider temperature range while no one is home.",
+          "upperTo": "Cool to",
+          "lowerTo": "Heat to",
+          "targetTo": "Target"
+        },
+        "Geofence": {
+          "screenTitle": "Geofence",
+          "disclosureTitle": "Use your location",
+          "disclosureDescription": "%{appName} will use location in the background to automatically remind you to turn on away mode, even when the app is closed or not in use",
+          "reminder": "Reminder",
+          "getNotificationDescription": "Get push notification to set away mode when you leave your home",
+          "locationPermissionAlert": {
+            "title": "Location permission required",
+            "message": "Open Settings and allow %{appName} to access your location even when you're not using the app.",
+            "openSettings": "Open Settings"
+          }
+        },
+        "Location": {
+          "screenTitle": "Location",
+          "rename": "Rename",
+          "history": "History",
+          "temperatureUnit": "Temperature unit",
+          "temperatureUnitSheet": {
+            "title": "Temperature unit",
+            "F": "Fahrenheit",
+            "C": "Celsius"
+          },
+          "away": "Away",
+          "notifications": "Notifications",
+          "temperatureNotifications": "Temperature notifications",
+          "humidityNotifications": "Humidity notifications",
+          "notificationEnabled": "On",
+          "holdLength": "Hold length",
+          "HoldLengthIndefinite": "Until cancelled",
+          "HoldLengthNextEvent": "Until next event",
+          "HoldLengthHours": {
+            "counting": {
+              "one": "1 hr",
+              "other": "%{count} hrs"
+            }
+          },
+          "HoldLengthDate": "Until %{date}",
+          "deleteThermostat": "Remove thermostat",
+          "deleteThermostatSheet": {
+            "title": "Are you sure you want to remove this thermostat?",
+            "message": "You can add it again later using the app.",
+            "confirm": "Remove"
+          },
+          "temperaturePresets": "Saved temperatures"
+        },
+        "ManageAccount": {
+          "screenTitle": "Manage Account",
+          "accountSharing": "Account sharing",
+          "email": "Email",
+          "removeAccount": "Remove account",
+          "signOut": "Logout"
+        },
+        "Notifications": {
+          "screenTitle": "Notifications",
+          "notificationEnabled": "On",
+          "temperatureThreshold": "Temperature",
+          "humidityThreshold": "Humidity",
+          "faults": "Faults"
+        },
+        "ListTemperatures": {
+          "screenTitle": "Temperature"
+        },
+        "ControllerTemperatureNotification": {
+          "screenTitle": "Temperature",
+          "title": "Notification",
+          "body": "Get a push notification when indoor temperature is outside this range",
+          "lowerThan": "Cooler than",
+          "higherThan": "Warmer than"
+        },
+        "LocationTemperatureNotification": {
+          "screenTitle": "Temperature",
+          "title": "Notification",
+          "body": "Get a push notification when indoor temperature is outside this range",
+          "lowerThan": "Cooler than",
+          "higherThan": "Warmer than"
+        },
+        "ListHumidities": {
+          "screenTitle": "Humidity"
+        },
+        "ControllerHumidityNotification": {
+          "screenTitle": "Humidity",
+          "title": "Notification",
+          "body": "Get a push notification when humidity is outside this range",
+          "higherThan": "Higher than",
+          "lowerThan": "Lower than"
+        },
+        "LocationHumidityNotification": {
+          "screenTitle": "Humidity",
+          "title": "Notification",
+          "body": "Get a push notification when humidity is outside this range",
+          "higherThan": "Higher than",
+          "lowerThan": "Lower than"
+        },
+        "LocationFaultsNotification": {
+          "screenTitle": "Faults",
+          "title": "Notification",
+          "body": "Get push notification when a fault occurs"
+        },
+        "Names": {
+          "screenTitle": "Names",
+          "location": "Location",
+          "room": "Room",
+          "rooms": "Zones"
+        },
+        "RoomNames": {
+          "screenTitle": "Zones"
+        },
+        "RenameLocation": {
+          "screenTitle": "Rename",
+          "label": "Location name"
+        },
+        "RenameRoom": {
+          "screenTitle": "Rename",
+          "label": "Room name"
+        },
+        "HoldLength": {
+          "screenTitle": "Hold length",
+          "HoldLengthIndefinite": "Until cancelled",
+          "HoldLengthNextEvent": "Until next event",
+          "HoldLengthHours": {
+            "counting": {
+              "one": "For 1 hour",
+              "other": "For %{count} hours"
+            }
+          },
+          "HoldLengthDate": "Until %{date}"
+        },
+        "FaultLogsLocation": {
+          "screenTitle": "History",
+          "notificationEnabled": "On",
+          "faultNotifications": "Fault Notifications",
+          "refetch": "Reload",
+          "noFaults": "No faults logged"
+        },
+        "FaultLogDescription": {
+          "screenTitle": "Fault log",
+          "date": "Reported at",
+          "label": "Fault",
+          "description": "Description"
+        },
+        "SelectFanMode": {
+          "screenTitle": "Fan"
+        },
+        "ListTemperaturePresets": {
+          "screenTitle": "Saved Temperatures",
+          "add": "Add",
+          "sectionTitleBuiltIn": "Built-in",
+          "sectionTitleCustom": "Custom"
+        }
+      }
+    }
+  },
+  "Notifications": {
+    "geofence": {
+      "leave": {
+        "title": "Far from home?",
+        "body": "Tap to enable away mode.",
+        "alert": {
+          "title": "Far from home?",
+          "message": "Enable away mode to save energy",
+          "cancelButton": "No thanks",
+          "enableButton": "Enable away mode"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,63 @@
+fragment Screen_Settings_Location on Location {
+  __typename
+  id
+  name
+  away {
+    active
+    setpoint {
+      ...SetpointFields
+    }
+  }
+  controllers {
+    __typename
+    id
+    name
+    temperatureNotification {
+      ...TemperatureNotification
+    }
+    humidityNotification {
+      ...HumidityNotification
+    }
+  }
+  temperatureNotification {
+    ...TemperatureNotification
+  }
+  humidityNotification {
+    ...HumidityNotification
+  }
+  defaultHoldLength {
+    ...HoldLengthFields
+  }
+  faultActive
+  temperatureUnit
+}
+
+fragment Screen_Settings_Manufacturer on Manufacturer {
+  support {
+    name
+  }
+}
+
+fragment Screen_Settings_User on User {
+  __typename
+  id
+  email
+}
+
+query Settings {
+  locations {
+    ...Screen_Settings_Location
+  }
+  manufacturer {
+    ...Screen_Settings_Manufacturer
+  }
+  me {
+    ...Screen_Settings_User
+  }
+}
+
+query SettingsLocation($locationId: ID!) {
+  location(id: $locationId) {
+    ...Screen_Settings_Location
+  }
+}

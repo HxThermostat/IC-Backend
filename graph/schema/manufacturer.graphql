@@ -1,0 +1,14 @@
+extend type Query {
+  manufacturer: Manufacturer!
+}
+
+type Manufacturer {
+  support: Contact
+}
+
+type Contact {
+  name: String!
+  email: String
+  phone: String
+  website: String
+}

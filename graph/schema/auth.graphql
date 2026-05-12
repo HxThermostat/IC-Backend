@@ -1,0 +1,117 @@
+enum AccountSharingFeature {
+  QR_CODE
+}
+
+enum SignInFeature {
+  TOKEN
+}
+
+extend type FeatureMap {
+  accountSharing: AccountSharingFeature
+  signIn: SignInFeature!
+}
+
+extend type Mutation {
+  checkEmail(input: CheckEmailInput!): CheckEmailResult!
+  sendToken(input: SendTokenInput!): SendTokenResult!
+  signIn(input: SignInInput!): SignInResult!
+  refreshToken(input: RefreshTokenInput!): RefreshTokenResult!
+  signUp(input: SignUpInput!): SignUpResult!
+  removeAccount(input: RemoveAccountInput!): RemoveAccountResult!
+  generateAccountSharingQrCode(
+    input: GenerateAccountSharingQrCodeInput!
+  ): GenerateAccountSharingQrCodeResult!
+}
+
+input CheckEmailInput {
+  email: String!
+}
+
+type CheckEmailResult {
+  available: Boolean!
+}
+
+input SendTokenInput {
+  email: String!
+}
+
+type SendTokenSuccess {
+  _: Boolean
+}
+
+union SendTokenResult = SendTokenSuccess | EmailInvalid
+
+input SignInInput {
+  email: String!
+  token: String!
+}
+
+type SignInSuccess {
+  accessToken: String!
+  refreshToken: String!
+  ttl: Int!
+  user: User!
+}
+
+type EmailInvalid implements Error {
+  message: String
+}
+
+union SignInResult = SignInSuccess | TokenInvalid | EmailInvalid
+
+input RefreshTokenInput {
+  token: String!
+}
+
+type RefreshTokenSuccess {
+  accessToken: String!
+  refreshToken: String!
+  ttl: Int!
+}
+
+union RefreshTokenResult = RefreshTokenSuccess | TokenInvalid
+
+input SignUpInput {
+  email: String!
+  firstName: String!
+  lastName: String!
+}
+
+type SignUpSuccess {
+  _: Boolean
+}
+
+type EmailTaken implements Error {
+  message: String
+}
+
+union SignUpResult = SignUpSuccess | EmailInvalid | EmailTaken
+
+input RemoveAccountInput {
+  token: String!
+}
+
+type RemoveAccountSuccess {
+  _: Boolean
+}
+
+union RemoveAccountResult = RemoveAccountSuccess | TokenInvalid
+
+input GenerateAccountSharingQrCodeInput {
+  size: Int!
+}
+
+type AccountSharingQrCode implements File {
+  dataUrl: String!
+  mimeType: String!
+  data: String!
+  ttl: Int
+}
+
+type GenerateAccountSharingQrCodeSuccess {
+  code: AccountSharingQrCode!
+}
+
+union GenerateAccountSharingQrCodeResult =
+    GenerateAccountSharingQrCodeSuccess
+  | NotSupported

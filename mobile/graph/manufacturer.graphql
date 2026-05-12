@@ -1,0 +1,5 @@
+fragment ManufacturerFields on Manufacturer {
+  __typename
+  ...Screen_Settings_Manufacturer
+  ...Screen_Support_Manufacturer
+}

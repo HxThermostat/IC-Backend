@@ -1,0 +1,338 @@
+# Uncomment the line if you want fastlane to automatically update itself
+# update_fastlane
+
+default_platform(:android)
+
+platform :android do
+
+  before_all do
+    ensure_dependencies_installed
+  end
+
+  desc "Build and white label Android (all apps)"
+  # options :skip_build, :sign_app, :keep_artifacts
+  lane :build_all_apps do |options| 
+    skip_all_builds = !!options[:skip_build]
+    apps = get_available_apps
+
+    # Build the .aab once so we can skip it for each app below
+    build_aab unless skip_all_builds
+    
+    apps.each_with_index do |app, index|
+      build(options.merge!({app: app, skip_build: true}))
+    end
+  end
+  
+
+  desc "Build and white label Android"
+  # options :app, :skip_build, :sign_app, :keep_artifacts
+  lane :build do |options|
+    app_name = ensure_app_valid options[:app]
+    sign_app = !!options[:sign_app]
+    skip_build = !!options[:skip_build]
+    keep_artifacts = !!options[:keep_artifacts]
+
+    build_aab unless skip_build
+    
+    paths = build_paths(app_name)
+    config = read_json(
+      json_path: "#{paths[:APP_CONFIG_PATH]}/whitelabel.json"
+    )
+
+    Dir.chdir("..") do
+      sh("rm -rf #{paths[:BASE_PATH_ANDROID]}")
+      sh("mkdir -p #{paths[:BASE_PATH_ANDROID]}")
+
+      sh("cp #{paths[:BASE_AAB_PATH]}/app-release.aab #{paths[:BASE_PATH_ANDROID]}")
+
+      sh("unzip #{paths[:BASE_PATH_ANDROID]}/app-release.aab -d #{paths[:BASE_PATH_ANDROID]}/app-release")
+
+      sh("rm -Rf #{paths[:BASE_PATH_ANDROID]}/app-release/META-INF #{paths[:BASE_PATH_ANDROID]}/app-release/base/root/META-INF")
+
+      sh("bundletool build-apks --bundle #{paths[:BASE_PATH_ANDROID]}/app-release.aab --mode universal --output #{paths[:BASE_PATH_ANDROID]}/app.apks")
+
+      Dir.chdir("#{paths[:BASE_PATH_ANDROID]}") do
+        sh("unzip -q app.apks -d ./ ")
+        sh("apktool d universal.apk -o ./universal")
+        
+        update_yaml(
+          key: ".versionInfo.versionCode", 
+          value: Time.now.to_i, 
+          path: "universal/apktool.yml"
+        )
+        update_yaml(
+          key: ".versionInfo.versionName", 
+          value: "\"#{config[:version_name_android]}\"", 
+          path: "universal/apktool.yml"
+        )
+        
+
+        update_xml(
+          key: "/resources/string[@name='app_name']", 
+          value: "#{config[:display_name]}", 
+          path: "./universal/res/values/strings.xml"
+        )
+
+        # Google Services
+        # These strings are added by the google-services plugin only
+        # at build time (based on a google-services.json file), so
+        # they aren't *super* obvious. This set was identified by a
+        # diff of the strings file generated with and without the
+        # Google Services gradle plugin enabled. If we need to change
+        # which Google Services are enabled, we may need to repeat
+        # that process to re-map the input google-services.json
+        update_xml(
+          key: "/resources/string[@name='default_web_client_id']",
+          value: "#{config[:google_services][:default_web_client_id]}",
+          path: "./universal/res/values/strings.xml"
+        )
+        update_xml(
+          key: "/resources/string[@name='gcm_defaultSenderId']",
+          value: "#{config[:google_services][:gcm_defaultSenderId]}",
+          path: "./universal/res/values/strings.xml"
+        )
+        update_xml(
+          key: "/resources/string[@name='google_api_key']",
+          value: "#{config[:google_services][:google_api_key]}",
+          path: "./universal/res/values/strings.xml"
+        )
+        update_xml(
+          key: "/resources/string[@name='google_app_id']",
+          value: "#{config[:google_services][:google_app_id]}",
+          path: "./universal/res/values/strings.xml"
+        )
+        update_xml(
+          key: "/resources/string[@name='google_crash_reporting_api_key']",
+          value: "#{config[:google_services][:google_crash_reporting_api_key]}",
+          path: "./universal/res/values/strings.xml"
+        )
+        update_xml(
+          key: "/resources/string[@name='google_storage_bucket']",
+          value: "#{config[:google_services][:google_storage_bucket]}",
+          path: "./universal/res/values/strings.xml"
+        )
+        update_xml(
+          key: "/resources/string[@name='project_id']",
+          value: "#{config[:google_services][:project_id]}",
+          path: "./universal/res/values/strings.xml"
+        )
+
+        # Google Maps
+        # (Not strictly part of Google Services)
+        update_xml(
+          key: "manifest/application/meta-data[@android:name='com.google.android.geo.API_KEY' and @android:value]/@android:value",
+          value: "#{config[:google_services][:geo_api_key]}",
+          path: "./universal/AndroidManifest.xml"
+        )
+
+        # Splash screen
+        update_xml(
+          key: "resources/color[@name='splashscreen_background']", 
+          value: "#{config[:splash_screen_background][:light]}", 
+          path: "./universal/res/values/colors.xml"
+        )
+        update_xml(
+          key: "resources/color[@name='splashscreen_background']", 
+          value: "#{config[:splash_screen_background][:dark]}", 
+          path: "./universal/res/values-night/colors.xml"
+        )
+
+        # default to other if not set
+        tint_color_light = config[:light_colors][:tint] || config[:dark_colors][:tint]
+        tint_color_dark = config[:dark_colors][:tint] || config[:light_colors][:tint]
+
+        update_xml(
+          key: "resources/color[@name='colorAccent']", 
+          value: "#{tint_color_light}", 
+          path: "./universal/res/values/colors.xml"
+        ) if tint_color_light
+
+        update_xml(
+          key: "resources/color[@name='colorAccent']", 
+          value: "#{tint_color_dark}", 
+          path: "./universal/res/values-night/colors.xml"
+        ) if tint_color_dark
+
+        update_xml(
+          key: "manifest[@package]/@package", 
+          value: "#{config[:bundle_id_android]}",
+          path: "./universal/AndroidManifest.xml"
+        )
+        update_xml(
+          key: "manifest/application/activity/intent-filter/data[@android:scheme and @android:host]/@android:host", 
+          value: "#{config[:host_name]}", 
+          path: "./universal/AndroidManifest.xml"
+        )
+
+        # each provider with android:authorities needs to be unique in the manifest
+        # otherwise we can't install multiple white-labelled apps at once
+        [
+          "com.kraftful.klimate.SentryInitProvider", 
+          "com.kraftful.klimate.FileSystemFileProvider", 
+          "com.kraftful.klimate.lifecycle-process", 
+          "com.kraftful.klimate.firebaseinitprovider"
+        ].each do |provider|
+          suffix = provider.sub("com.kraftful.klimate.", "")
+          update_xml(
+            key: "/manifest/application/provider[@android:authorities='#{provider}']/@android:authorities", 
+            value: "#{config[:bundle_id_android]}.#{suffix}",
+            path: "./universal/AndroidManifest.xml"
+          )
+        end
+      end
+
+      sh("yarn whitelabel:generate_icon_android #{app_name} $(pwd)/#{paths[:BASE_PATH_ANDROID]}/universal/res/")
+      sh("cp #{paths[:APP_CONFIG_PATH]}/whitelabel.json  #{paths[:BASE_PATH_ANDROID]}/app-release/base/assets")
+      
+      Dir.chdir("#{paths[:BASE_PATH_ANDROID]}") do
+        sh("apktool b -f ./universal -o ./temp.apk")
+        
+        sh("#{paths[:AAPT2]} convert -o ./temp_proto.apk --output-format proto ./temp.apk")
+
+        sh("unzip ./temp_proto.apk -d ./temp_proto")
+
+        sh("cp ./temp_proto/resources.pb ./app-release/base/resources.pb")
+        sh("cp ./temp_proto/AndroidManifest.xml ./app-release/base/manifest/AndroidManifest.xml")
+      end
+
+      Dir.chdir("#{paths[:BASE_PATH_ANDROID]}") do
+        sh("rm -Rf ./app-release/base/res")
+        sh("cp -R ./temp_proto/res ./app-release/base")
+
+        sh("rm -Rf ./app-release/**/.DS_Store")
+        sh("pwd")
+        Dir.chdir("app-release") do
+          sh("zip -r -D ../#{app_name}.aab *")
+        end
+        
+        sh("bundletool validate --bundle ./#{app_name}.aab")          
+      end      
+      clean_generated_build_artifacts({paths: paths}) unless keep_artifacts
+    end
+
+    if sign_app
+      sign_white_label_build({paths: paths, config: config, app_name: app_name })
+    end
+
+    # Extract an .apk from the .aab for easier to install the white
+    # labeled app on a device
+    extract_apk(options)
+  end
+
+  desc "Build klimate.aab used for white labeling"
+  lane :build_aab do
+    gradle(
+      task: "bundle",
+      build_type: "Release"
+    )
+  end
+
+  desc "Unpacks a white-labelled aab, and installs it onto a connected device"
+  lane :unpack_and_install_aab do |options| 
+    app_name = ensure_app_valid options[:app]
+    paths = build_paths(app_name)
+    
+    extract_apk(options)
+    
+    Dir.chdir("..") do
+      Dir.chdir("#{paths[:BASE_PATH_ANDROID]}") do
+        sh("adb install #{app_name}.apk")
+      end
+    end
+  end
+
+  desc "Extract an apk from the white-labelled aab"
+  private_lane :extract_apk do |options|
+    app_name = ensure_app_valid options[:app]
+    sign_app = !!options[:sign_app]
+    paths = build_paths(app_name)
+
+    config = read_json(
+      json_path: "#{paths[:APP_CONFIG_PATH]}/whitelabel.json"
+    )
+
+    Dir.chdir("..") do
+      signing_options = if sign_app
+        signing_path = "#{paths[:APP_CONFIG_PATH]}/signing/android"
+
+        key_pass = "file:#{signing_path}/key_password"
+        store_pass = "file:#{signing_path}/keystore_password"
+        alias_name = File.open("#{signing_path}/alias_name").read
+
+        "--ks=#{signing_path}/prod.keystore --ks-pass=#{store_pass} --ks-key-alias=#{alias_name.chomp} --key-pass=#{key_pass}"
+      end
+
+      sh("bundletool build-apks --bundle #{paths[:BASE_PATH_ANDROID]}/#{app_name}.aab --mode universal --output #{paths[:BASE_PATH_ANDROID]}/app.apks #{signing_options}")
+      Dir.chdir("#{paths[:BASE_PATH_ANDROID]}") do
+        sh("unzip -q app.apks -d ./ ")
+        sh("rm app.apks toc.pb")
+        sh("mv universal.apk #{app_name}.apk")
+      end
+    end
+  end
+
+
+  desc "Signs the modified AAB (requires a keystore + passwords)"
+  private_lane :sign_white_label_build do |options| 
+    paths = options[:paths]
+    
+    app_name = options[:app_name]
+
+    Dir.chdir("..") do
+      sh("jarsigner -sigalg SHA1withRSA -digestalg SHA1 -keystore #{paths[:APP_CONFIG_PATH]}/signing/android/prod.keystore #{paths[:BASE_PATH_ANDROID]}/#{app_name}.aab $(cat #{paths[:APP_CONFIG_PATH]}/signing/android/alias_name) -storepass:file '#{paths[:APP_CONFIG_PATH]}/signing/android/keystore_password' -keypass:file '#{paths[:APP_CONFIG_PATH]}/signing/android/key_password'")
+    end
+
+  end
+
+  desc "Removes irrelevant build artifacts"
+  private_lane :clean_generated_build_artifacts do |options|
+    paths = options[:paths]
+    Dir.chdir("#{paths[:BASE_PATH_ANDROID]}") do
+      sh("rm -rf temp_proto/ universal/ app-release/")
+      sh("rm temp_proto.apk temp.apk app.apks toc.pb universal.apk app-release.aab")
+    end
+  end
+end
+
+def update_yaml(key:, value:, path:)
+  sh("yq -i eval '#{key} = #{value}' #{path}")
+end
+
+def update_xml(key:, value:, path:)
+  sh(%Q! xml ed --inplace -u "#{key}" -v "#{value}" #{path} !)
+end
+
+def ensure_dependencies_installed
+  sh(
+    command: "which yq", 
+    error_callback: -> (res) { UI.user_error!("yq missing - run: brew install yq") }
+  )
+  sh(
+    command: "which xml", 
+    error_callback: -> (res) { UI.user_error!("xmlstarlet missing - run: brew install xmlstarlet") }
+  )
+end
+
+def ensure_app_valid(app_name)
+  apps = get_available_apps
+  app = apps.find { |app| app == app_name }
+  UI.user_error!("App #{app_name} is not valid") if app.nil?
+  app_name
+end
+
+def get_available_apps
+  config_path ="../../app_config"
+  Dir.entries(config_path).filter { |f| File.directory? File.join(config_path, f) and !f.include?(".") }
+end
+
+
+def build_paths(app_name)
+  base_aab_path = "./app/build/outputs/bundle/release";
+  base_path_android = "#{base_aab_path}/#{app_name}";
+  {
+    AAPT2: "~/Library/Android/sdk/build-tools/29.0.3/aapt2",
+    APP_CONFIG_PATH: "../app_config/#{app_name}",
+    BASE_AAB_PATH: base_aab_path,
+    BASE_PATH_ANDROID: base_path_android
+  }
+end

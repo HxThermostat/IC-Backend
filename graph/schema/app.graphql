@@ -1,0 +1,49 @@
+enum Platform {
+  IOS
+  ANDROID
+}
+
+enum UpdateMechanism {
+  NATIVE
+  OTA
+}
+
+extend type Query {
+  requestRating(input: RequestRatingInput): Boolean!
+  requestSurveyFeedback(input: RequestSurveyFeedbackInput!): Boolean!
+  updateRequired(input: UpdateRequiredInput!): UpdateMechanism
+}
+
+extend type Mutation {
+  requestSurveySession: RequestSurveySessionResult!
+}
+
+type RequestSurveySessionResult {
+  userId: String!
+  userName: String!
+  sessionToken: String!
+  sessionExpiresAt: String!
+}
+
+input RequestRatingInput {
+  build: String!
+  installedAt: String!
+  lastDisplayedAt: String
+  platform: Platform!
+  version: String!
+}
+
+input RequestSurveyFeedbackInput {
+  build: String!
+  installedAt: String!
+  lastDisplayedAt: String
+  lastResponseAt: String
+  platform: Platform!
+  version: String!
+}
+
+input UpdateRequiredInput {
+  platform: Platform!
+  version: String!
+  build: String!
+}

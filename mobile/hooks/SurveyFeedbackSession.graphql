@@ -1,0 +1,9 @@
+mutation RequestSurveySession {
+  requestSurveySession {
+    __typename
+    userId
+    userName
+    sessionToken
+    sessionExpiresAt
+  }
+}

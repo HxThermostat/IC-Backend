@@ -1,0 +1,114 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`controller it returns the correct fields 1`] = `
+Object {
+  "data": Object {
+    "controller": Object {
+      "mode": Object {
+        "effectiveMode": "HEATCOOL",
+        "name": "AUTO",
+        "placement": "PRIMARY",
+        "transitionFrom": Array [
+          Object {
+            "name": "HEAT",
+          },
+          Object {
+            "name": "COOL",
+          },
+          Object {
+            "name": "AUTO",
+          },
+          Object {
+            "name": "OFF",
+          },
+          Object {
+            "name": "QUICKHEAT",
+          },
+          Object {
+            "name": "QUICKCOOL",
+          },
+          Object {
+            "name": "EHEAT",
+          },
+        ],
+        "transitionTo": Array [
+          Object {
+            "name": "HEAT",
+          },
+          Object {
+            "name": "COOL",
+          },
+          Object {
+            "name": "AUTO",
+          },
+          Object {
+            "name": "OFF",
+          },
+          Object {
+            "name": "QUICKHEAT",
+          },
+          Object {
+            "name": "QUICKCOOL",
+          },
+          Object {
+            "name": "EHEAT",
+          },
+        ],
+      },
+      "modes": Array [
+        Object {
+          "name": "HEAT",
+        },
+        Object {
+          "name": "COOL",
+        },
+        Object {
+          "name": "AUTO",
+        },
+        Object {
+          "name": "OFF",
+        },
+        Object {
+          "name": "QUICKHEAT",
+        },
+        Object {
+          "name": "QUICKCOOL",
+        },
+        Object {
+          "name": "EHEAT",
+        },
+      ],
+    },
+  },
+  "errors": undefined,
+  "extensions": undefined,
+  "http": Object {
+    "headers": Headers {
+      Symbol(map): Object {},
+    },
+  },
+}
+`;
+
+exports[`controller it updates the mode 1`] = `
+Object {
+  "data": Object {
+    "changeMode": Object {
+      "__typename": "ChangeModeSuccess",
+      "controller": Object {
+        "id": "b06d8593-997a-44a1-ad23-2cf19e5ad071",
+        "mode": Object {
+          "name": "AUTO",
+        },
+      },
+    },
+  },
+  "errors": undefined,
+  "extensions": undefined,
+  "http": Object {
+    "headers": Headers {
+      Symbol(map): Object {},
+    },
+  },
+}
+`;

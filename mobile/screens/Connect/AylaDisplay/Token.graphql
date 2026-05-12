@@ -1,0 +1,10 @@
+mutation ConnectAylaDisplay($token: String!) {
+  connectAylaDisplay(input: { token: $token }) {
+    __typename
+    ... on ConnectAylaDisplaySuccess {
+      location {
+        id
+      }
+    }
+  }
+}

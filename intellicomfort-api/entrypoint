@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+set -e
+
+# Default the Datadog agent logging to "error" to keep the agents from
+# being super chatty on stdout/err
+export DD_LOG_LEVEL="${DD_LOG_LEVEL:=error}"
+
+# Run the Datadog agents
+datadog-agent run &
+/opt/datadog-agent/embedded/bin/trace-agent --config=/etc/datadog-agent/datadog.yaml &
+/opt/datadog-agent/embedded/bin/process-agent --config=/etc/datadog-agent/datadog.yaml &
+
+DD_PORT=8126
+
+echo -n "Waiting for the Datadog agent to start on port ${DD_PORT}"
+
+# via https://stackoverflow.com/a/50055449
+until printf "" 2>>/dev/null >>/dev/tcp/localhost/${DD_PORT}; do
+  printf .;
+  sleep 1;
+done
+
+echo -e ' Done!\n🐶 Datadog is ready accept metrics'
+
+exec "$@"

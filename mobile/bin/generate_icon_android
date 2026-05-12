@@ -1,0 +1,109 @@
+#!/bin/bash -e
+
+# Check imagemagick is installed
+# http://stackoverflow.com/questions/592620/check-if-a-program-exists-from-a-bash-script
+command -v convert >/dev/null 2>&1 || { echo >&2 "Imagemagick is required but not installed"; exit 1; }
+
+# Basic usage help text
+test "$#" -eq 2 || { echo >&2 "Usage: $0 [appName] [outputDir]"; exit 1; }
+
+# Ensure we're running in location of the script
+cd $(dirname "$0")
+
+appName="$1"
+outputDir="$2"
+
+test -d "../app_config/${appName}" || { echo >&2 "${appName} doesn't appear to be a valid app name"; exit 1; }
+
+BG="../app_config/${appName}/icons/android_adaptive_background.png"
+FG="../app_config/${appName}/icons/android_adaptive_foreground.png"
+NOTIFICATION="../app_config/${appName}/icons/android_notification.png"
+
+file "${BG}" | grep "PNG image data, 1536 x 1536" >/dev/null 2>&1 || { echo >&2 "A 1536x1536 PNG must be available at ${BG}"; exit 1; }
+file "${FG}" | grep "PNG image data, 1536 x 1536" >/dev/null 2>&1 || { echo >&2 "A 1536x1536 PNG must be available at ${FG}"; exit 1; }
+file "${NOTIFICATION}" | grep "PNG image data, 96 x 96" >/dev/null 2>&1 || { echo >&2 "A 96x96 PNG must be available at ${NOTIFICATION}"; exit 1; }
+
+TMP=$(mktemp -d)
+COMPOSITE="${TMP}/composite.png"
+RECT="${TMP}/rect.png"
+ROUND="${TMP}/round.png"
+
+function makeAdaptiveIcon () {
+  resolution="mipmap-$1"
+  legacySize=$2
+  adaptiveSize=$3
+
+  mkdir -p "${outputDir}/${resolution}"
+
+  # We use the mask_paint layer to isolate the component of the
+  # composite images we want to show through and the mask layer to add
+  # the drop shadow to the final icon
+  convert ${RECT} -alpha set -gravity center mask_paint_rect.png -composite mask_rect.png -compose DstIn -composite -resize ${legacySize}x${legacySize} "${outputDir}/${resolution}/ic_launcher.png"
+  convert ${ROUND} -alpha set -gravity center mask_paint_round.png -composite mask_round.png -compose DstIn -composite -resize ${legacySize}x${legacySize} "${outputDir}/${resolution}/ic_launcher_round.png"
+
+  convert ${FG} -resize ${adaptiveSize}x${adaptiveSize} "${outputDir}/${resolution}/ic_launcher_foreground.png"
+  convert ${BG} -resize ${adaptiveSize}x${adaptiveSize} "${outputDir}/${resolution}/ic_launcher_background.png"
+}
+
+function makeNotificationIcon () {
+  resolution="drawable-$1"
+  iconSize=$2
+
+  mkdir -p "${outputDir}/${resolution}"
+
+  convert ${NOTIFICATION} -resize ${iconSize}x${iconSize} "${outputDir}/${resolution}/notification_icon.png"
+}
+
+# -------------
+# Adaptive Icon
+# -------------
+
+# We need a few intermediate images that we'll use to generate the
+# legacy ic_launcher and ic_launcher_round icons
+
+# The composite image just combines the background and foreground images
+convert ${BG} ${FG} -gravity center -composite ${COMPOSITE}
+
+# The rect and round images are generated to be compatible with the masks
+convert ${COMPOSITE} -crop 1248x1248+144+144 -resize 1248x1248 ${RECT}
+convert ${COMPOSITE} -crop 1136x1136+180+180 -resize 1248x1248 ${ROUND}
+
+# Create the XML files that define the adaptive icons
+mkdir -p "${outputDir}/mipmap-anydpi-v26"
+
+cat > "${outputDir}/mipmap-anydpi-v26/ic_launcher.xml" <<EOD
+<?xml version="1.0" encoding="utf-8"?>
+<adaptive-icon xmlns:android="http://schemas.android.com/apk/res/android">
+    <background android:drawable="@mipmap/ic_launcher_background"/>
+    <foreground android:drawable="@mipmap/ic_launcher_foreground"/>
+</adaptive-icon>
+EOD
+
+cat > "${outputDir}/mipmap-anydpi-v26/ic_launcher_round.xml" <<EOD
+<?xml version="1.0" encoding="utf-8"?>
+<adaptive-icon xmlns:android="http://schemas.android.com/apk/res/android">
+    <background android:drawable="@mipmap/ic_launcher_background"/>
+    <foreground android:drawable="@mipmap/ic_launcher_foreground"/>
+</adaptive-icon>
+EOD
+
+# Generate the appropriately sized legacy + adaptive icons
+makeAdaptiveIcon xxxhdpi 192 432
+makeAdaptiveIcon xxhdpi 144 324
+makeAdaptiveIcon xhdpi 96 216
+makeAdaptiveIcon hdpi 72 162
+makeAdaptiveIcon mdpi 48 108
+
+# Clean up the intermediate icons
+rm -Rf ${TMP}
+
+# -----------------
+# Notification Icon
+# -----------------
+
+# Generate the appropriately sized notification icons
+makeNotificationIcon xxxhdpi 96
+makeNotificationIcon xxhdpi 72
+makeNotificationIcon xhdpi 48
+makeNotificationIcon hdpi 36
+makeNotificationIcon mdpi 24

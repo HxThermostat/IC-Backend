@@ -1,0 +1,5 @@
+.aws
+.terraform
+apns-certificate
+apns-key
+fcm-key

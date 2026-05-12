@@ -1,0 +1,64 @@
+fragment Component_SelectModeModal_Controller on Controller {
+  __typename
+  id
+  name
+  mode {
+    ...Component_SelectModeModal_Mode
+  }
+  modes {
+    ...Component_SelectModeModal_Mode
+  }
+  setpoint {
+    ...SetpointFields
+  }
+}
+
+fragment Component_SelectModeModal_Location on Location {
+  __typename
+  id
+  name
+  away {
+    active
+  }
+}
+
+fragment Component_SelectModeModal_Mode on Mode {
+  effectiveMode
+  name
+  placement
+  transitionTo {
+    name
+  }
+}
+
+query SelectMode($id: ID!) {
+  controller(id: $id) {
+    ...Component_SelectModeModal_Controller
+    location {
+      ...Component_SelectModeModal_Location
+    }
+  }
+}
+
+mutation ChangeMode($id: ID!, $mode: String!) {
+  changeMode(input: { id: $id, mode: $mode }) {
+    ... on ChangeModeSuccess {
+      controller {
+        ...Component_SelectModeModal_Controller
+      }
+    }
+  }
+}
+
+mutation ToggleLocationAway($input: ToggleAwayInput!) {
+  toggleLocationAway(input: $input) {
+    ... on ToggleLocationAwaySuccess {
+      location {
+        ...Component_SelectModeModal_Location
+        controllers {
+          ...Component_SelectModeModal_Controller
+        }
+      }
+    }
+  }
+}

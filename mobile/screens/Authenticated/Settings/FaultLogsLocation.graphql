@@ -1,0 +1,36 @@
+fragment Screen_Settings_FaultLogs_Location on Location {
+  __typename
+  id
+  faultNotification {
+    enabled
+  }
+}
+
+query ScreenSettingsFaultLogsLocation($locationId: ID!) {
+  location(id: $locationId) {
+    ...Screen_Settings_FaultLogs_Location
+  }
+}
+
+fragment Settings_FaultLogs_Location on Location {
+  __typename
+  id
+  faultLogs {
+    __typename
+    ... on FaultLogLabel {
+      date
+      label
+    }
+    ... on FaultLogLabelAndDescription {
+      date
+      label
+      description
+    }
+  }
+}
+
+query SettingsFaultLogsLocation($locationId: ID!) {
+  location(id: $locationId) {
+    ...Settings_FaultLogs_Location
+  }
+}

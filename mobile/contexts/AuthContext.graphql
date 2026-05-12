@@ -1,0 +1,11 @@
+mutation RemoveAccount {
+  removeAccount(input: { token: "" }) {
+    __typename
+  }
+}
+
+mutation RemoveLocation($locationId: ID!) {
+  removeLocation(input: { id: $locationId }) {
+    __typename
+  }
+}

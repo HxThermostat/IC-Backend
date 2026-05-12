@@ -1,0 +1,24 @@
+diff --git a/node_modules/react-native-screens/ios/RNSScreen.m b/node_modules/react-native-screens/ios/RNSScreen.m
+index 6fbee07..2c1f589 100644
+--- a/node_modules/react-native-screens/ios/RNSScreen.m
++++ b/node_modules/react-native-screens/ios/RNSScreen.m
+@@ -340,6 +340,8 @@ - (void)presentationControllerDidDismiss:(UIPresentationController *)presentatio
+   }
+ }
+ 
++
++
+ - (void)invalidate
+ {
+   _controller = nil;
+@@ -514,6 +516,10 @@ - (void)viewWillAppear:(BOOL)animated
+ {
+   [super viewWillAppear:animated];
+   [RNSScreenWindowTraits updateWindowTraits];
++  UIViewController *parentVC = [self parentViewController];
++  if ([parentVC isKindOfClass:[UINavigationController class]]) {
++    [((UINavigationController *)parentVC).navigationBar sizeToFit];
++  }
+   [((RNSScreenView *)self.view) notifyWillAppear];
+ }
+ 

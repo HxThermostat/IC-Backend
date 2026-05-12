@@ -1,0 +1,23 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`fan it returns the correct fields for fan 1`] = `
+Object {
+  "data": Object {
+    "controller": Object {
+      "fan": Object {
+        "__typename": "SpeedNameFan",
+        "activeSpeedName": "MEDIUM",
+        "running": true,
+      },
+      "id": "492cc711-4c86-42f5-bb2b-c61187825ffb",
+    },
+  },
+  "errors": undefined,
+  "extensions": undefined,
+  "http": Object {
+    "headers": Headers {
+      Symbol(map): Object {},
+    },
+  },
+}
+`;

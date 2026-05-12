@@ -1,0 +1,74 @@
+fragment Screen_Home_Controller on Controller {
+  __typename
+  id
+  activeHold {
+    __typename
+  }
+  away {
+    active
+  }
+  call
+  fan {
+    __typename
+    ... on SpeedNameFan {
+      activeSpeedName
+    }
+    ... on PercentageFan {
+      activeSpeedPercent
+    }
+  }
+  humidityAmbient
+  location {
+    ...Screen_Home_Location
+  }
+  mode {
+    name
+    effectiveMode
+  }
+  name
+  ...Component_Controlled_Dial_Controller
+  ...Component_SelectModeModal_Controller
+  ...Component_SelectControllerModal_Controller
+}
+
+fragment Screen_Home_Location on Location {
+  __typename
+  id
+  name
+  temperatureOutdoor
+  temperatureUnit
+  away {
+    active
+  }
+  faultActive
+  ...Component_Controlled_Dial_Location
+  ...Component_SelectControllerModal_Location
+  ...Component_SelectModeModal_Location
+}
+
+fragment Screen_Home_User on User {
+  __typename
+  ...Component_SurveyChatModal_User
+}
+
+query Home($controllerId: ID!) {
+  controller(id: $controllerId) {
+    ...Screen_Home_Controller
+  }
+  locations {
+    ...Screen_Home_Location
+  }
+  me {
+    ...Screen_Home_User
+  }
+}
+
+mutation CancelHold($controllerId: ID!) {
+  cancelHold(input: { id: $controllerId }) {
+    ... on CancelHoldSuccess {
+      controller {
+        ...Screen_Home_Controller
+      }
+    }
+  }
+}

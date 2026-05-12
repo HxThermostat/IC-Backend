@@ -1,0 +1,13 @@
+mutation SignIn($input: SignInInput!) {
+  signIn(input: $input) {
+    __typename
+    ... on SignInSuccess {
+      accessToken
+      refreshToken
+      ttl
+      user {
+        id
+      }
+    }
+  }
+}

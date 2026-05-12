@@ -1,0 +1,36 @@
+enum FaultLogsFeature {
+  LOG_WITH_LABEL
+  LOG_WITH_LABEL_AND_DESCRIPTION
+}
+
+extend type FeatureMap {
+  faultLogsController: FaultLogsFeature
+  faultLogsLocation: FaultLogsFeature
+}
+
+interface Log {
+  date: String!
+}
+
+type FaultLogLabel implements Log {
+  date: String!
+  label: String!
+}
+
+type FaultLogLabelAndDescription implements Log {
+  date: String!
+  label: String!
+  description: String!
+}
+
+union FaultLog = FaultLogLabel | FaultLogLabelAndDescription
+
+extend type Controller {
+  faultActive: Boolean
+  faultLogs: [FaultLog!]
+}
+
+extend type Location {
+  faultActive: Boolean
+  faultLogs: [FaultLog!]
+}

@@ -1,0 +1,32 @@
+query Bootstrap($platform: Platform!, $version: String!, $build: String!) {
+  controllers {
+    ...BootstrapControllerFields
+  }
+  features {
+    ...FeatureMapFields
+  }
+  locations {
+    ...BootstrapLocationFields
+  }
+  me {
+    ...UserBootstrapFields
+  }
+  updateRequired(
+    input: { platform: $platform, version: $version, build: $build }
+  )
+}
+
+query Load {
+  controllers {
+    ...ControllerFields
+  }
+  locations {
+    ...LocationFields
+  }
+  manufacturer {
+    ...ManufacturerFields
+  }
+  me {
+    ...UserFields
+  }
+}

@@ -1,0 +1,70 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`controller it returns the correct fields for DualSetpoint 1`] = `
+Object {
+  "data": Object {
+    "controller": Object {
+      "id": "b06d8593-997a-44a1-ad23-2cf19e5ad071",
+      "setpoint": Object {
+        "__typename": "DualSetpoint",
+        "lower": Object {
+          "max": 31.1111,
+          "min": 10,
+          "step": 0.5555,
+          "value": 15,
+        },
+        "minInterval": 1.1111,
+        "upper": Object {
+          "max": 32.2222,
+          "min": 11.1111,
+          "step": 0.5555,
+          "value": 26.1111,
+        },
+      },
+    },
+  },
+  "errors": undefined,
+  "extensions": undefined,
+  "http": Object {
+    "headers": Headers {
+      Symbol(map): Object {},
+    },
+  },
+}
+`;
+
+exports[`controller it updates the setpoint for DualSetpoint 1`] = `
+Object {
+  "data": Object {
+    "changeSetpoint": Object {
+      "__typename": "ChangeSetpointSuccess",
+      "controller": Object {
+        "id": "b06d8593-997a-44a1-ad23-2cf19e5ad071",
+        "setpoint": Object {
+          "__typename": "DualSetpoint",
+          "lower": Object {
+            "max": 31.1111,
+            "min": 10,
+            "step": 0.5555,
+            "value": 16.1111,
+          },
+          "minInterval": 1.1111,
+          "upper": Object {
+            "max": 32.2222,
+            "min": 11.1111,
+            "step": 0.5555,
+            "value": 20,
+          },
+        },
+      },
+    },
+  },
+  "errors": undefined,
+  "extensions": undefined,
+  "http": Object {
+    "headers": Headers {
+      Symbol(map): Object {},
+    },
+  },
+}
+`;

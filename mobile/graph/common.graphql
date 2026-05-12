@@ -1,0 +1,48 @@
+fragment AwayFields on Away {
+  active
+  setpoint {
+    ...SetpointFields
+  }
+}
+
+fragment HoldLengthFields on HoldLength {
+  __typename
+  ... on HoldLengthIndefinite {
+    _
+  }
+  ... on HoldLengthNextEvent {
+    _
+  }
+  ... on HoldLengthHours {
+    hours
+  }
+  ... on HoldLengthDate {
+    date
+  }
+}
+
+fragment RangeValueFields on RangeValue {
+  min
+  max
+  value
+  step
+}
+
+fragment DualRangeValueFields on DualRangeValue {
+  lower {
+    ...RangeValueFields
+  }
+  upper {
+    ...RangeValueFields
+  }
+  minInterval
+}
+
+fragment SetpointFields on Setpoint {
+  ... on SingleSetpoint {
+    ...RangeValueFields
+  }
+  ... on DualSetpoint {
+    ...DualRangeValueFields
+  }
+}

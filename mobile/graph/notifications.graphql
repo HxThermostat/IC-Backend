@@ -1,0 +1,18 @@
+mutation SubscribeToNotifications($input: SubscribeToNotificationsInput!) {
+  subscribeToNotifications(input: $input) {
+    __typename
+    ... on SubscribeToNotificationsSuccess {
+      pushToken {
+        id
+      }
+    }
+  }
+}
+
+mutation UnsubscribeFromNotifications(
+  $input: UnsubscribeFromNotificationsInput!
+) {
+  unsubscribeFromNotifications(input: $input) {
+    __typename
+  }
+}

@@ -1,0 +1,22 @@
+fragment Screen_Schedules_Controller on Controller {
+  __typename
+  id
+  schedule {
+    ...ScheduleFields
+  }
+  location {
+    temperatureUnit
+  }
+}
+
+query Schedules($controllerId: ID!) {
+  controller(id: $controllerId) {
+    ...Screen_Schedules_Controller
+  }
+}
+
+query ScheduleEvent($scheduleEventId: ID!) {
+  scheduleEvent(id: $scheduleEventId) {
+    ...ScheduleEventFields
+  }
+}

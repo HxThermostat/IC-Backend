@@ -1,0 +1,64 @@
+name: INTELLICOMFORT-API-DEPLOY
+
+on: workflow_dispatch
+
+env:
+  HEROKU_APP: klimate-intellicomfort
+
+jobs:
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Login to Heroku Container Registry
+        env:
+          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+        run: heroku container:login
+
+      - name: Build container image
+        env:
+          DD_API_KEY: ${{ secrets.DD_API_KEY }}
+        run: docker build -f intellicomfort-api/Dockerfile -t registry.heroku.com/${HEROKU_APP}/web . --build-arg DD_API_KEY=${DD_API_KEY}
+
+      - name: Push image to Heroku Container Registry
+        run: docker push registry.heroku.com/${HEROKU_APP}/web
+
+      - name: Release latest image
+        env:
+          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+        run: heroku container:release web
+
+      - name: Wait for dyno(s) to start
+        env:
+          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+        run: heroku ps:wait
+
+      - name: Post success in the deploys channel
+        if: ${{ success() }}
+        uses: rtCamp/action-slack-notify@v2
+        env:
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+          SLACK_COLOR: ${{ job.status }}
+          SLACK_USERNAME: Kompanion
+          SLACK_ICON_EMOJI: ":robot_face:"
+          SLACK_CHANNEL: deploys
+          SLACK_TITLE: "Succesfully deployed IntelliComfort API"
+          MSG_MINIMAL: commit,actions url
+          SLACK_MESSAGE: ":rocket:"
+
+      - name: Post failure in the deploys channel
+        if: ${{ !success() }}
+        uses: rtCamp/action-slack-notify@v2
+        env:
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+          SLACK_COLOR: ${{ job.status }}
+          SLACK_USERNAME: Kompanion
+          SLACK_ICON_EMOJI: ":robot_face:"
+          SLACK_CHANNEL: deploys
+          SLACK_TITLE: "Failed to deploy IntelliComfort API"
+          MSG_MINIMAL: commit,actions url
+          SLACK_MESSAGE: ":sob:"

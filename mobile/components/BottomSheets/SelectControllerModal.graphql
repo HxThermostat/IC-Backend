@@ -1,0 +1,27 @@
+fragment Component_SelectControllerModal_Controller on Controller {
+  __typename
+  id
+  name
+  mode {
+    effectiveMode
+  }
+  temperatureAmbient
+}
+
+fragment Component_SelectControllerModal_Location on Location {
+  __typename
+  id
+  name
+  zoning
+  connectionStatus
+  controllers {
+    ...Component_SelectControllerModal_Controller
+  }
+  temperatureUnit
+}
+
+query SelectController {
+  locations {
+    ...Component_SelectControllerModal_Location
+  }
+}

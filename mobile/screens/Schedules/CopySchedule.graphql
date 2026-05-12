@@ -1,0 +1,27 @@
+fragment Screen_Copy_Schedule_Controller on Controller {
+  __typename
+  id
+  schedule {
+    ...ScheduleFields
+  }
+  location {
+    temperatureUnit
+  }
+}
+
+query CopySchedule($controllerId: ID!) {
+  controller(id: $controllerId) {
+    ...Screen_Copy_Schedule_Controller
+  }
+}
+
+mutation MakeScheduleCopy($input: CopyScheduleInput!) {
+  copySchedule(input: $input) {
+    __typename
+    ... on CopyScheduleSuccess {
+      controller {
+        ...Screen_Copy_Schedule_Controller
+      }
+    }
+  }
+}

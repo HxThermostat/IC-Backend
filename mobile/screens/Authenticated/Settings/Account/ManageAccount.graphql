@@ -1,0 +1,11 @@
+fragment Screen_ManageAccount_User on User {
+  __typename
+  id
+  email
+}
+
+query ManageAccount {
+  me {
+    ...Screen_ManageAccount_User
+  }
+}

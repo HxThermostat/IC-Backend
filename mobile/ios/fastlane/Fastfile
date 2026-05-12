@@ -1,0 +1,216 @@
+require 'dotenv/load'
+require_relative "s3_folder_uploader"
+
+Dotenv.load('../../.env')
+
+# Uncomment the line if you want fastlane to automatically update itself
+# update_fastlane
+
+default_platform(:ios)
+
+platform :ios do  
+
+  desc "Build and white label iOS (all apps)"
+  # options :skip_build, :sign_app, :keep_artifacts
+  lane :build_all_apps do |options|
+    skip_all_builds = !!options[:skip_build]
+    apps = get_available_apps 
+
+    # Build the .ipa once so we can skip it for each app below
+    build_ipa unless skip_all_builds
+
+    apps.each_with_index do |app, index|
+      build(options.merge!({app: app, skip_build: true}))
+    end
+  end
+  
+  desc "Build and white label iOS"
+  # options :app, :skip_build, :sign_app, :keep_artifacts
+  lane :build do |options|
+    app_name = ensure_app_valid options[:app]
+    sign_app = !!options[:sign_app]
+    skip_build = !!options[:skip_build]
+    keep_artifacts = !!options[:keep_artifacts]
+    
+    build_ipa unless skip_build
+
+    paths = build_paths(app_name)
+    config = read_json(
+      json_path: "#{paths[:APP_CONFIG_PATH]}/whitelabel.json"
+    )
+
+    Dir.chdir("..") do
+      sh("rm -rf #{paths[:BASE_PATH_IOS]}")
+      sh("mkdir -p #{paths[:BASE_PATH_IOS]}")
+
+      sh("unzip #{paths[:BASE_IPA_PATH]} -d #{paths[:BASE_PATH_IOS]}")
+          
+      info_plist_adjustments = [ 
+        { key: "CFBundleDisplayName", value_type: "string", value: "'#{config[:display_name]}'" },
+        { key: "CFBundleShortVersionString", value_type: "string", value: "'#{config[:version_name_ios]}'" },
+        { key: "CFBundleVersion", value_type: "string", value: "'#{Time.now.to_i}'" },
+        { key: "CFBundleIdentifier", value_type: "string", value: "'#{config[:bundle_id_ios]}'" },
+        { key: "CFBundleURLTypes.0.CFBundleURLSchemes", value_type: "json", value: "'#{[config[:uri_scheme]]}'" },
+        { key: "NSAllowsArbitraryLoads", value_type: "bool", value: false },
+        { key: "NSAppTransportSecurity.NSAllowsArbitraryLoads", value_type: "bool", value: false },
+        { key: "NSAppTransportSecurity.NSExceptionDomains", value_type: "json", value: "'#{{}}'" },
+      ]
+
+      info_plist_adjustments.each { |info| update_plist(info.merge!({path: paths[:IOS_INFO_PLIST]})) }
+
+      sh("cp #{paths[:APP_CONFIG_PATH]}/whitelabel.json #{paths[:BASE_PATH_IOS_APP]}")
+
+      Dir.chdir("#{paths[:BASE_PATH_IOS]}") do
+        sh("mkdir assets")
+        sh("yarn whitelabel:generate_icon_ios #{app_name} $(pwd)")
+        sh("yarn whitelabel:generate_splash_screen_ios #{app_name} $(pwd)")
+        sh("xcrun actool --compile assets --minimum-deployment-target 11.0 --platform iphoneos --app-icon AppIcon --output-partial-info-plist Images.plist ./Images.xcassets")
+        sh("mv assets/* Payload/klimate.app")
+      end
+      sh("rm -rf #{paths[:BASE_PATH_IOS_APP]}/_CodeSignature")
+      clean_generated_build_artifacts({paths: paths}) unless keep_artifacts
+    end
+
+    if sign_app
+      sign_white_label_build({ paths: paths, config: config, app_name: app_name })
+    else 
+      Dir.chdir("..") do
+        sh("zip -qr '#{paths[:BASE_PATH_IOS]}/#{app_name}.ipa' #{paths[:BASE_PATH_IOS]}/Payload")
+      end
+    end
+  end
+
+  desc "Build klimate.ipa used for white labeling"
+  lane :build_ipa do
+    build_app(
+      scheme: "klimate",
+      workspace: "Klimate.xcworkspace",
+      export_team_id: "BPGHMXQ36K",
+      include_bitcode: true,
+      include_symbols: true,
+      export_method: "app-store",
+      skip_codesigning: true,
+      output_directory: "build"
+    )
+  end
+
+  desc "Removes irrelevant build artifacts"
+  private_lane :clean_generated_build_artifacts do |options|
+    paths = options[:paths]
+    Dir.chdir("#{paths[:BASE_PATH_IOS]}") do
+      sh("rm -rf assets/ Images.xcassets/ BCSymbolMaps/")
+      sh("rm Images.plist")
+    end
+  end
+
+
+  desc "Signs the white label app with the signing configuration under app_config/<app>/signing"
+  private_lane :sign_white_label_build do |options|
+    paths = options[:paths]
+    config = options[:config]
+    app_name = options[:app_name]
+
+    Dir.chdir("..") do
+      keychain = "klimate.keychain-db"
+      keychain_password = "whitelabel"
+
+      # create temporary keychain
+      sh("security delete-keychain #{keychain} || true")
+      sh("security create-keychain -p #{keychain_password} #{keychain}")
+      sh("security set-keychain-settings -lut 21600 #{keychain}")
+      sh("security unlock-keychain -p #{keychain_password} #{keychain}")
+
+      # import certificate to keychain
+      sh("security import #{paths[:APP_CONFIG_PATH]}/signing/ios/certificate.p12 -P \"$(cat #{paths[:APP_CONFIG_PATH]}/signing/ios/p12_password)\" -A -t cert -f pkcs12 -k #{keychain}")
+      sh("security list-keychain -d user -s #{keychain}")
+
+      # read the certificate's friendly name
+      signing_cert = sh("openssl pkcs12 -info -in #{paths[:APP_CONFIG_PATH]}/signing/ios/certificate.p12 -password file:#{paths[:APP_CONFIG_PATH]}/signing/ios/p12_password -nokeys 2>/dev/null | grep friendlyName | cut -d':' -f2-").strip.chomp
+
+      # allow the new keychain to be used by codesign without prompting for the password
+      sh("security set-key-partition-list -S apple-tool:,apple:,codesign: -s -k #{keychain_password} #{keychain}")
+
+      sh("cp #{paths[:APP_CONFIG_PATH]}/signing/ios/embedded.mobileprovision #{paths[:BASE_PATH_IOS_APP]}")
+
+      sh("codesign -d --entitlements :#{paths[:IOS_ENTITLEMENTS]} #{paths[:BASE_PATH_IOS_APP]}")
+      
+      update_plist(
+        key: "'com\\.apple\\.developer\\.associated-domains'",
+        value_type: "json", 
+        value: %Q! '["applinks:#{config[:host_name]}"]' !, 
+        path: paths[:IOS_ENTITLEMENTS]
+      )
+
+      update_plist(
+        key: "'application-identifier'",
+        value_type: "string", 
+        value: "#{config[:team_id]}.#{config[:bundle_id_ios]}",
+        path: paths[:IOS_ENTITLEMENTS]
+      ) 
+      
+      update_plist(
+        key: "'com\\.apple\\.developer\\.team-identifier'",
+        value_type: "string", 
+        value: "#{config[:team_id]}", 
+        path: paths[:IOS_ENTITLEMENTS]
+      )
+      
+      Dir.chdir("#{paths[:BASE_PATH_IOS]}") do
+        sh("codesign --deep --force --verify --sign '#{signing_cert}' --keychain #{keychain} Payload/klimate.app") 
+        sh("codesign --deep --force --verify --sign '#{signing_cert}' --keychain #{keychain} --entitlements entitlements.plist Payload/klimate.app")
+        sh("zip -qr '#{app_name}.ipa' Payload")
+      end
+    ensure
+      # remove the keychain we created
+      sh("security delete-keychain #{keychain} || true")
+    end
+  end
+
+  lane :publish_js_bundles_and_assets do |options| 
+    BASE_URL = "https://klimate.kraftful.app/update"
+
+    package = read_json(json_path: "../package.json")
+    version =  package[:version]
+    # all OTA updates exist under their equivalent "x.x.0" release
+    version.gsub!(/.$/, "0")
+
+    Dir.chdir("../../") do
+      sh "yarn expo export --public-url #{BASE_URL}/#{version} --target bare  --dump-sourcemap"
+    end
+    upload_s3(version: version)
+  end
+
+  private_lane :upload_s3 do |options|
+    uploader = S3FolderUploader.new('../../dist', options[:version])
+    uploader.upload!
+  end
+end
+
+def ensure_app_valid(app_name)
+  apps = get_available_apps
+  app = apps.find { |app| app == app_name }
+  UI.user_error!("App #{app_name} is not valid") unless !app.nil?
+  app_name
+end
+
+def get_available_apps
+  config_path ="../../app_config"
+  Dir.entries(config_path).filter { |f| File.directory? File.join(config_path, f) and !f.include?(".") }
+end
+
+def update_plist(key:, value_type:, value:, path:) 
+  sh("plutil -replace #{key} -#{value_type} #{value} #{path}")
+end
+
+def build_paths(app_name)
+  base_path_ios = "./build/#{app_name}/changes"
+  {
+    APP_CONFIG_PATH: "../app_config/#{app_name}",
+    BASE_IPA_PATH: "./build/klimate.ipa",
+    BASE_PATH_IOS: base_path_ios,
+    BASE_PATH_IOS_APP: "#{base_path_ios}/Payload/klimate.app",
+    IOS_EXPO_PLIST: "#{base_path_ios}/Payload/klimate.app/Expo.plist",
+    IOS_INFO_PLIST: "#{base_path_ios}/Payload/klimate.app/Info.plist",
+    IOS_ENTITLEMENTS: "#{base_path_ios}/entitlements.plist"
+  }
+end

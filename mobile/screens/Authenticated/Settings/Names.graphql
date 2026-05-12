@@ -1,0 +1,48 @@
+fragment Screen_Settings_Names_Controller on Controller {
+  __typename
+  id
+  name
+}
+
+fragment Screen_Settings_Names_Location on Location {
+  __typename
+  id
+  name
+  controllers {
+    ...Screen_Settings_Names_Controller
+  }
+}
+
+query Names($locationId: ID!) {
+  location(id: $locationId) {
+    ...Screen_Settings_Names_Location
+  }
+}
+
+query ControllerName($controllerId: ID!) {
+  controller(id: $controllerId) {
+    ...Screen_Settings_Names_Controller
+  }
+}
+
+mutation RenameController($input: RenameInput!) {
+  renameController(input: $input) {
+    __typename
+    ... on RenameControllerSuccess {
+      controller {
+        ...Screen_Settings_Names_Controller
+      }
+    }
+  }
+}
+
+mutation RenameLocation($input: RenameInput!) {
+  renameLocation(input: $input) {
+    __typename
+    ... on RenameLocationSuccess {
+      location {
+        ...Screen_Settings_Names_Location
+      }
+    }
+  }
+}

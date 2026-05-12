@@ -1,0 +1,6 @@
+module Pods_klimate {
+  umbrella header "Pods-klimate-umbrella.h"
+
+  export *
+  module * { export * }
+}
