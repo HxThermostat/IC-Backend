@@ -1,0 +1,19 @@
+interface FanRunning {
+  running: Boolean!
+}
+
+type SpeedNameFan implements FanRunning {
+  activeSpeedName: String
+  running: Boolean!
+}
+
+type PercentageFan implements FanRunning {
+  activeSpeedPercent: Float!
+  running: Boolean!
+}
+
+union Fan = PercentageFan | SpeedNameFan
+
+extend type Controller {
+  fan: Fan
+}

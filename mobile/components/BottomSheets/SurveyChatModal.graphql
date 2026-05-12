@@ -1,0 +1,10 @@
+fragment Component_SurveyChatModal_User on User {
+  id
+  email
+}
+
+query SurveyChatModal {
+  me {
+    ...Component_SurveyChatModal_User
+  }
+}

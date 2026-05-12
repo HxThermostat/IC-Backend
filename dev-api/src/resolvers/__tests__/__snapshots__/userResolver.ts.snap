@@ -1,0 +1,33 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`me it returns null when unauthenticated 1`] = `
+Object {
+  "data": Object {
+    "me": null,
+  },
+  "errors": undefined,
+  "extensions": undefined,
+  "http": Object {
+    "headers": Headers {
+      Symbol(map): Object {},
+    },
+  },
+}
+`;
+
+exports[`me it returns the correct fields when authenticated 1`] = `
+Object {
+  "data": Object {
+    "me": Object {
+      "id": "ed75d94a-dde6-48b8-83a3-e2aae86237f5",
+    },
+  },
+  "errors": undefined,
+  "extensions": undefined,
+  "http": Object {
+    "headers": Headers {
+      Symbol(map): Object {},
+    },
+  },
+}
+`;

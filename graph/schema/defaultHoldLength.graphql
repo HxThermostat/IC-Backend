@@ -1,0 +1,71 @@
+enum DefaultHoldLengthFeature {
+  INDEFINITE
+  NEXT_EVENT
+  HOURS_12
+  HOURS_24
+  DATE
+}
+
+extend type FeatureMap {
+  changeDefaultHoldLengthController: [DefaultHoldLengthFeature!]
+  changeDefaultHoldLengthLocation: [DefaultHoldLengthFeature!]
+}
+
+extend type Controller {
+  defaultHoldLength: HoldLength
+}
+
+extend type Location {
+  defaultHoldLength: HoldLength
+}
+
+extend type Mutation {
+  changeDefaultControllerHoldLength(
+    input: ChangeDefaultHoldLengthInput!
+  ): ChangeDefaultControllerHoldLengthResult!
+  changeDefaultLocationHoldLength(
+    input: ChangeDefaultHoldLengthInput!
+  ): ChangeDefaultLocationHoldLengthResult!
+}
+
+input ChangeDefaultHoldLengthIndefiniteInput {
+  _: Boolean
+}
+
+input ChangeDefaultHoldLengthNextEventInput {
+  _: Boolean
+}
+
+input ChangeDefaultHoldLengthHoursInput {
+  hours: Int!
+}
+
+input ChangeDefaultHoldLengthDateInput {
+  date: String!
+}
+
+input ChangeDefaultHoldLengthInput {
+  id: ID!
+  indefinite: ChangeDefaultHoldLengthIndefiniteInput
+  nextEvent: ChangeDefaultHoldLengthNextEventInput
+  hours: ChangeDefaultHoldLengthHoursInput
+  date: ChangeDefaultHoldLengthDateInput
+}
+
+type ChangeDefaultControllerHoldLengthSuccess {
+  controller: Controller!
+}
+
+union ChangeDefaultControllerHoldLengthResult =
+    ChangeDefaultControllerHoldLengthSuccess
+  | NotSupported
+  | NotFound
+
+type ChangeDefaultLocationHoldLengthSuccess {
+  location: Location!
+}
+
+union ChangeDefaultLocationHoldLengthResult =
+    ChangeDefaultLocationHoldLengthSuccess
+  | NotSupported
+  | NotFound

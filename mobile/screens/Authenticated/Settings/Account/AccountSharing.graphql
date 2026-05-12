@@ -1,0 +1,10 @@
+mutation GenerateAccountSharingQrCode($width: Int!) {
+  generateAccountSharingQrCode(input: { size: $width }) {
+    ... on GenerateAccountSharingQrCodeSuccess {
+      code {
+        dataUrl
+        ttl
+      }
+    }
+  }
+}

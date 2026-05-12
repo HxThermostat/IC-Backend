@@ -1,0 +1,13 @@
+fragment Screen_Support_Manufacturer on Manufacturer {
+  support {
+    email
+    phone
+    website
+  }
+}
+
+query SupportContact {
+  manufacturer {
+    ...Screen_Support_Manufacturer
+  }
+}

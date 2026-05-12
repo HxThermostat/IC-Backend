@@ -1,0 +1,20 @@
+fragment Screen_Settings_List_Temperature_Presets_Location on Location {
+  __typename
+  id
+  temperaturePresets {
+    ...TemperaturePresetsFields
+  }
+  temperatureUnit
+}
+
+query ListTemperaturePresets($locationId: ID!) {
+  location(id: $locationId) {
+    ...Screen_Settings_List_Temperature_Presets_Location
+  }
+}
+
+query TemperaturePreset($temperaturePresetId: ID!) {
+  temperaturePreset(id: $temperaturePresetId) {
+    ...TemperaturePresetsFields
+  }
+}

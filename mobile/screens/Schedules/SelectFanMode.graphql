@@ -1,0 +1,23 @@
+fragment Screen_Select_Fan_Mode on Location {
+  __typename
+  id
+}
+
+query SelectFanMode($locationId: ID!) {
+  location(id: $locationId) {
+    ...Screen_Select_Fan_Mode
+  }
+}
+
+mutation ChangeTemperaturePresetFanMode(
+  $input: ChangeTemperaturePresetFanModeInput!
+) {
+  changeTemperaturePresetFanMode(input: $input) {
+    __typename
+    ... on ChangeTemperaturePresetFanModeSuccess {
+      temperaturePreset {
+        ...TemperaturePresetsFields
+      }
+    }
+  }
+}

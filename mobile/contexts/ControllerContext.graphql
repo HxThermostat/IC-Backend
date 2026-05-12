@@ -1,0 +1,15 @@
+fragment Context_Controllers_Controller on Controller {
+  __typename
+  id
+  location {
+    __typename
+    id
+    temperatureUnit
+  }
+}
+
+query ControllersContext {
+  controllers {
+    ...Context_Controllers_Controller
+  }
+}

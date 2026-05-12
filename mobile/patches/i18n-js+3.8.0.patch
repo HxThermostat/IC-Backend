@@ -1,0 +1,21 @@
+diff --git a/node_modules/i18n-js/app/assets/javascripts/i18n.js b/node_modules/i18n-js/app/assets/javascripts/i18n.js
+index 890192d..94157a4 100644
+--- a/node_modules/i18n-js/app/assets/javascripts/i18n.js
++++ b/node_modules/i18n-js/app/assets/javascripts/i18n.js
+@@ -193,6 +193,7 @@
+     // string is actually missing for testing purposes, you can prefix the
+     // guessed string by setting the value here. By default, no prefix!
+     , missingTranslationPrefix: ''
++    , globals: {}
+   };
+ 
+   // Set default locale. This locale will be used when fallback is enabled and
+@@ -619,7 +620,7 @@
+       return message;
+     }
+ 
+-    options = options || {};
++    options = { ...this.globals, ...options }
+     var matches = message.match(this.placeholder)
+       , placeholder
+       , value

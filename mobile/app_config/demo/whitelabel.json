@@ -1,0 +1,29 @@
+{
+  "android_store_id": "",
+  "bundle_id_android": "com.kraftful.klimate.demo",
+  "bundle_id_ios": "com.kraftful.klimate.demo",
+  "dark_colors": {},
+  "display_name": "Klimate",
+  "google_services": {
+    "default_web_client_id": "645044357294-d4dps546jnpsovsm7ui4eqj7rsq11acg.apps.googleusercontent.com",
+    "geo_api_key": "AIzaSyBsXR8L_lNqMcuEKImXOO_aIxQgOYcJq1U",
+    "gcm_defaultSenderId": "645044357294",
+    "google_api_key": "AIzaSyDUpgSQLhC38abzqWOzgyjT2qxgQ0nJqmk",
+    "google_app_id": "1:645044357294:android:92b83bdf0424c694db053f",
+    "google_crash_reporting_api_key": "AIzaSyDUpgSQLhC38abzqWOzgyjT2qxgQ0nJqmk",
+    "google_storage_bucket": "klimate-app.appspot.com",
+    "project_id": "klimate-app"
+  },
+  "graph_url": "https://kraftful-klimate.herokuapp.com/",
+  "host_name": "klimate-demo.kraftful.app",
+  "ios_store_id": "",
+  "light_colors": {},
+  "splash_screen_background": {
+    "dark": "#000000",
+    "light": "#F1F1F1"
+  },
+  "team_id": "BPGHMXQ36K",
+  "uri_scheme": "klimate-demo",
+  "version_name_android": "1.0.0",
+  "version_name_ios": "1.0.0"
+}

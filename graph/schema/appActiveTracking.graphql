@@ -1,0 +1,29 @@
+enum AppActiveTrackingFeature {
+  INTERVAL_60
+}
+
+extend type FeatureMap {
+  appActiveTracking: [AppActiveTrackingFeature!]
+}
+
+extend type Mutation {
+  setAppActive(input: SetAppActiveInput!): SetAppActiveResult!
+}
+
+enum AppState {
+  FOREGROUND
+  BACKGROUND
+  UNKNOWN
+}
+
+input SetAppActiveInput {
+  appState: AppState!
+  controllerId: ID
+  locationId: ID
+}
+
+type SetAppActiveSuccess {
+  _: Boolean
+}
+
+union SetAppActiveResult = SetAppActiveSuccess | NotSupported | NotFound

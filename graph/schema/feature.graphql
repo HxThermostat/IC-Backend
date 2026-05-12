@@ -1,0 +1,7 @@
+type FeatureMap {
+  _: Boolean
+}
+
+extend type Query {
+  features: FeatureMap!
+}

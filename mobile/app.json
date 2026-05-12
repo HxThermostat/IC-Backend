@@ -1,0 +1,22 @@
+{
+  "name": "klimate",
+  "displayName": "klimate",
+  "expo": {
+    "name": "klimate",
+    "slug": "klimate",
+    "version": "3.2.0",
+    "assetBundlePatterns": ["**/*"],
+    "hooks": {
+      "postExport": [
+        {
+          "file": "sentry-expo/upload-sourcemaps",
+          "config": {
+            "organization": "kraftful",
+            "project": "klimate",
+            "authToken": "f0ab3135a67a41fa871a794b196a427917e26c2582874bfca1c21136e98973ef"
+          }
+        }
+      ]
+    }
+  }
+}

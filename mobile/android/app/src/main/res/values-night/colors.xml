@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <!-- Below line is handled by '@expo/configure-splash-screen' command and it's discouraged to modify it manually -->
+  <color name="splashscreen_background">#000000</color>
+  <!-- if this value is not different than values/colors/colorAccent here, then it gets stripped during build process, which messes up the script for updating this value later. -->
+  <color name="colorAccent">#007AF1</color>
+</resources>

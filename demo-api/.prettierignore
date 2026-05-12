@@ -1,0 +1,3 @@
+**/*.js
+**/*.json
+src/schema/resolvers-types.ts

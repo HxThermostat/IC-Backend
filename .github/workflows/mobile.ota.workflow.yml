@@ -1,0 +1,69 @@
+name: MOBILE-OTA
+
+on:
+  workflow_dispatch:
+
+defaults:
+  run:
+    # Default to commands running in the mobile folder
+    working-directory: ./mobile
+
+jobs:
+  ota:
+    name: Build + Deploy OTA Update
+    runs-on: ubuntu-latest
+    env:
+      BUNDLE_GEMFILE: ${{ github.workspace }}/mobile/ios/Gemfile
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: "~14"
+          cache: "yarn"
+          cache-dependency-path: "mobile/yarn.lock"
+
+      - name: Install yarn dependencies
+        run: yarn --frozen-lockfile --prefer-offline
+
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "2.7.3"
+          bundler-cache: true
+
+      - uses: maierj/fastlane-action@v2.0.1
+        env:
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.OTA_AWS_SECRET_ACCESS_KEY }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.OTA_AWS_ACCESS_KEY_ID }}
+          AWS_BUCKET: klimate-kraftful-app
+          AWS_DISTRIBUTION_ID: E1ON924IJVBCK0
+          AWS_REGION: us-east-1
+        with:
+          lane: "publish_js_bundles_and_assets"
+          subdirectory: "mobile/ios"
+
+      - name: Post success in the deploys channel
+        if: ${{ success() }}
+        uses: rtCamp/action-slack-notify@v2
+        env:
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+          SLACK_COLOR: ${{ job.status }}
+          SLACK_USERNAME: Kompanion
+          SLACK_ICON_EMOJI: ":robot_face:"
+          SLACK_CHANNEL: deploys
+          SLACK_TITLE: "Succesfully deployed Mobile OTA"
+          MSG_MINIMAL: commit,actions url
+          SLACK_MESSAGE: ":rocket:"
+
+      - name: Post failure in the deploys channel
+        if: ${{ !success() }}
+        uses: rtCamp/action-slack-notify@v2
+        env:        
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+          SLACK_COLOR: ${{ job.status }}
+          SLACK_USERNAME: Kompanion
+          SLACK_ICON_EMOJI: ":robot_face:"
+          SLACK_CHANNEL: deploys
+          SLACK_TITLE: "Failed to deploy Mobile OTA"
+          MSG_MINIMAL: commit,actions url
+          SLACK_MESSAGE: ":sob:"

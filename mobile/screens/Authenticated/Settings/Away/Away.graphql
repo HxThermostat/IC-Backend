@@ -1,0 +1,58 @@
+fragment Screen_Settings_Away_Controller on Controller {
+  __typename
+  id
+  name
+  away {
+    ...AwayFields
+  }
+  location {
+    temperatureUnit
+  }
+}
+
+fragment Screen_Settings_Away_Location on Location {
+  __typename
+  id
+  name
+  away {
+    ...AwayFields
+  }
+  lat
+  lng
+  controllers {
+    ...Screen_Settings_Away_Controller
+  }
+  temperatureUnit
+}
+
+query AwayController($controllerId: ID!) {
+  controller(id: $controllerId) {
+    ...Screen_Settings_Away_Controller
+  }
+}
+
+query AwayLocation($locationId: ID!) {
+  location(id: $locationId) {
+    ...Screen_Settings_Away_Location
+  }
+}
+
+mutation ChangeControllerAwaySetpoint($input: ChangeAwaySetpointInput!) {
+  changeControllerAwaySetpoint(input: $input) {
+    ... on ChangeControllerAwaySetpointSuccess {
+      controller {
+        ...Screen_Settings_Away_Controller
+      }
+    }
+  }
+}
+
+mutation ChangeLocationAwaySetpoint($input: ChangeAwaySetpointInput!) {
+  changeLocationAwaySetpoint(input: $input) {
+    ... on ChangeLocationAwaySetpointSuccess {
+      location {
+        ...Screen_Settings_Away_Location
+      }
+    }
+  }
+}

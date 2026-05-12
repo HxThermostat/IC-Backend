@@ -1,0 +1,67 @@
+fragment Component_Controlled_Dial_Controller on Controller {
+  __typename
+  id
+  call
+  activeHold {
+    __typename
+  }
+  away {
+    active
+  }
+  mode {
+    effectiveMode
+  }
+  location {
+    ...Component_Controlled_Dial_Location
+  }
+  setpoint {
+    ...SetpointFields
+  }
+  setpointRange {
+    min
+    max
+  }
+  temperatureAmbient
+}
+
+fragment Component_Controlled_Dial_Location on Location {
+  __typename
+  id
+  away {
+    active
+  }
+  connectionStatus
+  temperatureUnit
+}
+
+query ControlledDial($controllerId: ID!) {
+  controller(id: $controllerId) {
+    ...Component_Controlled_Dial_Controller
+  }
+}
+
+input SingleSetpointInput {
+  target: Float!
+}
+
+input DualSetpointInput {
+  lower: Float!
+  upper: Float!
+}
+
+mutation ChangeSetpoint(
+  $id: ID!
+  $single: SingleSetpointInput
+  $dual: DualSetpointInput
+) {
+  changeSetpoint(input: { id: $id, single: $single, dual: $dual }) {
+    __typename
+    ... on ChangeSetpointSuccess {
+      controller {
+        setpoint {
+          ...SetpointFields
+        }
+      }
+    }
+  }
+}

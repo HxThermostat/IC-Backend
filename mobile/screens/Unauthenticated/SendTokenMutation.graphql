@@ -1,0 +1,5 @@
+mutation SendToken($input: SendTokenInput!) {
+  sendToken(input: $input) {
+    __typename
+  }
+}

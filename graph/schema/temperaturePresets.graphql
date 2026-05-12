@@ -1,0 +1,126 @@
+enum TemperaturePresetsFeature {
+  BUILT_IN
+  CUSTOM
+}
+
+extend type FeatureMap {
+  temperaturePresets: [TemperaturePresetsFeature!]
+}
+
+enum Slot {
+  HOME
+  AWAY
+  SLEEP
+  CUSTOM
+}
+
+type TemperaturePreset {
+  id: ID!
+  name: String!
+  slot: Slot
+  setpoint: Setpoint!
+  fanMode: FanMode
+  removable: Boolean!
+}
+
+extend type Query {
+  temperaturePreset(id: ID!): TemperaturePreset
+  temperaturePresets: [TemperaturePreset!]
+}
+
+extend type Location {
+  temperaturePreset(id: ID!): TemperaturePreset
+  temperaturePresets: [TemperaturePreset!]
+}
+
+extend type Mutation {
+  addTemperaturePreset(
+    input: AddTemperaturePresetInput!
+  ): AddTemperaturePresetResult!
+  changeTemperaturePresetName(
+    input: ChangeTemperaturePresetNameInput!
+  ): ChangeTemperaturePresetNameResult!
+  changeTemperaturePresetSetpoint(
+    input: ChangeTemperaturePresetSetpointInput!
+  ): ChangeTemperaturePresetSetpointResult!
+  changeTemperaturePresetFanMode(
+    input: ChangeTemperaturePresetFanModeInput!
+  ): ChangeTemperaturePresetFanModeResult!
+  removeTemperaturePreset(
+    input: RemoveTemperaturePresetInput!
+  ): RemoveTemperaturePresetResult!
+}
+
+input AddTemperaturePresetInput {
+  id: ID!
+  single: SingleSetpointInput
+  dual: DualSetpointInput
+  name: String!
+  fanMode: FanMode
+}
+
+type AddTemperaturePresetSuccess {
+  temperaturePreset: TemperaturePreset!
+}
+
+union AddTemperaturePresetResult =
+    AddTemperaturePresetSuccess
+  | NotFound
+  | NotSupported
+
+input ChangeTemperaturePresetNameInput {
+  id: ID!
+  name: String!
+}
+
+type ChangeTemperaturePresetNameSuccess {
+  temperaturePreset: TemperaturePreset!
+}
+
+union ChangeTemperaturePresetNameResult =
+    ChangeTemperaturePresetNameSuccess
+  | NotFound
+  | NotSupported
+
+input ChangeTemperaturePresetSetpointInput {
+  id: ID!
+  single: SingleSetpointInput
+  dual: DualSetpointInput
+}
+
+type ChangeTemperaturePresetSetpointSuccess {
+  temperaturePreset: TemperaturePreset!
+}
+
+union ChangeTemperaturePresetSetpointResult =
+    ChangeTemperaturePresetSetpointSuccess
+  | NotFound
+  | NotSupported
+
+input ChangeTemperaturePresetFanModeInput {
+  id: ID!
+  fanMode: FanMode!
+}
+
+type ChangeTemperaturePresetFanModeSuccess {
+  temperaturePreset: TemperaturePreset!
+}
+
+union ChangeTemperaturePresetFanModeResult =
+    ChangeTemperaturePresetFanModeSuccess
+  | NotFound
+  | NotSupported
+
+input RemoveTemperaturePresetInput {
+  locationId: ID!
+  id: ID!
+}
+
+type RemoveTemperaturePresetSuccess {
+  _: Boolean
+}
+
+union RemoveTemperaturePresetResult =
+    RemoveTemperaturePresetSuccess
+  | NotFound
+  | NotSupported

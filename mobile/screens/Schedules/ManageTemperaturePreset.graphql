@@ -1,0 +1,65 @@
+fragment Screen_Manage_Temperature_Preset_Location on Location {
+  __typename
+  id
+  temperaturePresets {
+    ...TemperaturePresetsFields
+  }
+  temperatureUnit
+}
+
+query NewTemperaturePreset($locationId: ID!) {
+  location(id: $locationId) {
+    ...Screen_Manage_Temperature_Preset_Location
+  }
+}
+
+query ManageTemperaturePreset($locationId: ID!, $temperaturePresetId: ID!) {
+  location(id: $locationId) {
+    ...Screen_Manage_Temperature_Preset_Location
+  }
+  temperaturePreset(id: $temperaturePresetId) {
+    ...TemperaturePresetsFields
+  }
+}
+
+mutation AddTemperaturePreset($input: AddTemperaturePresetInput!) {
+  addTemperaturePreset(input: $input) {
+    __typename
+    ... on AddTemperaturePresetSuccess {
+      temperaturePreset {
+        ...TemperaturePresetsFields
+      }
+    }
+  }
+}
+
+mutation ChangeTemperaturePreset(
+  $setpointInput: ChangeTemperaturePresetSetpointInput!
+  $nameInput: ChangeTemperaturePresetNameInput!
+) {
+  changeTemperaturePresetSetpoint(input: $setpointInput) {
+    __typename
+    ... on ChangeTemperaturePresetSetpointSuccess {
+      temperaturePreset {
+        ...TemperaturePresetsFields
+      }
+    }
+  }
+  changeTemperaturePresetName(input: $nameInput) {
+    __typename
+    ... on ChangeTemperaturePresetNameSuccess {
+      temperaturePreset {
+        ...TemperaturePresetsFields
+      }
+    }
+  }
+}
+
+mutation RemoveTemperaturePreset($input: RemoveTemperaturePresetInput!) {
+  removeTemperaturePreset(input: $input) {
+    __typename
+    ... on RemoveTemperaturePresetSuccess {
+      _
+    }
+  }
+}

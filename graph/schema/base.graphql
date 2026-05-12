@@ -1,0 +1,44 @@
+type Query {
+  _: Boolean
+}
+
+type Mutation {
+  _: Boolean
+}
+
+enum Placement {
+  PRIMARY
+  SECONDARY
+  TERTIARY
+}
+
+interface RangeValue {
+  value: Float!
+  min: Float!
+  max: Float!
+  step: Float!
+}
+
+interface DualRangeValue {
+  lower: RangeValue!
+  upper: RangeValue!
+  minInterval: Float
+}
+
+type PercentageRangeValue implements RangeValue {
+  value: Float!
+  min: Float!
+  max: Float!
+  step: Float!
+}
+
+interface Range {
+  min: Float!
+  max: Float!
+}
+
+interface File {
+  dataUrl: String!
+  mimeType: String!
+  data: String!
+}

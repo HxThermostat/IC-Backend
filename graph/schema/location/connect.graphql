@@ -1,0 +1,29 @@
+enum ConnectFeature {
+  AYLA_DISPLAY
+}
+
+extend type FeatureMap {
+  connect: ConnectFeature
+}
+
+extend type Mutation {
+  connectAylaDisplay(input: ConnectAylaDisplayInput!): ConnectAylaDisplayResult!
+}
+
+input ConnectAylaDisplayInput {
+  token: String!
+}
+
+type ConnectAylaDisplaySuccess {
+  location: Location!
+}
+
+type DeviceStateInvalid implements Error {
+  message: String
+}
+
+union ConnectAylaDisplayResult =
+    ConnectAylaDisplaySuccess
+  | TokenInvalid
+  | DeviceStateInvalid
+  | NotSupported

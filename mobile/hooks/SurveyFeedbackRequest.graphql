@@ -1,0 +1,19 @@
+query RequestSurveyFeedback(
+  $build: String!
+  $installedAt: String!
+  $lastDisplayedAt: String
+  $lastResponseAt: String
+  $platform: Platform!
+  $version: String!
+) {
+  requestSurveyFeedback(
+    input: {
+      build: $build
+      installedAt: $installedAt
+      lastDisplayedAt: $lastDisplayedAt
+      lastResponseAt: $lastResponseAt
+      platform: $platform
+      version: $version
+    }
+  )
+}

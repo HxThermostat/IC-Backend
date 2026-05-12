@@ -1,0 +1,32 @@
+overwrite: true
+schema: ${SCHEMA_PATH:../graph/schema/**/*.graphql}
+documents:
+  - "**/*.{ts,tsx,graphql}"
+  - "!ios/**"
+  - "!node_modules/**"
+generates:
+  graph/schema.tsx:
+    plugins:
+      - "typescript"
+      - "typescript-operations"
+      - "typescript-react-apollo"
+    config:
+      avoidOptionals: true
+      enumsAsTypes: true
+      withHooks: true
+      withComponent: false
+      withHOC: false
+      reactApolloVersion: 3
+      withMutationOptionsType: false
+      skipTypename: false
+    hooks:
+      afterOneFileWrite:
+        - yarn prettier --ignore-path /dev/null --write
+  graph/introspectionResult.ts:
+    plugins:
+      - "fragment-matcher"
+    config:
+      apolloClientVersion: 3
+    hooks:
+      afterOneFileWrite:
+        - yarn prettier --ignore-path /dev/null --write

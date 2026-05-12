@@ -1,0 +1,90 @@
+#!/bin/bash -e
+
+# Check imagemagick is installed
+# http://stackoverflow.com/questions/592620/check-if-a-program-exists-from-a-bash-script
+command -v convert >/dev/null 2>&1 || { echo >&2 "Imagemagick is required but not installed"; exit 1; }
+command -v jq >/dev/null 2>&1 || { echo >&2 "jq is required but not installed"; exit 1; }
+
+# Basic usage help text
+test "$#" -eq 2 || { echo >&2 "Usage: $0 [appName] [outputDir]"; exit 1; }
+
+# Ensure we're running in location of script.
+cd $(dirname "$0")
+
+appName="$1"
+outputDir="$2"
+
+test -d "../app_config/${appName}" || { echo >&2 "${appName} doesn't appear to be a valid app name"; exit 1; }
+
+imageSetDir="${outputDir}/Images.xcassets/SplashScreenBackground.imageset"
+mkdir -p "${imageSetDir}"
+
+# clean it out
+rm -rf "${imageSetDir}"/*.png
+
+convert -size 1x1 xc:"$(cat "../app_config/${appName}/whitelabel.json" | jq -r .splash_screen_background.light)" "${imageSetDir}/background.png"
+convert -size 1x1 xc:"$(cat "../app_config/${appName}/whitelabel.json" | jq -r .splash_screen_background.dark)" "${imageSetDir}/dark_background.png"
+
+cat > "${imageSetDir}/Contents.json" << EOF
+{
+  "images": [
+    {
+      "idiom": "universal",
+      "filename": "background.png",
+      "scale": "1x"
+    },
+    {
+      "appearances": [
+        {
+          "appearance": "luminosity",
+          "value": "dark"
+        }
+      ],
+      "idiom": "universal",
+      "filename": "dark_background.png",
+      "scale": "1x"
+    },
+    {
+      "idiom": "universal",
+      "scale": "2x"
+    },
+    {
+      "appearances": [
+        {
+          "appearance": "luminosity",
+          "value": "dark"
+        }
+      ],
+      "idiom": "universal",
+      "scale": "2x"
+    },
+    {
+      "idiom": "universal",
+      "scale": "3x"
+    },
+    {
+      "appearances": [
+        {
+          "appearance": "luminosity",
+          "value": "dark"
+        }
+      ],
+      "idiom": "universal",
+      "scale": "3x"
+    }
+  ],
+  "info": {
+    "version": 1,
+    "author": "xcode"
+  }
+}
+EOF
+
+cat > "${imageSetDir}/../Contents.json" << EOF
+{
+  "info": {
+    "version": 1,
+    "author": "xcode"
+  }
+}
+EOF

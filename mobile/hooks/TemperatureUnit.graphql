@@ -1,0 +1,12 @@
+mutation ChangeTemperatureUnit($input: ChangeTemperatureUnitInput!) {
+  changeTemperatureUnit(input: $input) {
+    __typename
+    ... on ChangeTemperatureUnitSuccess {
+      location {
+        __typename
+        id
+        temperatureUnit
+      }
+    }
+  }
+}

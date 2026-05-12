@@ -1,0 +1,191 @@
+enum ScheduleFeature {
+  SCHEDULE_TEMPERATURE
+  SCHEDULE_TEMPERATURE_FAN
+}
+
+extend type FeatureMap {
+  schedule: ScheduleFeature
+}
+
+enum Day {
+  SUN
+  MON
+  TUE
+  WED
+  THU
+  FRI
+  SAT
+}
+
+type ScheduleTime {
+  day: Day!
+  hour: Int!
+  minute: Int!
+}
+
+input ScheduleTimeInput {
+  day: Day!
+  hour: Int!
+  minute: Int!
+}
+
+type ScheduleEvent {
+  id: ID!
+  day: Day!
+  removable: Boolean!
+  start: ScheduleTime!
+  end: ScheduleTime!
+  nextEvent: ScheduleEvent!
+  prevEvent: ScheduleEvent!
+  temperaturePreset: TemperaturePreset!
+}
+
+type ScheduleDay {
+  day: Day!
+  events: [ScheduleEvent!]!
+  full: Boolean!
+}
+
+type Schedule {
+  days: [ScheduleDay!]!
+  monday: ScheduleDay!
+  tuesday: ScheduleDay!
+  wednesday: ScheduleDay!
+  thursday: ScheduleDay!
+  friday: ScheduleDay!
+  saturday: ScheduleDay!
+  sunday: ScheduleDay!
+  maxEvents: Int!
+  minEvents: Int!
+  minEventInterval: Int!
+}
+
+extend type Controller {
+  schedule: Schedule
+}
+
+type HoldLengthIndefinite {
+  _: Boolean
+}
+
+type HoldLengthNextEvent {
+  _: Boolean
+}
+
+type HoldLengthHours {
+  hours: Int!
+}
+
+type HoldLengthDate {
+  date: String!
+}
+
+union HoldLength =
+    HoldLengthIndefinite
+  | HoldLengthNextEvent
+  | HoldLengthHours
+  | HoldLengthDate
+
+extend type Query {
+  scheduleEvent(id: ID!): ScheduleEvent
+  scheduleEvents: [ScheduleEvent!]!
+}
+
+extend type Controller {
+  activeHold: HoldLength
+}
+
+extend type Mutation {
+  addScheduleEvent(input: AddScheduleEventInput!): AddScheduleEventResult!
+  cancelHold(input: CancelHoldInput!): CancelHoldResult!
+  changeScheduleEventTime(
+    input: ChangeScheduleEventTimeInput!
+  ): ChangeScheduleEventTimeResult!
+  changeScheduleEventTemperaturePreset(
+    input: ChangeScheduleEventTemperaturePresetInput!
+  ): ChangeScheduleEventTemperaturePresetResult!
+  copySchedule(input: CopyScheduleInput!): CopyScheduleResult!
+  removeScheduleEvent(
+    input: RemoveScheduleEventInput!
+  ): RemoveScheduleEventResult!
+}
+
+input CancelHoldInput {
+  id: ID!
+}
+
+type CancelHoldSuccess {
+  controller: Controller!
+}
+
+union CancelHoldResult = CancelHoldSuccess | NotFound
+
+input ChangeScheduleEventTimeInput {
+  id: ID!
+  start: ScheduleTimeInput!
+  end: ScheduleTimeInput!
+}
+
+type ChangeScheduleEventTimeSuccess {
+  scheduleEvent: ScheduleEvent!
+}
+
+union ChangeScheduleEventTimeResult = ChangeScheduleEventTimeSuccess | NotFound
+
+input ChangeScheduleEventTemperaturePresetInput {
+  id: ID!
+  temperaturePresetId: ID!
+}
+
+type ChangeScheduleEventTemperaturePresetSuccess {
+  scheduleEvent: ScheduleEvent!
+}
+
+union ChangeScheduleEventTemperaturePresetResult =
+    ChangeScheduleEventTemperaturePresetSuccess
+  | NotFound
+
+input AddScheduleEventInput {
+  id: ID!
+  start: ScheduleTimeInput!
+  end: ScheduleTimeInput!
+  temperaturePresetId: ID
+}
+
+type AddScheduleEventSuccess {
+  controller: Controller!
+  scheduleEvent: ScheduleEvent!
+}
+
+type ScheduleFull implements Error {
+  message: String
+}
+
+union AddScheduleEventResult =
+    AddScheduleEventSuccess
+  | NotFound
+  | NotSupported
+  | ScheduleFull
+
+input CopyScheduleInput {
+  id: ID!
+  source: Day!
+  destination: [Day!]!
+}
+
+type CopyScheduleSuccess {
+  controller: Controller!
+}
+
+union CopyScheduleResult = CopyScheduleSuccess | NotFound
+
+input RemoveScheduleEventInput {
+  id: ID!
+  scheduleEventId: ID!
+}
+
+type RemoveScheduleEventSuccess {
+  controller: Controller!
+}
+
+union RemoveScheduleEventResult = RemoveScheduleEventSuccess | NotFound

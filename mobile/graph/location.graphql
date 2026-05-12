@@ -1,0 +1,19 @@
+fragment BootstrapLocationFields on Location {
+  __typename
+  id
+}
+
+fragment LocationFields on Location {
+  __typename
+  id
+  temperatureUnit
+  ...Screen_Home_Location
+  ...Screen_Settings_Location
+  ...Screen_Settings_Away_Location
+  ...Screen_Settings_HoldLength_Location
+  ...Background_AwayActiveStatus_Location
+  ...Screen_Settings_Notifications_Location
+  ...Screen_Select_Fan_Mode
+  ...Screen_Settings_List_Temperature_Presets_Location
+  ...Screen_Manage_Temperature_Preset_Location
+}

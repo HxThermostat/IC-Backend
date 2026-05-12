@@ -1,0 +1,71 @@
+fragment Screen_Manage_Schedule_Controller on Controller {
+  id
+  schedule {
+    minEventInterval
+  }
+  location {
+    id
+    temperatureUnit
+    temperaturePresets {
+      ...TemperaturePresetsFields
+    }
+  }
+}
+
+query NewSchedule($controllerId: ID!) {
+  controller(id: $controllerId) {
+    ...Screen_Manage_Schedule_Controller
+  }
+}
+
+query ManageSchedule($controllerId: ID!, $scheduleEventId: ID!) {
+  controller(id: $controllerId) {
+    ...Screen_Manage_Schedule_Controller
+  }
+  scheduleEvent(id: $scheduleEventId) {
+    ...ScheduleEventFields
+  }
+}
+
+mutation ChangeScheduleEvent(
+  $timeInput: ChangeScheduleEventTimeInput!
+  $temperaturePresetInput: ChangeScheduleEventTemperaturePresetInput!
+) {
+  changeScheduleEventTime(input: $timeInput) {
+    __typename
+    ... on ChangeScheduleEventTimeSuccess {
+      scheduleEvent {
+        ...ScheduleEventFields
+      }
+    }
+  }
+  changeScheduleEventTemperaturePreset(input: $temperaturePresetInput) {
+    __typename
+    ... on ChangeScheduleEventTemperaturePresetSuccess {
+      scheduleEvent {
+        ...ScheduleEventFields
+      }
+    }
+  }
+}
+mutation AddScheduleEvent($input: AddScheduleEventInput!) {
+  addScheduleEvent(input: $input) {
+    __typename
+    ... on AddScheduleEventSuccess {
+      controller {
+        ...Screen_Schedules_Controller
+      }
+    }
+  }
+}
+
+mutation RemoveScheduleEvent($input: RemoveScheduleEventInput!) {
+  removeScheduleEvent(input: $input) {
+    __typename
+    ... on RemoveScheduleEventSuccess {
+      controller {
+        ...Screen_Schedules_Controller
+      }
+    }
+  }
+}

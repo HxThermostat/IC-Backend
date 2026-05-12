@@ -1,0 +1,54 @@
+# This is a basic workflow to help you get started with Actions
+name: MOBILE-CI
+
+# Triggers the workflow on changes to `mobile/**`
+# 1. On main branch (a merged PR will result in a push)
+# 2. When a pull request created / updated
+# 3. Manually
+on:
+  push:
+    branches: [main]
+    paths: ["mobile/**", "graph/**"]
+  pull_request:
+    types: [opened, reopened, synchronize]
+    paths: ["mobile/**", "graph/**"]
+  workflow_dispatch:
+
+defaults:
+  run:
+    # Default to commands running in the mobile folder
+    working-directory: ./mobile
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: actions/setup-node@v2
+        with:
+          node-version: "~14"
+          cache: "yarn"
+          cache-dependency-path: "mobile/yarn.lock"
+
+      - name: Install yarn dependencies from cache
+        run: yarn --frozen-lockfile --prefer-offline
+
+      - name: Build Graph
+        run: |
+          yarn build-graph
+          git diff --quiet
+          if [ $? -eq 1 ]; then
+            echo "Schema changes detected, they should be validated and comitted"
+            exit 1;
+          fi
+
+      - name: Check translations
+        run: yarn check-translate
+
+      - name: Run ESLint
+        run: yarn lint
+
+      - name: Run Jest
+        run: yarn test

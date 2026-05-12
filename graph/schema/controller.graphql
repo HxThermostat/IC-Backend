@@ -1,0 +1,24 @@
+enum Call {
+  HEAT
+  COOL
+}
+
+type Controller {
+  call: Call
+  humidityAmbient: Float
+  id: ID!
+  location: Location!
+  name: String!
+  temperatureAmbient: Float!
+  zoning: Boolean!
+}
+
+extend type Location {
+  controller: Controller
+  controllers: [Controller!]!
+}
+
+extend type Query {
+  controller(id: ID!): Controller
+  controllers: [Controller!]!
+}

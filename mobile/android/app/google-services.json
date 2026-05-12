@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "645044357294",
+    "project_id": "klimate-app",
+    "storage_bucket": "klimate-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:645044357294:android:92b83bdf0424c694db053f",
+        "android_client_info": {
+          "package_name": "com.kraftful.klimate"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "645044357294-d4dps546jnpsovsm7ui4eqj7rsq11acg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDUpgSQLhC38abzqWOzgyjT2qxgQ0nJqmk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "645044357294-d4dps546jnpsovsm7ui4eqj7rsq11acg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,32 @@
+overwrite: true
+schema: ${SCHEMA_PATH:../graph/schema/**/*.graphql}
+documents: []
+generates:
+  ./src/schema/resolvers-types.ts:
+    plugins:
+      - "typescript"
+      - "typescript-resolvers"
+    config:
+      contextType: ../server/context#AppContext
+      mappers:
+        AccountSharingQrCode: ./mappers#FileMapper
+        Controller: ./mappers#ControllerMapper
+        FeatureMap: ./mappers#FeatureMapMapper
+        Location: ./mappers#LocationMapper
+        Mode: ./mappers#ModeMapper
+        PushToken: ./mappers#PushTokenMapper
+        Schedule: ./mappers#ScheduleMapper
+        ScheduleDay: ./mappers#ScheduleDayMapper
+        ScheduleEvent: ./mappers#ScheduleEventMapper
+        TemperaturePreset: ./mappers#TemperaturePresetMapper
+        User: ./mappers#UserMapper
+      useIndexSignature: true
+    hooks:
+      afterOneFileWrite:
+        - yarn prettier --ignore-path /dev/null --write
+  ./src/graphql.schema.json:
+    plugins:
+      - "introspection"
+    hooks:
+      afterOneFileWrite:
+        - yarn prettier --ignore-path /dev/null --write

@@ -1,0 +1,19 @@
+From f928cb41e373835f7c17f702699d1a96408525ee Mon Sep 17 00:00:00 2001
+From: Jacob Gable <jacob.gable@gmail.com>
+Date: Wed, 11 Aug 2021 15:58:08 -0700
+Subject: [PATCH] Remove dev-api package name
+
+---
+ dev-api/package.json | 1 -
+ 1 file changed, 1 deletion(-)
+
+diff --git a/dev-api/package.json b/dev-api/package.json
+index b50a475ca..94fac0e6f 100644
+--- a/dev-api/package.json
++++ b/dev-api/package.json
+@@ -1,5 +1,4 @@
+ {
+-  "name": "klimate-api",
+   "version": "0.0.1",
+   "private": true,
+   "engines": {

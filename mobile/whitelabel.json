@@ -1,0 +1,9 @@
+{
+  "_comment": "This file is (mostly) just a placeholder. In a white-labelled app it will be replaced with the appropriate values in its respective /ios and /android locations.",
+  "graph_url": "",
+  "android_store_id": "android",
+  "ios_store_id": "ios",
+  "uri_scheme": "klimate",
+  "light_colors": {},
+  "dark_colors": {}
+}

@@ -1,0 +1,14 @@
+{
+  "trailingComma": "es5",
+  "singleQuote": false,
+  "importOrder": [
+    "^~/(components|contexts|hooks|screens|theme)($|/(.*)$)",
+    "^~/graph($|/(.*)$)",
+    "^~/i18n($|/(.*)$)",
+    "^~/utils($|/(.*)$)",
+    "^~/(.*)$",
+    "^../(.*)$",
+    "^./(.*)$"
+  ],
+  "importOrderSeparation": true
+}

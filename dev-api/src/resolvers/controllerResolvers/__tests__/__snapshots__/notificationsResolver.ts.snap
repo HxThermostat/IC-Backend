@@ -1,0 +1,464 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`controller it adjusts the values for adjustControllerHumidityNotification 1`] = `
+Object {
+  "data": Object {
+    "adjustControllerHumidityNotificationThreshold": Object {
+      "__typename": "AdjustControllerHumidityNotificationThresholdSuccess",
+      "controller": Object {
+        "humidityNotification": Object {
+          "enabled": false,
+          "lower": Object {
+            "max": 60,
+            "min": 15,
+            "step": 1,
+            "value": 25,
+          },
+          "minInterval": 5,
+          "upper": Object {
+            "max": 65,
+            "min": 20,
+            "step": 1,
+            "value": 45,
+          },
+        },
+        "id": "b06d8593-997a-44a1-ad23-2cf19e5ad071",
+      },
+    },
+  },
+  "errors": undefined,
+  "extensions": undefined,
+  "http": Object {
+    "headers": Headers {
+      Symbol(map): Object {},
+    },
+  },
+}
+`;
+
+exports[`controller it adjusts the values for adjustControllerTemperatureNotification 1`] = `
+Object {
+  "data": Object {
+    "adjustControllerTemperatureNotificationThreshold": Object {
+      "__typename": "AdjustControllerTemperatureNotificationThresholdSuccess",
+      "controller": Object {
+        "id": "b06d8593-997a-44a1-ad23-2cf19e5ad071",
+        "temperatureNotification": Object {
+          "enabled": false,
+          "lower": Object {
+            "max": 31.1111,
+            "min": 10,
+            "step": 0.5555,
+            "value": 14.4444,
+          },
+          "minInterval": 1.1111111111111112,
+          "upper": Object {
+            "max": 32.2222,
+            "min": 11.1111,
+            "step": 0.5555,
+            "value": 22.2222,
+          },
+        },
+      },
+    },
+  },
+  "errors": undefined,
+  "extensions": undefined,
+  "http": Object {
+    "headers": Headers {
+      Symbol(map): Object {},
+    },
+  },
+}
+`;
+
+exports[`controller it returns the correct value for humidityNotification 1`] = `
+Object {
+  "data": Object {
+    "controller": Object {
+      "humidityNotification": Object {
+        "enabled": false,
+        "lower": Object {
+          "max": 60,
+          "min": 15,
+          "step": 1,
+          "value": 15,
+        },
+        "minInterval": 5,
+        "upper": Object {
+          "max": 65,
+          "min": 20,
+          "step": 1,
+          "value": 65,
+        },
+      },
+      "id": "b06d8593-997a-44a1-ad23-2cf19e5ad071",
+    },
+  },
+  "errors": undefined,
+  "extensions": undefined,
+  "http": Object {
+    "headers": Headers {
+      Symbol(map): Object {},
+    },
+  },
+}
+`;
+
+exports[`controller it returns the correct value for temperatureNotification 1`] = `
+Object {
+  "data": Object {
+    "controller": Object {
+      "id": "b06d8593-997a-44a1-ad23-2cf19e5ad071",
+      "temperatureNotification": Object {
+        "enabled": false,
+        "lower": Object {
+          "max": 31.1111,
+          "min": 10,
+          "step": 0.5555,
+          "value": 15.5555,
+        },
+        "minInterval": 1.1111111111111112,
+        "upper": Object {
+          "max": 32.2222,
+          "min": 11.1111,
+          "step": 0.5555,
+          "value": 30.5555,
+        },
+      },
+    },
+  },
+  "errors": undefined,
+  "extensions": undefined,
+  "http": Object {
+    "headers": Headers {
+      Symbol(map): Object {},
+    },
+  },
+}
+`;
+
+exports[`controller it toggles the value for toggleControllerHumidityNotification 1`] = `
+Object {
+  "data": Object {
+    "toggleControllerHumidityNotification": Object {
+      "__typename": "ToggleControllerHumidityNotificationSuccess",
+      "controller": Object {
+        "humidityNotification": Object {
+          "enabled": true,
+        },
+        "id": "b06d8593-997a-44a1-ad23-2cf19e5ad071",
+      },
+    },
+  },
+  "errors": undefined,
+  "extensions": undefined,
+  "http": Object {
+    "headers": Headers {
+      Symbol(map): Object {},
+    },
+  },
+}
+`;
+
+exports[`controller it toggles the value for toggleControllerTemperatureNotification 1`] = `
+Object {
+  "data": Object {
+    "toggleControllerTemperatureNotification": Object {
+      "__typename": "ToggleControllerTemperatureNotificationSuccess",
+      "controller": Object {
+        "id": "b06d8593-997a-44a1-ad23-2cf19e5ad071",
+        "temperatureNotification": Object {
+          "enabled": true,
+        },
+      },
+    },
+  },
+  "errors": undefined,
+  "extensions": undefined,
+  "http": Object {
+    "headers": Headers {
+      Symbol(map): Object {},
+    },
+  },
+}
+`;
+
+exports[`location it adjusts the values for adjustLocationHumidityNotification 1`] = `
+Object {
+  "data": Object {
+    "adjustLocationHumidityNotificationThreshold": Object {
+      "__typename": "AdjustLocationHumidityNotificationThresholdSuccess",
+      "location": Object {
+        "controllers": Array [
+          Object {
+            "humidityNotification": Object {
+              "enabled": false,
+              "lower": Object {
+                "max": 60,
+                "min": 15,
+                "value": 25,
+              },
+              "upper": Object {
+                "max": 65,
+                "min": 20,
+                "value": 45,
+              },
+            },
+            "id": "b06d8593-997a-44a1-ad23-2cf19e5ad071",
+          },
+          Object {
+            "humidityNotification": Object {
+              "enabled": false,
+              "lower": Object {
+                "max": 60,
+                "min": 15,
+                "value": 25,
+              },
+              "upper": Object {
+                "max": 65,
+                "min": 20,
+                "value": 45,
+              },
+            },
+            "id": "492cc711-4c86-42f5-bb2b-c61187825ffb",
+          },
+        ],
+      },
+    },
+  },
+  "errors": undefined,
+  "extensions": undefined,
+  "http": Object {
+    "headers": Headers {
+      Symbol(map): Object {},
+    },
+  },
+}
+`;
+
+exports[`location it adjusts the values for adjustLocationTemperatureNotification 1`] = `
+Object {
+  "data": Object {
+    "adjustLocationTemperatureNotificationThreshold": Object {
+      "__typename": "AdjustLocationTemperatureNotificationThresholdSuccess",
+      "location": Object {
+        "controllers": Array [
+          Object {
+            "id": "b06d8593-997a-44a1-ad23-2cf19e5ad071",
+            "temperatureNotification": Object {
+              "enabled": false,
+              "lower": Object {
+                "max": 31.1111,
+                "min": 10,
+                "value": 14.4444,
+              },
+              "upper": Object {
+                "max": 32.2222,
+                "min": 11.1111,
+                "value": 22.2222,
+              },
+            },
+          },
+          Object {
+            "id": "492cc711-4c86-42f5-bb2b-c61187825ffb",
+            "temperatureNotification": Object {
+              "enabled": false,
+              "lower": Object {
+                "max": 31.1111,
+                "min": 10,
+                "value": 14.4444,
+              },
+              "upper": Object {
+                "max": 32.2222,
+                "min": 11.1111,
+                "value": 22.2222,
+              },
+            },
+          },
+        ],
+      },
+    },
+  },
+  "errors": undefined,
+  "extensions": undefined,
+  "http": Object {
+    "headers": Headers {
+      Symbol(map): Object {},
+    },
+  },
+}
+`;
+
+exports[`location it returns the value for faultNotification 1`] = `
+Object {
+  "data": Object {
+    "location": Object {
+      "faultNotification": Object {
+        "enabled": false,
+      },
+      "id": "9c98e454-531c-4042-b494-3a8f8bba1273",
+    },
+  },
+  "errors": undefined,
+  "extensions": undefined,
+  "http": Object {
+    "headers": Headers {
+      Symbol(map): Object {},
+    },
+  },
+}
+`;
+
+exports[`location it returns the value for humidityNotification 1`] = `
+Object {
+  "data": Object {
+    "location": Object {
+      "humidityNotification": Object {
+        "enabled": false,
+        "lower": Object {
+          "max": 60,
+          "min": 15,
+          "step": 1,
+          "value": 15,
+        },
+        "minInterval": 5,
+        "upper": Object {
+          "max": 65,
+          "min": 20,
+          "step": 1,
+          "value": 65,
+        },
+      },
+      "id": "9c98e454-531c-4042-b494-3a8f8bba1273",
+    },
+  },
+  "errors": undefined,
+  "extensions": undefined,
+  "http": Object {
+    "headers": Headers {
+      Symbol(map): Object {},
+    },
+  },
+}
+`;
+
+exports[`location it returns the value for temperatureNotification 1`] = `
+Object {
+  "data": Object {
+    "location": Object {
+      "id": "9c98e454-531c-4042-b494-3a8f8bba1273",
+      "temperatureNotification": Object {
+        "enabled": false,
+        "lower": Object {
+          "max": 31.1111,
+          "min": 10,
+          "step": 0.5555,
+          "value": 15.5555,
+        },
+        "minInterval": 1.1111111111111112,
+        "upper": Object {
+          "max": 32.2222,
+          "min": 11.1111,
+          "step": 0.5555,
+          "value": 30.5555,
+        },
+      },
+    },
+  },
+  "errors": undefined,
+  "extensions": undefined,
+  "http": Object {
+    "headers": Headers {
+      Symbol(map): Object {},
+    },
+  },
+}
+`;
+
+exports[`location it toggles the value for toggleLocationFaultNotification 1`] = `
+Object {
+  "data": Object {
+    "toggleLocationFaultNotification": Object {
+      "__typename": "ToggleLocationFaultNotificationSuccess",
+      "location": Object {
+        "faultNotification": Object {
+          "enabled": true,
+        },
+        "id": "9c98e454-531c-4042-b494-3a8f8bba1273",
+      },
+    },
+  },
+  "errors": undefined,
+  "extensions": undefined,
+  "http": Object {
+    "headers": Headers {
+      Symbol(map): Object {},
+    },
+  },
+}
+`;
+
+exports[`location it toggles the value for toggleLocationHumidityNotification 1`] = `
+Object {
+  "data": Object {
+    "toggleLocationHumidityNotification": Object {
+      "__typename": "ToggleLocationHumidityNotificationSuccess",
+      "location": Object {
+        "controllers": Array [
+          Object {
+            "humidityNotification": Object {
+              "enabled": true,
+            },
+          },
+          Object {
+            "humidityNotification": Object {
+              "enabled": true,
+            },
+          },
+        ],
+        "id": "9c98e454-531c-4042-b494-3a8f8bba1273",
+      },
+    },
+  },
+  "errors": undefined,
+  "extensions": undefined,
+  "http": Object {
+    "headers": Headers {
+      Symbol(map): Object {},
+    },
+  },
+}
+`;
+
+exports[`location it toggles the value for toggleLocationTemperatureNotification 1`] = `
+Object {
+  "data": Object {
+    "toggleLocationTemperatureNotification": Object {
+      "__typename": "ToggleLocationTemperatureNotificationSuccess",
+      "location": Object {
+        "controllers": Array [
+          Object {
+            "temperatureNotification": Object {
+              "enabled": true,
+            },
+          },
+          Object {
+            "temperatureNotification": Object {
+              "enabled": true,
+            },
+          },
+        ],
+        "id": "9c98e454-531c-4042-b494-3a8f8bba1273",
+      },
+    },
+  },
+  "errors": undefined,
+  "extensions": undefined,
+  "http": Object {
+    "headers": Headers {
+      Symbol(map): Object {},
+    },
+  },
+}
+`;

@@ -1,0 +1,43 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`controller it changes the name 1`] = `
+Object {
+  "data": Object {
+    "renameController": Object {
+      "__typename": "RenameControllerSuccess",
+      "controller": Object {
+        "id": "b06d8593-997a-44a1-ad23-2cf19e5ad071",
+        "name": "Dining Room",
+      },
+    },
+  },
+  "errors": undefined,
+  "extensions": undefined,
+  "http": Object {
+    "headers": Headers {
+      Symbol(map): Object {},
+    },
+  },
+}
+`;
+
+exports[`location it changes the name 1`] = `
+Object {
+  "data": Object {
+    "renameLocation": Object {
+      "__typename": "RenameLocationSuccess",
+      "location": Object {
+        "id": "9c98e454-531c-4042-b494-3a8f8bba1273",
+        "name": "Vacation home",
+      },
+    },
+  },
+  "errors": undefined,
+  "extensions": undefined,
+  "http": Object {
+    "headers": Headers {
+      Symbol(map): Object {},
+    },
+  },
+}
+`;

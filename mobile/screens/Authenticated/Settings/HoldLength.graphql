@@ -1,0 +1,29 @@
+fragment Screen_Settings_HoldLength_Controller on Controller {
+  __typename
+  id
+}
+
+fragment Screen_Settings_HoldLength_Location on Location {
+  __typename
+  id
+  defaultHoldLength {
+    ...HoldLengthFields
+  }
+}
+
+query SettingsHoldLengthLocation($locationId: ID!) {
+  location(id: $locationId) {
+    ...Screen_Settings_HoldLength_Location
+  }
+}
+
+mutation ChangeLocationHoldLength($input: ChangeDefaultHoldLengthInput!) {
+  changeDefaultLocationHoldLength(input: $input) {
+    __typename
+    ... on ChangeDefaultLocationHoldLengthSuccess {
+      location {
+        ...Screen_Settings_HoldLength_Location
+      }
+    }
+  }
+}

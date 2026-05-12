@@ -1,0 +1,45 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`faultLogs it returns the correct fields 1`] = `
+Object {
+  "data": Object {
+    "location": Object {
+      "faultActive": true,
+      "faultLogs": Array [
+        Object {
+          "__typename": "FaultLogLabelAndDescription",
+          "date": "2021-03-13T11:05:00.000Z",
+          "description": "This is a description",
+          "label": "COM ERROR ERV/HRV",
+        },
+        Object {
+          "__typename": "FaultLogLabelAndDescription",
+          "date": "2021-03-14T18:20:00.000Z",
+          "description": "This is a long description. A very very very long description",
+          "label": "COM ERROR ERV/HRV",
+        },
+        Object {
+          "__typename": "FaultLogLabelAndDescription",
+          "date": "2021-03-14T13:01:00.000Z",
+          "description": "",
+          "label": "COM ERROR ERV/HRV",
+        },
+        Object {
+          "__typename": "FaultLogLabelAndDescription",
+          "date": "2021-03-16T09:50:00.000Z",
+          "description": "",
+          "label": "COM ERROR ERV/HRV",
+        },
+      ],
+      "id": "9c98e454-531c-4042-b494-3a8f8bba1273",
+    },
+  },
+  "errors": undefined,
+  "extensions": undefined,
+  "http": Object {
+    "headers": Headers {
+      Symbol(map): Object {},
+    },
+  },
+}
+`;

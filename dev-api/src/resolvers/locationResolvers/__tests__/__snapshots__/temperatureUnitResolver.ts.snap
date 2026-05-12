@@ -1,0 +1,40 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`location it returns the correct value 1`] = `
+Object {
+  "data": Object {
+    "location": Object {
+      "id": "9c98e454-531c-4042-b494-3a8f8bba1273",
+      "temperatureUnit": "F",
+    },
+  },
+  "errors": undefined,
+  "extensions": undefined,
+  "http": Object {
+    "headers": Headers {
+      Symbol(map): Object {},
+    },
+  },
+}
+`;
+
+exports[`location it changes the temperatureUnit 1`] = `
+Object {
+  "data": Object {
+    "changeTemperatureUnit": Object {
+      "__typename": "ChangeTemperatureUnitSuccess",
+      "location": Object {
+        "id": "9c98e454-531c-4042-b494-3a8f8bba1273",
+        "temperatureUnit": "C",
+      },
+    },
+  },
+  "errors": undefined,
+  "extensions": undefined,
+  "http": Object {
+    "headers": Headers {
+      Symbol(map): Object {},
+    },
+  },
+}
+`;

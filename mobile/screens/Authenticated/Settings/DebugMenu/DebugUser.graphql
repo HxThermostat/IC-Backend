@@ -1,0 +1,10 @@
+fragment Screen_Settings_DebugMenu_DebugUser on User {
+  __typename
+  id
+}
+
+query SettingsDebugMenuDebugUser {
+  me {
+    ...Screen_Settings_DebugMenu_DebugUser
+  }
+}

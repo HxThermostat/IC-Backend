@@ -1,0 +1,48 @@
+enum ConnectionStatus {
+  ONLINE
+  OFFLINE
+}
+
+type Location {
+  connectionStatus: ConnectionStatus!
+  id: ID!
+  lat: Float
+  lng: Float
+  name: String!
+  temperatureOutdoor: Float
+  zoning: Boolean!
+}
+
+extend type Query {
+  location(id: ID!): Location
+  locations: [Location!]!
+}
+
+extend type Mutation {
+  removeLocation(input: RemoveLocationInput!): RemoveLocationResult!
+  changeLocationAway(input: ChangeLocationAwayInput!): ChangeLocationAwayResult!
+}
+
+input RemoveLocationInput {
+  id: ID!
+}
+
+type RemoveLocationSuccess {
+  _: Boolean
+}
+
+union RemoveLocationResult = RemoveLocationSuccess | NotFound
+
+input ChangeLocationAwayInput {
+  id: ID!
+  active: Boolean!
+}
+
+type ChangeLocationAwaySuccess {
+  location: Location!
+}
+
+union ChangeLocationAwayResult =
+    ChangeLocationAwaySuccess
+  | NotFound
+  | NotSupported

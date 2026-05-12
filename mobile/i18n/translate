@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+I18N=$(dirname "$0")
+
+for TARGET_PATH in ${I18N}/*.json; do
+  FILENAME=$(basename ${TARGET_PATH})
+  LOCALE="${FILENAME%.*}"
+
+  if [ "${LOCALE}" = "en" ] || [ "${LOCALE}" = "google-service-account" ]; then
+    continue;
+  fi
+
+  yarn attranslate --srcFile=i18n/en.json --srcLng=en --srcFormat=nested-json --targetFile=i18n/${LOCALE}.json --targetLng=${LOCALE} --targetFormat=nested-json --service=google-translate --serviceConfig=${I18N}/google-service-account.json --overwriteOutdated=true --cacheDir=i18n/.attranslate-cache
+done

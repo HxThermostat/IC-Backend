@@ -1,0 +1,11 @@
+fragment UserBootstrapFields on User {
+  __typename
+  id
+}
+
+fragment UserFields on User {
+  __typename
+  id
+  ...Screen_ManageAccount_User
+  ...Screen_Settings_User
+}

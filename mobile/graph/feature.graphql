@@ -1,0 +1,13 @@
+fragment FeatureMapFields on FeatureMap {
+  accountSharing
+  appActiveTracking
+  away
+  changeDefaultHoldLengthLocation
+  changeTemperatureUnit
+  connect
+  faultLogsLocation
+  notifications
+  rename
+  schedule
+  signIn
+}

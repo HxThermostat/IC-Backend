@@ -1,0 +1,47 @@
+#!/bin/sh
+
+echo "🚚 Clone klimate -> klimate-mono"
+git clone git@github.com:kraftful/klimate.git klimate-mono-first
+pushd klimate-mono-first
+
+echo "🚚 Merge history and -> app"
+git filter-repo --to-subdirectory-filter app
+popd
+
+echo "🚚 Recloning to get rid of weird /app/app directory"
+git clone klimate-mono-first klimate-mono
+pushd klimate-mono
+git remote remove origin
+popd
+
+echo "🚚 Clone klimate-api -> dev-api"
+git clone git@github.com:kraftful/klimate-api.git dev-api
+pushd dev-api
+
+echo "🚚 Merge dev-api history"
+git filter-repo --to-subdirectory-filter dev-api
+popd
+popd
+pushd klimate-mono
+git remote add -f dev-api ../dev-api
+git merge --allow-unrelated-histories dev-api/main -m "Merge klimate-api into dev-api"
+
+echo "🚚 Graph/schema history"
+git filter-repo --path-rename dev-api/schema/:graph/schema/ --force
+
+echo "🚚 Add origins and fetch"
+git remote add origin git@github.com:kraftful/klimate-mono.git
+git remote add klimate-origin git@github.com:kraftful/klimate.git
+git fetch --all
+
+echo "🚚 Cherry picking migration commits"
+git cherry-pick 4c91e8bd 
+git cherry-pick c4039eec
+git cherry-pick 2908472d4
+popd
+
+echo "🚚 Cleanup folders..."
+rm -rf klimate-mono-first
+rm -rf dev-api
+
+echo "🚚 Done!"

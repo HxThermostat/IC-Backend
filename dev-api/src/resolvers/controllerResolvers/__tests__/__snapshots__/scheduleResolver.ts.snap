@@ -1,0 +1,768 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`controller returns the activeHold 1`] = `
+Object {
+  "data": Object {
+    "controller": Object {
+      "activeHold": null,
+    },
+  },
+  "errors": undefined,
+  "extensions": undefined,
+  "http": Object {
+    "headers": Headers {
+      Symbol(map): Object {},
+    },
+  },
+}
+`;
+
+exports[`controller returns the weekly schedule 1`] = `
+Object {
+  "data": Object {
+    "controller": Object {
+      "schedule": Object {
+        "days": Array [
+          Object {
+            "day": "SUN",
+            "events": Array [
+              Object {
+                "id": "b06d8593-997a-44a1-ad23-2cf19e5ad071--SUN--0",
+              },
+              Object {
+                "id": "b06d8593-997a-44a1-ad23-2cf19e5ad071--SUN--1",
+              },
+              Object {
+                "id": "b06d8593-997a-44a1-ad23-2cf19e5ad071--SUN--2",
+              },
+            ],
+            "full": false,
+          },
+          Object {
+            "day": "MON",
+            "events": Array [
+              Object {
+                "id": "b06d8593-997a-44a1-ad23-2cf19e5ad071--MON--0",
+              },
+              Object {
+                "id": "b06d8593-997a-44a1-ad23-2cf19e5ad071--MON--1",
+              },
+              Object {
+                "id": "b06d8593-997a-44a1-ad23-2cf19e5ad071--MON--2",
+              },
+            ],
+            "full": false,
+          },
+          Object {
+            "day": "TUE",
+            "events": Array [
+              Object {
+                "id": "b06d8593-997a-44a1-ad23-2cf19e5ad071--TUE--0",
+              },
+              Object {
+                "id": "b06d8593-997a-44a1-ad23-2cf19e5ad071--TUE--1",
+              },
+              Object {
+                "id": "b06d8593-997a-44a1-ad23-2cf19e5ad071--TUE--2",
+              },
+            ],
+            "full": false,
+          },
+          Object {
+            "day": "WED",
+            "events": Array [
+              Object {
+                "id": "b06d8593-997a-44a1-ad23-2cf19e5ad071--WED--0",
+              },
+              Object {
+                "id": "b06d8593-997a-44a1-ad23-2cf19e5ad071--WED--1",
+              },
+              Object {
+                "id": "b06d8593-997a-44a1-ad23-2cf19e5ad071--WED--2",
+              },
+            ],
+            "full": false,
+          },
+          Object {
+            "day": "THU",
+            "events": Array [
+              Object {
+                "id": "b06d8593-997a-44a1-ad23-2cf19e5ad071--THU--0",
+              },
+              Object {
+                "id": "b06d8593-997a-44a1-ad23-2cf19e5ad071--THU--1",
+              },
+              Object {
+                "id": "b06d8593-997a-44a1-ad23-2cf19e5ad071--THU--2",
+              },
+            ],
+            "full": false,
+          },
+          Object {
+            "day": "FRI",
+            "events": Array [
+              Object {
+                "id": "b06d8593-997a-44a1-ad23-2cf19e5ad071--FRI--0",
+              },
+              Object {
+                "id": "b06d8593-997a-44a1-ad23-2cf19e5ad071--FRI--1",
+              },
+              Object {
+                "id": "b06d8593-997a-44a1-ad23-2cf19e5ad071--FRI--2",
+              },
+            ],
+            "full": false,
+          },
+          Object {
+            "day": "SAT",
+            "events": Array [
+              Object {
+                "id": "b06d8593-997a-44a1-ad23-2cf19e5ad071--SAT--0",
+              },
+              Object {
+                "id": "b06d8593-997a-44a1-ad23-2cf19e5ad071--SAT--1",
+              },
+              Object {
+                "id": "b06d8593-997a-44a1-ad23-2cf19e5ad071--SAT--2",
+              },
+            ],
+            "full": false,
+          },
+        ],
+        "friday": Object {
+          "day": "FRI",
+          "events": Array [
+            Object {
+              "id": "b06d8593-997a-44a1-ad23-2cf19e5ad071--FRI--0",
+            },
+            Object {
+              "id": "b06d8593-997a-44a1-ad23-2cf19e5ad071--FRI--1",
+            },
+            Object {
+              "id": "b06d8593-997a-44a1-ad23-2cf19e5ad071--FRI--2",
+            },
+          ],
+          "full": false,
+        },
+        "maxEvents": 4,
+        "minEventInterval": 15,
+        "minEvents": 1,
+        "monday": Object {
+          "day": "MON",
+          "events": Array [
+            Object {
+              "id": "b06d8593-997a-44a1-ad23-2cf19e5ad071--MON--0",
+            },
+            Object {
+              "id": "b06d8593-997a-44a1-ad23-2cf19e5ad071--MON--1",
+            },
+            Object {
+              "id": "b06d8593-997a-44a1-ad23-2cf19e5ad071--MON--2",
+            },
+          ],
+          "full": false,
+        },
+        "saturday": Object {
+          "day": "SAT",
+          "events": Array [
+            Object {
+              "id": "b06d8593-997a-44a1-ad23-2cf19e5ad071--SAT--0",
+            },
+            Object {
+              "id": "b06d8593-997a-44a1-ad23-2cf19e5ad071--SAT--1",
+            },
+            Object {
+              "id": "b06d8593-997a-44a1-ad23-2cf19e5ad071--SAT--2",
+            },
+          ],
+          "full": false,
+        },
+        "sunday": Object {
+          "day": "SUN",
+          "events": Array [
+            Object {
+              "id": "b06d8593-997a-44a1-ad23-2cf19e5ad071--SUN--0",
+            },
+            Object {
+              "id": "b06d8593-997a-44a1-ad23-2cf19e5ad071--SUN--1",
+            },
+            Object {
+              "id": "b06d8593-997a-44a1-ad23-2cf19e5ad071--SUN--2",
+            },
+          ],
+          "full": false,
+        },
+        "thursday": Object {
+          "day": "THU",
+          "events": Array [
+            Object {
+              "id": "b06d8593-997a-44a1-ad23-2cf19e5ad071--THU--0",
+            },
+            Object {
+              "id": "b06d8593-997a-44a1-ad23-2cf19e5ad071--THU--1",
+            },
+            Object {
+              "id": "b06d8593-997a-44a1-ad23-2cf19e5ad071--THU--2",
+            },
+          ],
+          "full": false,
+        },
+        "tuesday": Object {
+          "day": "TUE",
+          "events": Array [
+            Object {
+              "id": "b06d8593-997a-44a1-ad23-2cf19e5ad071--TUE--0",
+            },
+            Object {
+              "id": "b06d8593-997a-44a1-ad23-2cf19e5ad071--TUE--1",
+            },
+            Object {
+              "id": "b06d8593-997a-44a1-ad23-2cf19e5ad071--TUE--2",
+            },
+          ],
+          "full": false,
+        },
+        "wednesday": Object {
+          "day": "WED",
+          "events": Array [
+            Object {
+              "id": "b06d8593-997a-44a1-ad23-2cf19e5ad071--WED--0",
+            },
+            Object {
+              "id": "b06d8593-997a-44a1-ad23-2cf19e5ad071--WED--1",
+            },
+            Object {
+              "id": "b06d8593-997a-44a1-ad23-2cf19e5ad071--WED--2",
+            },
+          ],
+          "full": false,
+        },
+      },
+    },
+  },
+  "errors": undefined,
+  "extensions": undefined,
+  "http": Object {
+    "headers": Headers {
+      Symbol(map): Object {},
+    },
+  },
+}
+`;
+
+exports[`mutations it copies a day's schedule to other days 1`] = `
+Object {
+  "data": Object {
+    "copySchedule": Object {
+      "__typename": "CopyScheduleSuccess",
+      "controller": Object {
+        "schedule": Object {
+          "days": Array [
+            Object {
+              "day": "SUN",
+              "events": Array [
+                Object {
+                  "end": Object {
+                    "day": "SUN",
+                    "hour": 12,
+                    "minute": 45,
+                  },
+                  "start": Object {
+                    "day": "SUN",
+                    "hour": 8,
+                    "minute": 0,
+                  },
+                },
+                Object {
+                  "end": Object {
+                    "day": "SUN",
+                    "hour": 22,
+                    "minute": 30,
+                  },
+                  "start": Object {
+                    "day": "SUN",
+                    "hour": 12,
+                    "minute": 45,
+                  },
+                },
+                Object {
+                  "end": Object {
+                    "day": "MON",
+                    "hour": 8,
+                    "minute": 0,
+                  },
+                  "start": Object {
+                    "day": "SUN",
+                    "hour": 22,
+                    "minute": 30,
+                  },
+                },
+              ],
+              "full": false,
+            },
+            Object {
+              "day": "MON",
+              "events": Array [
+                Object {
+                  "end": Object {
+                    "day": "MON",
+                    "hour": 15,
+                    "minute": 45,
+                  },
+                  "start": Object {
+                    "day": "MON",
+                    "hour": 8,
+                    "minute": 0,
+                  },
+                },
+                Object {
+                  "end": Object {
+                    "day": "MON",
+                    "hour": 18,
+                    "minute": 30,
+                  },
+                  "start": Object {
+                    "day": "MON",
+                    "hour": 15,
+                    "minute": 45,
+                  },
+                },
+                Object {
+                  "end": Object {
+                    "day": "TUE",
+                    "hour": 8,
+                    "minute": 0,
+                  },
+                  "start": Object {
+                    "day": "MON",
+                    "hour": 18,
+                    "minute": 30,
+                  },
+                },
+              ],
+              "full": false,
+            },
+            Object {
+              "day": "TUE",
+              "events": Array [
+                Object {
+                  "end": Object {
+                    "day": "TUE",
+                    "hour": 15,
+                    "minute": 45,
+                  },
+                  "start": Object {
+                    "day": "TUE",
+                    "hour": 8,
+                    "minute": 0,
+                  },
+                },
+                Object {
+                  "end": Object {
+                    "day": "TUE",
+                    "hour": 18,
+                    "minute": 30,
+                  },
+                  "start": Object {
+                    "day": "TUE",
+                    "hour": 15,
+                    "minute": 45,
+                  },
+                },
+                Object {
+                  "end": Object {
+                    "day": "WED",
+                    "hour": 8,
+                    "minute": 0,
+                  },
+                  "start": Object {
+                    "day": "TUE",
+                    "hour": 18,
+                    "minute": 30,
+                  },
+                },
+              ],
+              "full": false,
+            },
+            Object {
+              "day": "WED",
+              "events": Array [
+                Object {
+                  "end": Object {
+                    "day": "WED",
+                    "hour": 15,
+                    "minute": 45,
+                  },
+                  "start": Object {
+                    "day": "WED",
+                    "hour": 8,
+                    "minute": 0,
+                  },
+                },
+                Object {
+                  "end": Object {
+                    "day": "WED",
+                    "hour": 18,
+                    "minute": 30,
+                  },
+                  "start": Object {
+                    "day": "WED",
+                    "hour": 15,
+                    "minute": 45,
+                  },
+                },
+                Object {
+                  "end": Object {
+                    "day": "THU",
+                    "hour": 8,
+                    "minute": 0,
+                  },
+                  "start": Object {
+                    "day": "WED",
+                    "hour": 18,
+                    "minute": 30,
+                  },
+                },
+              ],
+              "full": false,
+            },
+            Object {
+              "day": "THU",
+              "events": Array [
+                Object {
+                  "end": Object {
+                    "day": "THU",
+                    "hour": 12,
+                    "minute": 45,
+                  },
+                  "start": Object {
+                    "day": "THU",
+                    "hour": 8,
+                    "minute": 0,
+                  },
+                },
+                Object {
+                  "end": Object {
+                    "day": "THU",
+                    "hour": 22,
+                    "minute": 30,
+                  },
+                  "start": Object {
+                    "day": "THU",
+                    "hour": 12,
+                    "minute": 45,
+                  },
+                },
+                Object {
+                  "end": Object {
+                    "day": "FRI",
+                    "hour": 8,
+                    "minute": 0,
+                  },
+                  "start": Object {
+                    "day": "THU",
+                    "hour": 22,
+                    "minute": 30,
+                  },
+                },
+              ],
+              "full": false,
+            },
+            Object {
+              "day": "FRI",
+              "events": Array [
+                Object {
+                  "end": Object {
+                    "day": "FRI",
+                    "hour": 15,
+                    "minute": 45,
+                  },
+                  "start": Object {
+                    "day": "FRI",
+                    "hour": 8,
+                    "minute": 0,
+                  },
+                },
+                Object {
+                  "end": Object {
+                    "day": "FRI",
+                    "hour": 18,
+                    "minute": 30,
+                  },
+                  "start": Object {
+                    "day": "FRI",
+                    "hour": 15,
+                    "minute": 45,
+                  },
+                },
+                Object {
+                  "end": Object {
+                    "day": "SAT",
+                    "hour": 8,
+                    "minute": 0,
+                  },
+                  "start": Object {
+                    "day": "FRI",
+                    "hour": 18,
+                    "minute": 30,
+                  },
+                },
+              ],
+              "full": false,
+            },
+            Object {
+              "day": "SAT",
+              "events": Array [
+                Object {
+                  "end": Object {
+                    "day": "SAT",
+                    "hour": 15,
+                    "minute": 45,
+                  },
+                  "start": Object {
+                    "day": "SAT",
+                    "hour": 8,
+                    "minute": 0,
+                  },
+                },
+                Object {
+                  "end": Object {
+                    "day": "SAT",
+                    "hour": 18,
+                    "minute": 30,
+                  },
+                  "start": Object {
+                    "day": "SAT",
+                    "hour": 15,
+                    "minute": 45,
+                  },
+                },
+                Object {
+                  "end": Object {
+                    "day": "SUN",
+                    "hour": 8,
+                    "minute": 0,
+                  },
+                  "start": Object {
+                    "day": "SAT",
+                    "hour": 18,
+                    "minute": 30,
+                  },
+                },
+              ],
+              "full": false,
+            },
+          ],
+        },
+      },
+    },
+  },
+  "errors": undefined,
+  "extensions": undefined,
+  "http": Object {
+    "headers": Headers {
+      Symbol(map): Object {},
+    },
+  },
+}
+`;
+
+exports[`scheduleEvent returns the correct fields 1`] = `
+Object {
+  "data": Object {
+    "scheduleEvent": Object {
+      "day": "SUN",
+      "end": Object {
+        "day": "SUN",
+        "hour": 12,
+        "minute": 45,
+      },
+      "id": "b06d8593-997a-44a1-ad23-2cf19e5ad071--SUN--0",
+      "nextEvent": Object {
+        "day": "SUN",
+        "id": "b06d8593-997a-44a1-ad23-2cf19e5ad071--SUN--1",
+      },
+      "prevEvent": Object {
+        "day": "SAT",
+        "id": "b06d8593-997a-44a1-ad23-2cf19e5ad071--SAT--2",
+      },
+      "removable": true,
+      "start": Object {
+        "day": "SUN",
+        "hour": 8,
+        "minute": 0,
+      },
+      "temperaturePreset": Object {
+        "fanMode": "AUTO",
+        "name": "Home",
+        "setpoint": Object {
+          "__typename": "DualSetpoint",
+          "lower": Object {
+            "max": 31.1111,
+            "min": 10,
+            "step": 0.5555,
+            "value": 15,
+          },
+          "minInterval": 1.1111,
+          "upper": Object {
+            "max": 32.2222,
+            "min": 11.1111,
+            "step": 0.5555,
+            "value": 26.1111,
+          },
+        },
+        "slot": "HOME",
+      },
+    },
+  },
+  "errors": undefined,
+  "extensions": undefined,
+  "http": Object {
+    "headers": Headers {
+      Symbol(map): Object {},
+    },
+  },
+}
+`;
+
+exports[`scheduleEvents it returns all scheduleEvents 1`] = `
+Object {
+  "data": Object {
+    "scheduleEvents": Array [
+      Object {
+        "id": "b06d8593-997a-44a1-ad23-2cf19e5ad071--SUN--0",
+      },
+      Object {
+        "id": "b06d8593-997a-44a1-ad23-2cf19e5ad071--SUN--1",
+      },
+      Object {
+        "id": "b06d8593-997a-44a1-ad23-2cf19e5ad071--SUN--2",
+      },
+      Object {
+        "id": "b06d8593-997a-44a1-ad23-2cf19e5ad071--MON--0",
+      },
+      Object {
+        "id": "b06d8593-997a-44a1-ad23-2cf19e5ad071--MON--1",
+      },
+      Object {
+        "id": "b06d8593-997a-44a1-ad23-2cf19e5ad071--MON--2",
+      },
+      Object {
+        "id": "b06d8593-997a-44a1-ad23-2cf19e5ad071--TUE--0",
+      },
+      Object {
+        "id": "b06d8593-997a-44a1-ad23-2cf19e5ad071--TUE--1",
+      },
+      Object {
+        "id": "b06d8593-997a-44a1-ad23-2cf19e5ad071--TUE--2",
+      },
+      Object {
+        "id": "b06d8593-997a-44a1-ad23-2cf19e5ad071--WED--0",
+      },
+      Object {
+        "id": "b06d8593-997a-44a1-ad23-2cf19e5ad071--WED--1",
+      },
+      Object {
+        "id": "b06d8593-997a-44a1-ad23-2cf19e5ad071--WED--2",
+      },
+      Object {
+        "id": "b06d8593-997a-44a1-ad23-2cf19e5ad071--THU--0",
+      },
+      Object {
+        "id": "b06d8593-997a-44a1-ad23-2cf19e5ad071--THU--1",
+      },
+      Object {
+        "id": "b06d8593-997a-44a1-ad23-2cf19e5ad071--THU--2",
+      },
+      Object {
+        "id": "b06d8593-997a-44a1-ad23-2cf19e5ad071--FRI--0",
+      },
+      Object {
+        "id": "b06d8593-997a-44a1-ad23-2cf19e5ad071--FRI--1",
+      },
+      Object {
+        "id": "b06d8593-997a-44a1-ad23-2cf19e5ad071--FRI--2",
+      },
+      Object {
+        "id": "b06d8593-997a-44a1-ad23-2cf19e5ad071--SAT--0",
+      },
+      Object {
+        "id": "b06d8593-997a-44a1-ad23-2cf19e5ad071--SAT--1",
+      },
+      Object {
+        "id": "b06d8593-997a-44a1-ad23-2cf19e5ad071--SAT--2",
+      },
+      Object {
+        "id": "492cc711-4c86-42f5-bb2b-c61187825ffb--SUN--0",
+      },
+      Object {
+        "id": "492cc711-4c86-42f5-bb2b-c61187825ffb--SUN--1",
+      },
+      Object {
+        "id": "492cc711-4c86-42f5-bb2b-c61187825ffb--SUN--2",
+      },
+      Object {
+        "id": "492cc711-4c86-42f5-bb2b-c61187825ffb--MON--0",
+      },
+      Object {
+        "id": "492cc711-4c86-42f5-bb2b-c61187825ffb--MON--1",
+      },
+      Object {
+        "id": "492cc711-4c86-42f5-bb2b-c61187825ffb--MON--2",
+      },
+      Object {
+        "id": "492cc711-4c86-42f5-bb2b-c61187825ffb--TUE--0",
+      },
+      Object {
+        "id": "492cc711-4c86-42f5-bb2b-c61187825ffb--TUE--1",
+      },
+      Object {
+        "id": "492cc711-4c86-42f5-bb2b-c61187825ffb--TUE--2",
+      },
+      Object {
+        "id": "492cc711-4c86-42f5-bb2b-c61187825ffb--WED--0",
+      },
+      Object {
+        "id": "492cc711-4c86-42f5-bb2b-c61187825ffb--WED--1",
+      },
+      Object {
+        "id": "492cc711-4c86-42f5-bb2b-c61187825ffb--WED--2",
+      },
+      Object {
+        "id": "492cc711-4c86-42f5-bb2b-c61187825ffb--THU--0",
+      },
+      Object {
+        "id": "492cc711-4c86-42f5-bb2b-c61187825ffb--THU--1",
+      },
+      Object {
+        "id": "492cc711-4c86-42f5-bb2b-c61187825ffb--THU--2",
+      },
+      Object {
+        "id": "492cc711-4c86-42f5-bb2b-c61187825ffb--FRI--0",
+      },
+      Object {
+        "id": "492cc711-4c86-42f5-bb2b-c61187825ffb--FRI--1",
+      },
+      Object {
+        "id": "492cc711-4c86-42f5-bb2b-c61187825ffb--FRI--2",
+      },
+      Object {
+        "id": "492cc711-4c86-42f5-bb2b-c61187825ffb--SAT--0",
+      },
+      Object {
+        "id": "492cc711-4c86-42f5-bb2b-c61187825ffb--SAT--1",
+      },
+      Object {
+        "id": "492cc711-4c86-42f5-bb2b-c61187825ffb--SAT--2",
+      },
+    ],
+  },
+  "errors": undefined,
+  "extensions": undefined,
+  "http": Object {
+    "headers": Headers {
+      Symbol(map): Object {},
+    },
+  },
+}
+`;

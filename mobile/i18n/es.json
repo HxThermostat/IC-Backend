@@ -1,0 +1,523 @@
+{
+  "Common": {
+    "back": "Atrás",
+    "cancel": "Cancelar",
+    "continue": "Continuar",
+    "done": "Hecho",
+    "ok": "OK",
+    "save": "Guardar",
+    "signOut": "Cerrar sesión",
+    "edit": "Editar",
+    "offlineAlert": {
+      "title": "No se pudo cargar la cuenta",
+      "message": "No se pudieron cargar los detalles de su cuenta. Asegúrese de estar conectado a WiFi o datos celulares con acceso a Internet.",
+      "logout": "Cerrar sesión",
+      "tryAgain": "Intentar otra vez"
+    },
+    "logoutSheet": {
+      "logout": "Cerrar sesión",
+      "message": "¿Está seguro de que desea cerrar la sesión?"
+    },
+    "removeAccountSheet": {
+      "title": "¿Estás seguro de que deseas eliminar tu cuenta?",
+      "message": "Su termostato seguirá funcionando sin el control de la aplicación.",
+      "confirm": "Eliminar cuenta"
+    },
+    "errorAlert": {
+      "title": "Algo salió mal",
+      "message": "No pudimos cargar los datos necesarios para iniciar la aplicación. Asegúrese de estar conectado a WiFi o datos celulares con acceso a Internet.",
+      "emailSupport": "Soporte de correo electrónico",
+      "tryAgain": "Intentar otra vez",
+      "emailSubject": "Issues loading app",
+      "emailBody": "Hi app development team,\n\nI was trying to load the %{appName} app and it's not working. Can you help?\n\nThanks!"
+    },
+    "Notifications": {
+      "alertTitle": "Se requiere permiso",
+      "alertDescription": "Deberá ir a sus Ajustes para habilitar las notificaciones automáticas",
+      "openSettings": "Abrir Ajustes"
+    },
+    "Modes": {
+      "HEAT": "Modo calefacción",
+      "COOL": "Modo enfriamiento",
+      "HEATCOOL": "Frío + Calor",
+      "OFF": "Apagado",
+      "OFFLINE": "Fuera de Línea",
+      "AWAY": "Ausente"
+    },
+    "home": "Casa",
+    "schedules": "Horarios",
+    "settings": "Ajustes",
+    "fanSettings": {
+      "AUTO": {
+        "label": "Auto",
+        "itemLabel": "Auto"
+      },
+      "ALWAYS": {
+        "label": "Siempre",
+        "itemLabel": "Corre siempre"
+      },
+      "FIFTEEN": {
+        "label": "15 min / hora",
+        "itemLabel": "Corre 15 minutos por hora"
+      },
+      "THIRTY": {
+        "label": "30 min / hora",
+        "itemLabel": "Corre 30 minutos por hora"
+      },
+      "FORTYFIVE": {
+        "label": "45 min / hora",
+        "itemLabel": "Corre 45 minutos por hora"
+      }
+    }
+  },
+  "Components": {
+    "Dial": {
+      "indoor": "Interior"
+    },
+    "SelectControllerModal": {
+      "thermostatOffline": "Termostato fuera de línea"
+    },
+    "SelectModeModal": {
+      "modes": {
+        "HEAT": "Calefacción",
+        "COOL": "Enfríamiento",
+        "AUTO": "Frío + Calor",
+        "OFF": "Apagado",
+        "QUICKHEAT": "Calefacción rápida",
+        "QUICKCOOL": "Enfriamiento rápido",
+        "EHEAT": "Calefacción de emergencia"
+      },
+      "away": "Ausente",
+      "awayActive": "Apagar",
+      "actionSheet": {
+        "awayLocation": "Establecer lejos de %{name}",
+        "awayZone": "Establecer lejos de %{name}",
+        "message": "Establecer modo ausente",
+        "cancel": "Cancelar"
+      }
+    },
+    "DaySelector": {
+      "Short": {
+        "MON": "METRO",
+        "TUE": "T",
+        "WED": "W",
+        "THU": "T",
+        "FRI": "F",
+        "SAT": "S",
+        "SUN": "S"
+      }
+    }
+  },
+  "Screens": {
+    "Unauthenticated": {
+      "EnterEmailAddress": {
+        "screenTitle": "Correo electrónico",
+        "title": "¿Cuál es su dirección de correo electrónico?",
+        "placeholder": "Dirección de correo electrónico",
+        "label": "Dirección de correo electrónico",
+        "caption": "Comprobemos si esta dirección ya tiene cuenta."
+      },
+      "EnterEmailConfirmation": {
+        "screenTitle": "Confirmación",
+        "title": "Revise su correo electrónico",
+        "instructions": "Para iniciar sesión, haga clic en el botón del correo electrónico que fue enviado a",
+        "button": "Abrir correo electrónico",
+        "fallbackInstructions": "También puede escribir el código:",
+        "emailNotReceived": "¿No recibió un correo electrónico?",
+        "placeholder": "Código",
+        "headerRightText": "Continuar",
+        "alertManual": {
+          "title": "Código incorrecto",
+          "message": "Asegúrese de que el código coincida con el correo electrónico enviado a %{email}",
+          "defaultButton": "Intentar otra vez",
+          "cancelButton": "Enviar código nuevo"
+        },
+        "alertDeeplink": {
+          "title": "Código incorrecto",
+          "message": "El código no fue válido o ya se usó",
+          "defaultButton": "Enviar código nuevo"
+        },
+        "alertEmailNotReceived": {
+          "title": "¿No recibió un correo electrónico?",
+          "message": "El correo electrónico puede tardar unos minutos en llegar. Intente actualizar su buzón y verifique su carpeta de correo no deseado.",
+          "defaultButton": "Reenviar",
+          "cancelButton": "Cancelar"
+        }
+      },
+      "EnterNewSignUpInfo": {
+        "screenTitle": "Inscribirse",
+        "title": "No se encontró ninguna cuenta",
+        "createAccountFor": "Creemos una nueva cuenta para",
+        "firstNameLabel": "Nombre",
+        "firstNamePlaceholder": "Nombre",
+        "lastNameLabel": "Apellido",
+        "lastNamePlaceholder": "Apellido",
+        "button": "Inscribirse"
+      },
+      "UpdateRequired": {
+        "updateRequired": "Se requiere actualización de la aplicación",
+        "downloadUpdate": "Puede instalar la última actualización de %{store}."
+      }
+    },
+    "Connect": {
+      "Start": {
+        "title": "Conecta tu termostato",
+        "body": "Le mostraremos cómo configurar su termostato con esta aplicación."
+      },
+      "Success": {
+        "title": "¡Éxito!",
+        "body": "El termostato está conectado. Ahora puede controlarlo con esta aplicación."
+      },
+      "AylaDisplay": {
+        "Instructions": {
+          "title": "Instrucciones",
+          "item1": "1. En su termostato, vaya a Menú / Herramientas / Inalámbrico",
+          "item2": "2. Seleccione su red WiFi y toque \"conectar\".",
+          "item3": "3. Ingrese la contraseña para conectarse a su red WiFi y presione \"ok\"."
+        },
+        "Token": {
+          "title": "Ingrese el ID del dispositivo",
+          "body": "Si su pantalla no muestra un ID de dispositivo, presione \"Actualizar\" o intente volver a conectar el termostato a su WiFi.",
+          "placeholder": "ID del dispositivo",
+          "TokenInvalid": {
+            "title": "ID de dispositivo no válido",
+            "message": "Asegúrese de que el token ingresado coincida con el token que se muestra en su termostato"
+          },
+          "DeviceStateInvalid": {
+            "title": "Problema con su termostato",
+            "message": "Hay un problema con su termostato que impide que funcione con esta aplicación"
+          },
+          "RequestFailed": {
+            "title": "No se pudo conectar el termostato",
+            "message": "Algo salió mal al registrar el ID del dispositivo",
+            "defaultButton": "Intentar otra vez"
+          }
+        }
+      }
+    },
+    "Authenticated": {
+      "Home": {
+        "outdoorTemp": "Exterior",
+        "humidity": "Humedad",
+        "activeHold": "Anulación de la temperatura programada",
+        "backToSchedule": "Volver al horario",
+        "systemModeCool": "El climatizador está encendido",
+        "systemModeHeat": "El calentador está encendido",
+        "awayModeAlert": {
+          "title": "El modo ausente está activo",
+          "message": "Puede ajustar las temperaturas del Modo Ausente en Ajustes.",
+          "cancel": "Cancelar",
+          "openSettings": "Abrir Ajustes"
+        },
+        "fanSpeed": {
+          "low": "bajo",
+          "medium": "medio",
+          "high": "elevado",
+          "name": "El ventilador funciona a la velocidad {{speedName}}",
+          "percent": "El ventilador funciona a una velocidad del {{speedPercent}}%"
+        },
+        "survey": {
+          "prompt": "¿Realimentación? Habla con nosotros",
+          "chat": {
+            "title": "Realimentación",
+            "intro": "Envíenos sus comentarios y le responderemos directamente."
+          }
+        }
+      },
+      "SchedulesNavigator": {
+        "Schedules": {
+          "title": "Horarios",
+          "button": "Copiar horario"
+        },
+        "ManageSchedule": {
+          "titleEdit": "Editar horario",
+          "titleAdd": "Agregar horario",
+          "startsAt": "Comienzo",
+          "endsAt": "Final",
+          "temperatureLabel": "Temperatura",
+          "edit": "Editar",
+          "add": "Agregar",
+          "delete": "Eliminar programa",
+          "deleteScheduleSheet": {
+            "title": "¿Estás seguro de que deseas eliminar este evento?",
+            "message": "Puedes volver a agregarlo más tarde usando la aplicación.",
+            "confirm": "Eliminar"
+          },
+          "note": "Este evento termina mañana",
+          "reset": "Reiniciar"
+        },
+        "ManageTemperaturePreset": {
+          "titleEdit": "Editar ${name}",
+          "titleAdd": "Agregar temperatura",
+          "label": "Establezca un rango de temperatura cómodo.",
+          "fan": "Ventilador",
+          "delete": "Eliminar preajuste",
+          "deleteScheduleSheet": {
+            "title": "¿Estás seguro de que quieres eliminar esta temperatura?",
+            "message": "Puedes volver a agregarlo más tarde usando la aplicación.",
+            "confirm": "Eliminar"
+          }
+        },
+        "CopySchedule": {
+          "title": "Copiar horario",
+          "header": "En dias",
+          "copy": "Dupdo"
+        },
+        "Fan": {
+          "title": "Ventilador"
+        }
+      },
+      "SettingsNavigator": {
+        "Settings": {
+          "screenTitle": "Ajustes",
+          "sections": {
+            "general": {
+              "title": "General",
+              "about": "Acerca de",
+              "support": "Apoyo",
+              "rate": "Calificar"
+            },
+            "account": {
+              "title": "Cuenta",
+              "addThermostat": "Agregar termostato",
+              "manageAccount": "Administrar cuenta"
+            },
+            "locations": {
+              "title": "Ubicaciones"
+            }
+          }
+        },
+        "DebugMenuHome": {
+          "screenTitle": "Menú de desarrollador",
+          "graphUrl": "URL del gráfico",
+          "debugUser": "Usuario actual"
+        },
+        "ChangeGraphUrl": {
+          "screenTitle": "URL del gráfico",
+          "label": "URL del gráfico"
+        },
+        "DebugUser": {
+          "screenTitle": "Usuario actual",
+          "id": "ID de usuario",
+          "accessToken": "Token de acceso",
+          "refreshToken": "Actualizar Token",
+          "expiresAt": "Caduca a las",
+          "triggerRefresh": "Activar token de actualización"
+        },
+        "About": {
+          "screenTitle": "Acerca de",
+          "version": "Versión",
+          "debugMenu": "Menú de desarrollador",
+          "submitFeedback": "Enviar comentarios",
+          "submitFeedbackAlert": {
+            "title": "¿Nos podría enviar un correo electrónico?",
+            "message": "Valoramos sus comentarios. Nos ayudan a mejorar la aplicación.",
+            "cancelButton": "No, gracias",
+            "defaultButton": "Está bien"
+          },
+          "submitFeedbackEmail": {
+            "subject": "%{appName} app feedback",
+            "body": "Hi app development,\n\nI was using the %{appName} app and thought you might like to know..."
+          }
+        },
+        "Support": {
+          "screenTitle": "Apoyo",
+          "manufacturerSupport": "Soporte del fabricante",
+          "email": "Email",
+          "phone": "Teléfono",
+          "web": "Web",
+          "contactDealer": "Para solicitudes de servicio y soporte inmediato, comuníquese con su distribuidor autorizado."
+        },
+        "AccountSharing": {
+          "screenTitle": "Compartir cuenta",
+          "title": "Escanear para iniciar sesión",
+          "subtitle": "Inicie sesión rápidamente en su cuenta %{appName} en otro dispositivo.",
+          "description": "Empiece por descargar la aplicación %{appName} en otro teléfono o tableta. Luego, escanee este código QR con la cámara de ese dispositivo para iniciar sesión automáticamente en su cuenta% {appName}.",
+          "expiresIn": {
+            "counting": {
+              "one": "Por su seguridad, este código QR solo será válido durante un minuto.",
+              "other": "Por su seguridad, este código QR solo será válido durante %{count} minutos."
+            }
+          }
+        },
+        "Away": {
+          "screenTitle": "Ausente",
+          "geofencing": "Geocerca",
+          "geofencingEnabled": "Encendido",
+          "setpoints": "Puntos de ajuste"
+        },
+        "AdjustAway": {
+          "screenTitle": "Temperatura",
+          "awayMode": "Modo ausente",
+          "saveEnergyDescription": "Ahorre energía estableciendo un rango de temperatura más amplio cuando no haya nadie en casa.",
+          "upperTo": "Enfriar a",
+          "lowerTo": "Calentar a",
+          "targetTo": "Objetivo"
+        },
+        "Geofence": {
+          "screenTitle": "Geocerca",
+          "disclosureTitle": "Usa tu ubicación",
+          "disclosureDescription": "%{appName} usará la ubicación en segundo plano para recordarle automáticamente que active el modo ausente, incluso cuando la aplicación esté cerrada o no esté en uso",
+          "reminder": "Recordatorio",
+          "getNotificationDescription": "Reciba notificaciones automáticas para configurar el modo ausente cuando salga de su casa",
+          "locationPermissionAlert": {
+            "title": "Se requiere permiso de ubicación",
+            "message": "Abra Ajustes y permita que %{appName} acceda a su ubicación incluso cuando no esté usando la aplicación.",
+            "openSettings": "Abrir Ajustes"
+          }
+        },
+        "Location": {
+          "screenTitle": "Ubicación",
+          "rename": "Renombrar",
+          "history": "Historial",
+          "temperatureUnit": "Unidad de temperatura",
+          "temperatureUnitSheet": {
+            "title": "Unidad de temperatura",
+            "F": "Fahrenheit",
+            "C": "Celsius"
+          },
+          "away": "Ausente",
+          "notifications": "Notificaciones",
+          "temperatureNotifications": "Notificaciones de temperatura",
+          "humidityNotifications": "Notificaciones de humedad",
+          "notificationEnabled": "Encendido",
+          "holdLength": "Duración de espera",
+          "HoldLengthIndefinite": "Hasta cancelar",
+          "HoldLengthNextEvent": "Hasta el próximo evento",
+          "HoldLengthHours": {
+            "counting": {
+              "one": "1 hora",
+              "other": "%{count} horas"
+            }
+          },
+          "HoldLengthDate": "Hasta %{date}",
+          "deleteThermostat": "Eliminar termostato",
+          "deleteThermostatSheet": {
+            "title": "¿Está seguro de que quiere eliminar este termostato?",
+            "message": "Puede volver a agregarlo más tarde usando la aplicación.",
+            "confirm": "Eliminar"
+          },
+          "temperaturePresets": "Temperaturas guardadas"
+        },
+        "ManageAccount": {
+          "screenTitle": "Administrar cuenta",
+          "accountSharing": "Compartir cuenta",
+          "email": "Correo electrónico",
+          "removeAccount": "Eliminar cuenta",
+          "signOut": "Cerrar sesión"
+        },
+        "Notifications": {
+          "screenTitle": "Notificaciones",
+          "notificationEnabled": "Encendido",
+          "temperatureThreshold": "Temperatura",
+          "humidityThreshold": "Humedad",
+          "faults": "Fallas"
+        },
+        "ListTemperatures": {
+          "screenTitle": "Temperatura"
+        },
+        "ControllerTemperatureNotification": {
+          "screenTitle": "Temperatura",
+          "title": "Notificación",
+          "body": "Reciba una notificación automática cuando la temperatura interior esté fuera de este rango",
+          "lowerThan": "Más frío que",
+          "higherThan": "Más cálido que"
+        },
+        "LocationTemperatureNotification": {
+          "screenTitle": "Temperatura",
+          "title": "Notificación",
+          "body": "Reciba una notificación automática cuando la temperatura interior esté fuera de este rango",
+          "lowerThan": "Más frío que",
+          "higherThan": "Más caliente que"
+        },
+        "ListHumidities": {
+          "screenTitle": "Humedad"
+        },
+        "ControllerHumidityNotification": {
+          "screenTitle": "Humedad",
+          "title": "Notificación",
+          "body": "Reciba una notificación automática cuando la humedad esté fuera de este rango",
+          "higherThan": "Más alto que",
+          "lowerThan": "Más bajo que"
+        },
+        "LocationHumidityNotification": {
+          "screenTitle": "Humedad",
+          "title": "Notificación",
+          "body": "Reciba una notificación automática cuando la humedad esté fuera de este rango",
+          "higherThan": "Más alto que",
+          "lowerThan": "Más bajo que"
+        },
+        "LocationFaultsNotification": {
+          "screenTitle": "Fallas",
+          "title": "Notificación",
+          "body": "Reciba notificaciones automáticas cuando ocurra una falla"
+        },
+        "Names": {
+          "screenTitle": "Nombres",
+          "location": "Ubicación",
+          "room": "Habitación",
+          "rooms": "Zonas"
+        },
+        "RoomNames": {
+          "screenTitle": "Zonas"
+        },
+        "RenameLocation": {
+          "screenTitle": "Nombrar de nuevo",
+          "label": "Nombre del lugar"
+        },
+        "RenameRoom": {
+          "screenTitle": "Nombrar de nuevo",
+          "label": "Nombre de la habitación"
+        },
+        "HoldLength": {
+          "screenTitle": "Duración de espera",
+          "HoldLengthIndefinite": "Hasta cancelar",
+          "HoldLengthNextEvent": "Hasta el próximo evento",
+          "HoldLengthHours": {
+            "counting": {
+              "one": "Por 1 hora",
+              "other": "Por %{count} horas"
+            }
+          },
+          "HoldLengthDate": "Hasta %{date}"
+        },
+        "FaultLogsLocation": {
+          "screenTitle": "Historial",
+          "notificationEnabled": "Encendidas",
+          "faultNotifications": "Notificaciones de fallas",
+          "refetch": "Recargar",
+          "noFaults": "No se registran fallas"
+        },
+        "FaultLogDescription": {
+          "screenTitle": "Registro de fallas",
+          "date": "Reportado en",
+          "label": "Falla",
+          "description": "Descripción"
+        },
+        "SelectFanMode": {
+          "screenTitle": "Ventilador"
+        },
+        "ListTemperaturePresets": {
+          "screenTitle": "Temperaturas guardadas",
+          "add": "Agregar",
+          "sectionTitleBuiltIn": "Incorporado",
+          "sectionTitleCustom": "Personalizado"
+        }
+      }
+    }
+  },
+  "Notifications": {
+    "geofence": {
+      "leave": {
+        "title": "¿Está lejos de casa?",
+        "body": "Toque para habilitar el modo ausente.",
+        "alert": {
+          "title": "¿Está lejos de casa?",
+          "message": "Habilite el modo ausente para ahorrar energía",
+          "cancelButton": "No, gracias",
+          "enableButton": "Habilitar el modo ausente"
+        }
+      }
+    }
+  }
+}

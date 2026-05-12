@@ -1,0 +1,80 @@
+enum AwayFeature {
+  AWAY_CONTROLLER
+  AWAY_LOCATION
+}
+
+extend type FeatureMap {
+  away: [AwayFeature!]
+}
+
+type Away {
+  active: Boolean!
+  setpoint: Setpoint!
+}
+
+extend type Controller {
+  away: Away
+}
+
+extend type Location {
+  awayActive: Boolean!
+  away: Away
+}
+
+extend type Mutation {
+  toggleControllerAway(input: ToggleAwayInput!): ToggleControllerAwayResult!
+  toggleLocationAway(input: ToggleAwayInput!): ToggleLocationAwayResult!
+  changeControllerAwaySetpoint(
+    input: ChangeAwaySetpointInput!
+  ): ChangeControllerAwaySetpointResult!
+  changeLocationAwaySetpoint(
+    input: ChangeAwaySetpointInput!
+  ): ChangeLocationAwaySetpointResult!
+}
+
+input ToggleAwayInput {
+  id: ID!
+  active: Boolean!
+}
+
+type ToggleControllerAwaySuccess {
+  controller: Controller!
+}
+
+union ToggleControllerAwayResult =
+    ToggleControllerAwaySuccess
+  | NotFound
+  | NotSupported
+
+type ToggleLocationAwaySuccess {
+  location: Location!
+}
+
+union ToggleLocationAwayResult =
+    ToggleLocationAwaySuccess
+  | NotFound
+  | NotSupported
+
+input ChangeAwaySetpointInput {
+  id: ID!
+  single: SingleSetpointInput
+  dual: DualSetpointInput
+}
+
+type ChangeControllerAwaySetpointSuccess {
+  controller: Controller!
+}
+
+union ChangeControllerAwaySetpointResult =
+    ChangeControllerAwaySetpointSuccess
+  | NotFound
+  | NotSupported
+
+type ChangeLocationAwaySetpointSuccess {
+  location: Location!
+}
+
+union ChangeLocationAwaySetpointResult =
+    ChangeLocationAwaySetpointSuccess
+  | NotFound
+  | NotSupported

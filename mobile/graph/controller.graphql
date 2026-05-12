@@ -1,0 +1,19 @@
+fragment BootstrapControllerFields on Controller {
+  __typename
+  id
+  ...Context_Controllers_Controller
+  ...Screen_Home_Controller
+}
+
+fragment ControllerFields on Controller {
+  __typename
+  id
+  ...Context_Controllers_Controller
+  ...Screen_Home_Controller
+  ...Screen_Settings_Away_Controller
+  ...Screen_Settings_HoldLength_Controller
+  ...Screen_Settings_Notifications_Controller
+  ...Screen_Schedules_Controller
+  ...Screen_Manage_Schedule_Controller
+  ...Screen_Copy_Schedule_Controller
+}

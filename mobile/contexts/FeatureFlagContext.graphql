@@ -1,0 +1,5 @@
+query FeatureFlagContext {
+  features {
+    ...FeatureMapFields
+  }
+}

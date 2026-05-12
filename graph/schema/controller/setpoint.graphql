@@ -1,0 +1,57 @@
+input SingleSetpointInput {
+  target: Float!
+}
+
+input DualSetpointInput {
+  lower: Float!
+  upper: Float!
+}
+
+input ChangeSetpointInput {
+  id: ID!
+  single: SingleSetpointInput
+  dual: DualSetpointInput
+}
+
+type SingleSetpoint implements RangeValue {
+  value: Float!
+  min: Float!
+  max: Float!
+  step: Float!
+}
+
+type DualSetpoint implements DualRangeValue {
+  lower: SingleSetpoint!
+  upper: SingleSetpoint!
+  minInterval: Float!
+}
+
+union Setpoint = SingleSetpoint | DualSetpoint
+
+type SetpointRange implements Range {
+  min: Float!
+  max: Float!
+}
+
+extend type Controller {
+  setpoint: Setpoint!
+  setpointRange: SetpointRange!
+}
+
+extend type Mutation {
+  changeSetpoint(input: ChangeSetpointInput!): ChangeSetpointResult!
+}
+
+type ChangeSetpointSuccess {
+  controller: Controller!
+}
+
+type AwayActive implements Error {
+  message: String
+}
+
+union ChangeSetpointResult =
+    ChangeSetpointSuccess
+  | AwayActive
+  | NotSupported
+  | NotFound

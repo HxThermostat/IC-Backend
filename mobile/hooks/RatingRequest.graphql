@@ -1,0 +1,17 @@
+query RequestRating(
+  $build: String!
+  $installedAt: String!
+  $lastDisplayedAt: String
+  $platform: Platform!
+  $version: String!
+) {
+  requestRating(
+    input: {
+      build: $build
+      installedAt: $installedAt
+      lastDisplayedAt: $lastDisplayedAt
+      platform: $platform
+      version: $version
+    }
+  )
+}

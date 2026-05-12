@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+git diff --quiet
+if [ $? -eq 1 ]; then
+  echo "Unable to check with uncommitted changes";
+  exit 1;
+fi
+
+# Perform the translations (we want this to be a no-op)
+$(dirname "$0")/translate
+
+git diff --quiet
+
+if [ $? -eq 1 ]; then
+  echo "New translations were added, they should be validated and comitted"
+  exit 1;
+fi

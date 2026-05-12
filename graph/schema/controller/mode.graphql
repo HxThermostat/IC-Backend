@@ -1,0 +1,46 @@
+enum EffectiveMode {
+  COOL
+  HEAT
+  HEATCOOL
+  OFF
+}
+
+type Mode {
+  effectiveMode: EffectiveMode!
+  name: String!
+  placement: Placement!
+  transitionFrom: [Mode!]!
+  transitionTo: [Mode!]!
+}
+
+extend type Controller {
+  mode: Mode!
+  modes: [Mode!]!
+}
+
+extend type Mutation {
+  changeMode(input: ChangeModeInput!): ChangeModeResult!
+}
+
+input ChangeModeInput {
+  id: ID!
+  mode: String!
+}
+
+type ChangeModeSuccess {
+  controller: Controller!
+}
+
+type InvalidMode implements Error {
+  message: String
+}
+
+type InvalidModeTransition implements Error {
+  message: String
+}
+
+union ChangeModeResult =
+    ChangeModeSuccess
+  | InvalidMode
+  | InvalidModeTransition
+  | NotFound

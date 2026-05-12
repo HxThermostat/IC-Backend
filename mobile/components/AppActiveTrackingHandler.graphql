@@ -1,0 +1,15 @@
+mutation SetAppActive(
+  $appState: AppState!
+  $controllerId: ID!
+  $locationId: ID!
+) {
+  setAppActive(
+    input: {
+      appState: $appState
+      controllerId: $controllerId
+      locationId: $locationId
+    }
+  ) {
+    __typename
+  }
+}
