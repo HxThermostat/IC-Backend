@@ -8,7 +8,7 @@
   },
   "scripts": {
     "start": "node -r dotenv/config dist/index.js",
-    "build": "yarn build-graph && yarn build-ts",
+    "build": "yarn --cwd ayla-client build-ts && yarn build-graph && yarn build-ts",
     "build-ts": "tsc",
     "build-graph": "graphql-codegen --config codegen.yml -r dotenv/config",
     "watch-ts": "tsc -w",
