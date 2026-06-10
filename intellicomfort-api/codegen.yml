@@ -1,5 +1,5 @@
 overwrite: true
-schema: ${SCHEMA_PATH:../graph/schema/**/*.graphql}
+schema: ${SCHEMA_PATH:./graph/schema/**/*.graphql}
 documents: []
 generates:
   ./src/schema/resolvers-types.ts:
