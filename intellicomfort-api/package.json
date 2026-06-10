@@ -10,7 +10,7 @@
     "start": "node -r dotenv/config dist/index.js",
     "build": "yarn build-graph && yarn build-ts",
     "build-ts": "tsc",
-    "build-graph":  "pwd && ls -la && ls -la .. && graphql-codegen --config codegen.yml -r dotenv/config",
+    "build-graph": "graphql-codegen --config codegen.yml -r dotenv/config",
     "watch-ts": "tsc -w",
     "watch-graph": "graphql-codegen --watch --config codegen.yml -r dotenv/config",
     "watch-node": "nodemon -r dotenv/config dist/index.js",
