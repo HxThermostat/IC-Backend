@@ -3030,7 +3030,7 @@ axobject-query@^2.2.0:
   resolved "https://registry.yarnpkg.com/axobject-query/-/axobject-query-2.2.0.tgz#943d47e10c0b704aa42275e20edf3722648989be"
   integrity sha512-Td525n+iPOOyUQIeBfcASuG6uJsDOITl7Mds5gFyerkWiX7qhUTdYUBlSgNMyVqtSJqwpt1kXGLdUt6SykLMRA==
 
-"ayla-client@file:../ayla-client":
+"ayla-client@file:./ayla-client":
   version "1.0.0"
   dependencies:
     env-var "^7.0.0"
