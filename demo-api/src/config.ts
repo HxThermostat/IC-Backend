@@ -12,7 +12,7 @@ export const SCHEMA_PATH: string = env
 
 export const BASE_URL: string = env
   .get("BASE_URL")
-  .default("https://klimate-demo.kraftful.cloud/")
+  .default("https://intellicomfort.yoursysteminfo.com/")
   .required()
   .asUrlString();
 
