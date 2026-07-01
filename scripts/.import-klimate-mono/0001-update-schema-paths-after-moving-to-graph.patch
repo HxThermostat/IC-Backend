@@ -176,7 +176,7 @@ index ab41c73d6..ebc72e45a 100644
 +
  export const BASE_URL: string = env
    .get("BASE_URL")
-   .default("https://intellicomfort.kraftful.cloud/")
+   .default("https://intellicomfort.yoursysteminfo.com/")
 diff --git a/intellicomfort-api/src/schema/index.ts b/intellicomfort-api/src/schema/index.ts
 index f6a483669..b49d5894c 100644
 --- a/intellicomfort-api/src/schema/index.ts

@@ -161,7 +161,7 @@ export const mutationResolver: MutationResolvers = {
     if (!user) throw new AuthenticationError("Must be logged in");
 
     const code = await qrcode.toBuffer(
-      `https://klimate.kraftful.app/signIn/${user.email}/${user.token}`,
+      `${process.env.APP_URL}/signIn/${user.email}/${user.token}`,
       {
         width: size,
         margin: 0,

@@ -19,7 +19,7 @@ const config: TemplateConfiguration = {
   customerUrl: "www.kraftful.com",
   footerBackgroundColor: "#F4F5F5",
   iconAlt: "72",
-  iconUrl: "https://klimate-demo.kraftful.app/app-icon-256.png",
+  iconUrl: `${process.env.APP_URL}/app-icon-256.png`,
   textColor: "#181718",
 };
 
@@ -45,7 +45,7 @@ export default {
       ${spacer()}
       ${button({
         label: "Sign in",
-        url: `https://klimate-demo.kraftful.app/signIn/${userEmail.trim()}/${token}`,
+        url: `${process.env.APP_URL}/signIn/${userEmail.trim()}/${token}`,
         config,
       })}
       ${spacer()}
