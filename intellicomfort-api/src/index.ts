@@ -1,4 +1,5 @@
 import "./tracer";
+import path from "path";
 
 import * as Sentry from "@sentry/node";
 
@@ -31,6 +32,8 @@ const start = async (): Promise<void> => {
   if (IS_PRODUCTION) {
     app.use(redirectToHTTPS([], [], 301));
   }
+
+  app.use(express.static(path.join(__dirname, "../static")));
 
   applyWebhookMiddleware({ app, path: AYLA_RULES_SERVICE_WEBHOOK_PATH });
   server.applyMiddleware({ app, path: "/" });
