@@ -98,7 +98,7 @@ const config = (
 const deepLinkingConfig = (
   options: DeepLinkingConfigOptions
 ): LinkingOptions => ({
-  prefixes: [`${URI_SCHEME}://`, `https://${URI_SCHEME}.kraftful.app`],
+  prefixes: [`${URI_SCHEME}://`, `https://${URI_SCHEME}.intellicomfort.yoursysteminfo.com`],
   config: config(options),
   getStateFromPath: (path, options) => {
     const state = getStateFromPath(path, options);

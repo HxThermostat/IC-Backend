@@ -14,8 +14,8 @@
     "google_storage_bucket": "klimate-app.appspot.com",
     "project_id": "klimate-app"
   },
-  "graph_url": "https://kraftful-klimate.herokuapp.com/",
-  "host_name": "klimate-demo.kraftful.app",
+  "graph_url": "https://intellicomfort.yoursysteminfo.com/",
+  "host_name": "intellicomfort.yoursysteminfo.com",
   "ios_store_id": "",
   "light_colors": {},
   "splash_screen_background": {

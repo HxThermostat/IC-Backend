@@ -13,7 +13,7 @@ determine appropriate values:
 - `display_name` - the human-friendly app name in the App Store and Play Store
 - `google_services` - a subset of the values from the `google-services.json` file used by the Android build (see https://github.com/kraftful/klimate/blob/ffbe7b9f11f1716999c17d3e505d30a4f1256e80/mobile/android/fastlane/Fastfile#L76-L118)
 - `graph_url` - the URL the app will communicate with
-- `home_name` - the host name used for universal links, typically in the form of `<app_name>.kraftful.app`
+- `home_name` - the host name used for universal links, typically in the form of `<app_name>.intellicomfort.yoursysteminfo.com`
 - `ios_store_id` - the numerical component of the app ID from the App Store url (e.g. `https://apps.apple.com/us/app/intellicomfort/id794980960` => `794980960`)
 - `light_colors` - key-value pairs of color palette names and their hex color values when in light mode (e.g. `{ "text": "#181718" }`)
 - `splash_screen_background` - key-value mapping for the background color of the spash screen in dark and light mode (e.g. `{ "dark": "#000000", "light": "#F1F1F1" }`)

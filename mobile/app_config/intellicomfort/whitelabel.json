@@ -21,8 +21,8 @@
     "google_storage_bucket": "intellicomfort-thermostat.appspot.com",
     "project_id": "intellicomfort-thermostat"
   },
-  "graph_url": "https://intellicomfort.kraftful.cloud",
-  "host_name": "intellicomfort.kraftful.app",
+  "graph_url": "https://intellicomfort.yoursysteminfo.com",
+  "host_name": "intellicomfort.yoursysteminfo.com",
   "ios_store_id": "794980960",
   "light_colors": {
     "cool": "#0031FF",
