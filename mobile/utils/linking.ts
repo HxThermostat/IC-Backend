@@ -33,6 +33,6 @@ export function clearLink(): void {
 
 export const deepLinkInitialURL = (url: string): void => {
   attemptToOpenURL(
-    url.replace(`https://${URI_SCHEME}.kraftful.app/`, `${URI_SCHEME}://`)
+    url.replace(`https://${URI_SCHEME}.intellicomfort.yoursysteminfo.com/`, `${URI_SCHEME}://`)
   );
 };

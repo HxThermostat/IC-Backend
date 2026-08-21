@@ -167,7 +167,7 @@ platform :ios do
   end
 
   lane :publish_js_bundles_and_assets do |options| 
-    BASE_URL = "https://klimate.kraftful.app/update"
+    BASE_URL = "https://intellicomfort.yoursysteminfo.com/update"
 
     package = read_json(json_path: "../package.json")
     version =  package[:version]
