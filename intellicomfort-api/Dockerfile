@@ -1,6 +1,6 @@
 # NB we expect the repo root to be the build context
 
-FROM node:14-buster AS build-ayla-client
+FROM node:14-bullseye AS build-ayla-client
 
 WORKDIR /usr/src/ayla-client
 
@@ -13,7 +13,7 @@ COPY ayla-client/src ./src
 
 RUN yarn build-ts
 
-FROM node:14-buster AS build
+FROM node:14-bullseye AS build
 
 WORKDIR /usr/src/intellicomfort-api
 
@@ -28,7 +28,7 @@ COPY intellicomfort-api/src ./src
 
 RUN yarn build-ts
 
-FROM node:14-buster
+FROM node:14-bullseye
 
 # Run Datadog's Debian one-line install with a bit of Docker-specific
 # cleanup to keep the image small + to give the node user access to
@@ -65,7 +65,7 @@ RUN yarn install --frozen-lockfile
 COPY ./graph ../graph
 COPY --from=build /usr/src/intellicomfort-api/dist ./dist
 
-COPY intellicomfort-api/entrypoint ./entrypoint
+COPY --chown=node:node --chmod=755 intellicomfort-api/entrypoint ./entrypoint
 
 EXPOSE 3000
 
