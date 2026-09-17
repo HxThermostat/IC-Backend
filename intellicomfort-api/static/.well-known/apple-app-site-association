@@ -1,0 +1,15 @@
+{
+  "applinks": {
+    "details": [
+      {
+        "appID": "C9JBF8A6KB.com.jci.intellicomfort",
+        "components": [
+          {
+            "/": "/signIn/*",
+            "comment": "Matches sign-in deep links"
+          }
+        ]
+      }
+    ]
+  }
+}

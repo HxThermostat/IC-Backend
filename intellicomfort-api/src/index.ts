@@ -33,6 +33,21 @@ const start = async (): Promise<void> => {
     app.use(redirectToHTTPS([], [], 301));
   }
 
+  app.get("/.well-known/assetlinks.json", (_, res) => {
+    res.sendFile(
+      path.resolve(process.cwd(), "static/.well-known/assetlinks.json")
+    );
+  });
+
+  app.get("/.well-known/apple-app-site-association", (_, res) => {
+    res.sendFile(
+      path.resolve(
+        process.cwd(),
+        "static/.well-known/apple-app-site-association"
+      )
+    );
+  });
+
   app.use(express.static(path.join(__dirname, "../static")));
 
   applyWebhookMiddleware({ app, path: AYLA_RULES_SERVICE_WEBHOOK_PATH });
