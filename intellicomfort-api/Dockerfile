@@ -33,15 +33,15 @@ FROM node:14-buster
 # Run Datadog's Debian one-line install with a bit of Docker-specific
 # cleanup to keep the image small + to give the node user access to
 # the relevant config files and logs
-ARG DD_API_KEY
-RUN DD_AGENT_MAJOR_VERSION=7 \
-    DD_API_KEY=$DD_API_KEY \
-    DD_INSTALL_ONLY=true \
-    DD_SITE="datadoghq.com" \
-    bash -c "$(curl -L https://s3.amazonaws.com/dd-agent/scripts/install_script.sh)" && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/* && \
-    chown -R node:node /etc/datadog-agent/ /opt/datadog-agent/ /var/log/datadog/
+# ARG DD_API_KEY
+# RUN DD_AGENT_MAJOR_VERSION=7 \
+#     DD_API_KEY=$DD_API_KEY \
+#     DD_INSTALL_ONLY=true \
+#     DD_SITE="datadoghq.com" \
+#     bash -c "$(curl -L https://s3.amazonaws.com/dd-agent/scripts/install_script.sh)" && \
+#     apt-get clean && \
+#     rm -rf /var/lib/apt/lists/* && \
+#     chown -R node:node /etc/datadog-agent/ /opt/datadog-agent/ /var/log/datadog/
 
 # Add tini as a basic init manager
 RUN apt-get update && apt-get install -y \
@@ -65,9 +65,9 @@ RUN yarn install --frozen-lockfile
 COPY ./graph ../graph
 COPY --from=build /usr/src/intellicomfort-api/dist ./dist
 
-COPY intellicomfort-api/entrypoint ./entrypoint
+# COPY intellicomfort-api/entrypoint ./entrypoint
 
 EXPOSE 3000
 
-ENTRYPOINT [ "./entrypoint" ]
+ENTRYPOINT [ "tini", "-s", "--"]
 CMD ["node", "dist/index.js"]
