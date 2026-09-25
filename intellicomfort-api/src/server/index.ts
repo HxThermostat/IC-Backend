@@ -8,6 +8,7 @@ import buildSchema from "./schema";
 import context, { AppContext } from "./context";
 import loaders from "./loaders";
 import { metrics } from "./plugins";
+import { IS_PRODUCTION } from "../config";
 
 export { buildSchema, context, loaders };
 
@@ -29,7 +30,7 @@ export default function buildServer(
     },
     introspection: true,
     plugins: [metrics],
-    playground: true,
+    playground: !IS_PRODUCTION,
     schema,
   });
 }
